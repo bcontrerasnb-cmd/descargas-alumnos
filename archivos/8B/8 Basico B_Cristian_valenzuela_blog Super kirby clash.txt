@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog de Super Kirby Clash</title>
+    <style>
+        /* ==========================================
+           ESTILOS DE SUPER KIRBY CLASH BLOG - CSS
+           ========================================== */
+
+        :root {
+          --skc-bg-dark: #0f0c24;
+          --skc-bg-card: #1c1740;
+          --skc-bg-header: linear-gradient(135deg, #1b1448 0%, #3a228a 100%);
+          --skc-kirby-pink: #ff7bc0;
+          --skc-gem-gold: #ffd700;
+          --skc-magic-blue: #00f0ff;
+          --skc-boss-red: #ff4a4a;
+          --skc-text-light: #f4f4f9;
+          --skc-border-gold: 3px solid #ffd700;
+          --skc-shadow-glow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        body {
+          background-color: var(--skc-bg-dark);
+          color: var(--skc-text-light);
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          padding: 0;
+          line-height: 1.6;
+        }
+
+        .blog-container {
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 0 20px;
+        }
+
+        /* Cabecera del Blog */
+        .blog-header {
+          background: var(--skc-bg-header);
+          border: var(--skc-border-gold);
+          border-radius: 12px;
+          text-align: center;
+          padding: 40px 20px;
+          box-shadow: var(--skc-shadow-glow);
+          margin-bottom: 30px;
+        }
+
+        .blog-header h1 {
+          color: var(--skc-gem-gold);
+          font-size: 2.8rem;
+          margin-bottom: 10px;
+          text-shadow: 3px 3px #000;
+          letter-spacing: 1px;
+        }
+
+        .blog-header p {
+          color: var(--skc-kirby-pink);
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+
+        /* Tarjetas de Contenido */
+        .rpg-card {
+          background-color: var(--skc-bg-card);
+          border: 2px solid var(--skc-magic-blue);
+          border-radius: 10px;
+          padding: 25px;
+          margin-bottom: 25px;
+          box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+        }
+
+        .rpg-card h2 {
+          color: var(--skc-gem-gold);
+          border-bottom: 2px dashed var(--skc-magic-blue);
+          padding-bottom: 10px;
+          margin-top: 0;
+        }
+
+        .rpg-card h3 {
+          color: var(--skc-kirby-pink);
+        }
+
+        /* Tarjeta de Jefes */
+        .boss-card {
+          background: linear-gradient(135deg, #2b113a 0%, #1c1740 100%);
+          border: 2px solid var(--skc-boss-red);
+          border-radius: 10px;
+          padding: 20px;
+          margin-bottom: 20px;
+          box-shadow: 0 0 15px rgba(255, 74, 74, 0.25);
+        }
+
+        .boss-card h3 {
+          color: var(--skc-kirby-pink);
+          margin-top: 0;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        /* Tablas de Armas y Armaduras */
+        .rpg-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 15px;
+        }
+
+        .rpg-table th, .rpg-table td {
+          border: 1px solid #3a3278;
+          padding: 12px;
+          text-align: left;
+        }
+
+        .rpg-table th {
+          background-color: #272056;
+          color: var(--skc-gem-gold);
+        }
+
+        .rpg-table tr:nth-child(even) {
+          background-color: rgba(255, 255, 255, 0.02);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blog-container">
+
+        <!-- Cabecera del Blog -->
+        <header class="blog-header">
+            <h1>Blog de Super Kirby Clash</h1>
+            <p>¡Reúne a tu equipo, derrota a los jefes y salva el reino de Dream Kingdom!</p>
+        </header>
+
+        <!-- Sección 1: Roles de Héroe -->
+        <section class="rpg-card">
+            <h2>1. Roles de Héroe (Clases del Juego)</h2>
+            <p>En <em>Super Kirby Clash</em>, las misiones se afrontan con un equipo de cuatro héroes que eligen entre las siguientes clases oficiales:</p>
+            
+            <ul>
+                <li><strong>Héroe de la Espada:</strong> Rol equilibrado de combate cercano. Posee un escudo protector muy útil para bloquear ataques frontales y realizar contraataques certeros.</li>
+                <li><strong>As del martillo:</strong> El tanque con mayor poder ofensivo del juego. Su brutal habilidad de carga inflige un daño masivo a los jefes, aunque requiere calcular el momento exacto para golpear sin fallar.</li>
+                <li><strong>Señor del rayo:</strong> Especialista en proyectiles a distancia y control de ritmo. Al conectar una cantidad suficiente de rayos consecutivos, puede activar una habilidad para detener temporalmente el tiempo.</li>
+                <li><strong>Doctor erudito:</strong> El rol de apoyo indispensable. Cuenta con campos curativos para sanar a sus compañeros de equipo y pociones que mejoran las capacidades ofensivas de todos.</li>
+            </ul>
+        </section>
+
+        <!-- Sección 2: Armas y Armaduras -->
+        <section class="rpg-card">
+            <h2>2. Armas y Armaduras (Tienda de Magolor)</h2>
+            <p>El equipamiento se adquiere gastando <strong>Manzanas Gemas</strong> y fragmentos conseguidos al superar las misiones del reino:</p>
+
+            <table class="rpg-table">
+                <thead>
+                    <tr>
+                        <th>Set de Equipamiento</th>
+                        <th>Descripción y Características</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Set Estándar</strong></td>
+                        <td>El equipo básico con el que inicias tus misiones en el juego.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Set DX</strong></td>
+                        <td>Versiones mejoradas que potencian notablemente las estadísticas de ataque y salud de tu Kirby.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Set Super DX (SDX)</strong></td>
+                        <td>Las piezas de equipo definitivas y más poderosas para hacer frente a los niveles de dificultad más altos y a los jefes despiadados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Sección 3: Jefes del Juego -->
+        <section class="rpg-card">
+            <h2>3. Jefes del Juego (Nombres Oficiales en Español)</h2>
+            
+            <div class="boss-card">
+                <h3>Rey D-Mind</h3>
+                <p>Una versión corrupta y gigantesca del Rey Dedede, armado con un enorme martillo oscuro y portador de portales dimensionales.</p>
+            </div>
+
+            <div class="boss-card">
+                <h3>Mago Pesadilla</h3>
+                <p>El clásico hechicero onírico que regresa con su báculo para lanzar hechizos y desafiar a los héroes.</p>
+            </div>
+
+            <div class="boss-card">
+                <h3>Pyribbit</h3>
+                <p>La gigantesca rana ígnea que salta sin parar por el escenario y llena el terreno de fuego y peligros.</p>
+            </div>
+
+            <div class="boss-card">
+                <h3>Grand Doomer</h3>
+                <p>La poderosa bestia alada que domina las brechas dimensionales y ataca desde los aires con ráfagas de energía oscura.</p>
+            </div>
+
+            <div class="boss-card">
+                <h3>Héroe Æon (Galacta Knight)</h3>
+                <p>El legendario guerrero galáctico, considerado el desafío definitivo por su extrema velocidad y letalidad en combate.</p>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

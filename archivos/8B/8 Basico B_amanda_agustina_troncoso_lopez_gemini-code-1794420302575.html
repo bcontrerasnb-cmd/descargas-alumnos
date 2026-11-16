@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog Personal - Slipknot Edition</title>
+    
+    <!-- FUENTES DE GOOGLE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- BLOQUE CSS (DISEÑO SLIPKNOT) -->
+    <style id="estilos-ia">
+        /* Ocultar pantallas por defecto según la lógica JS */
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        /* --- VARIABLES GLOBALES --- */
+        :root {
+            --bg-principal: #0d0d0d;
+            --bg-tarjeta: #171717;
+            --rojo-slipknot: #b30000;
+            --rojo-hover: #e60000;
+            --texto-claro: #e5e5e5;
+            --texto-oscuro: #a3a3a3;
+            --borde-rojo: #330000;
+            --fuente-titulo: 'Permanent Marker', cursive;
+            --fuente-base: 'Roboto Condensed', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            background-image: radial-gradient(circle at center, #1a0202 0%, #0d0d0d 100%);
+            color: var(--texto-claro);
+            font-family: var(--fuente-base);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        /* --- NAVEGACIÓN Y ENCABEZADO --- */
+        header {
+            background-color: #000000;
+            border-bottom: 3px solid var(--rojo-slipknot);
+            padding: 20px 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(179, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-family: var(--fuente-titulo);
+            color: var(--rojo-slipknot);
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px #000;
+        }
+
+        header p {
+            color: var(--texto-oscuro);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- BOTONES GENERALES --- */
+        .btn {
+            font-family: var(--fuente-base);
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border: 1px solid var(--rojo-slipknot);
+            background: #141414;
+            color: var(--texto-claro);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            border-radius: 2px;
+        }
+
+        .btn:hover {
+            background-color: var(--rojo-slipknot);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.6);
+        }
+
+        .btn-secundario {
+            border-color: #555;
+            background: #262626;
+        }
+
+        .btn-secundario:hover {
+            background-color: #444;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-peligro {
+            border-color: #8b0000;
+            background: #4a0000;
+        }
+
+        .btn-peligro:hover {
+            background-color: #ff0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+        }
+
+        /* --- FORMULARIOS Y CAJAS DE TEXTO --- */
+        .formulario {
+            background-color: var(--bg-tarjeta);
+            border: 1px solid var(--borde-rojo);
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+            margin-top: 20px;
+        }
+
+        .formulario h2 {
+            font-family: var(--fuente-titulo);
+            color: var(--rojo-slipknot);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .grupo-control {
+            margin-bottom: 15px;
+        }
+
+        .grupo-control label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--texto-oscuro);
+        }
+
+        input[type="text"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #080808;
+            border: 1px solid #333;
+            color: #fff;
+            font-family: var(--fuente-base);
+            font-size: 1rem;
+            border-radius: 2px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--rojo-slipknot);
+            box-shadow: 0 0 5px rgba(179, 0, 0, 0.5);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* --- MURO Y TARJETAS DE POSTS --- */
+        #muro {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tarjeta-post {
+            background-color: var(--bg-tarjeta);
+            border: 1px solid #262626;
+            border-top: 4px solid var(--rojo-slipknot);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .t-post {
+            font-family: var(--fuente-titulo);
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            word-break: break-word;
+        }
+
+        .img-post {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 1px solid #333;
+            margin-bottom: 10px;
+            background-color: #000;
+        }
+
+        .p-post {
+            color: var(--texto-oscuro);
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .bienvenida {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--bg-tarjeta);
+            border: 1px solid var(--borde-rojo);
+        }
+
+        .bienvenida h2 {
+            font-family: var(--fuente-titulo);
+            color: var(--rojo-slipknot);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .bienvenida p {
+            font-size: 1.2rem;
+            color: var(--texto-oscuro);
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ENCABEZADO Y NAVEGACIÓN COMPLEMENTARIA -->
+    <header>
+        <h1>Slipknot Blog</h1>
+        <p>Maggot HeadQuarters - 8° Básico</p>
+        <nav>
+            <button class="btn" onclick="cambiarVista('vista-inicio')">Inicio</button>
+            <button class="btn" onclick="cambiarVista('vista-publicaciones')">Ver Muro</button>
+            <button class="btn" onclick="cambiarVista('vista-crear')">Nueva Publicación</button>
+        </nav>
+    </header>
+
+    <div class="contenedor">
+
+        <!-- VISTA: INICIO -->
+        <div id="vista-inicio" class="bienvenida">
+            <h2>WE ARE NOT YOUR KIND</h2>
+            <p>Bienvenido al espacio definitivo sobre Slipknot. Comparte noticias, álbumes, máscaras y vivencias sobre la banda de Des Moines, Iowa.</p>
+            <button class="btn" onclick="cambiarVista('vista-crear')">Crear primer Post</button>
+        </div>
+
+        <!-- VISTA: PUBLICACIONES (MURO) -->
+        <div id="vista-publicaciones">
+            <h2 style="font-family: var(--fuente-titulo); color: var(--rojo-slipknot); margin-bottom: 15px;">Últimas Publicaciones</h2>
+            <div id="muro"></div>
+        </div>
+
+        <!-- VISTA: CREAR POST -->
+        <div id="vista-crear" class="formulario">
+            <h2>Crear Publicación</h2>
+            <div class="grupo-control">
+                <label for="tit">Título de la publicación:</label>
+                <input type="text" id="tit" placeholder="Ej: Reseña de Iowa / Máscara de Corey Taylor">
+            </div>
+            
+            <div class="grupo-control">
+                <label for="txt">Contenido / Opinión:</label>
+                <textarea id="txt" placeholder="Escribe aquí tu publicación..."></textarea>
+            </div>
+
+            <div class="grupo-control">
+                <label>Imagen desde archivo local:</label>
+                <input type="file" id="imgArchivo" accept="image/*">
+            </div>
+
+            <div class="grupo-control">
+                <label for="imgUrl">O pega el enlace (URL) de una imagen:</label>
+                <input type="text" id="imgUrl" placeholder="https://ejemplo.com/slipknot.jpg">
+            </div>
+
+            <button class="btn" onclick="crearPost()">Publicar</button>
+        </div>
+
+        <!-- VISTA: EDITAR POST -->
+        <div id="vista-editar" class="formulario">
+            <h2>Editar Publicación</h2>
+            <input type="hidden" id="edit-imgActual">
+
+            <div class="grupo-control">
+                <label for="edit-tit">Título:</label>
+                <input type="text" id="edit-tit">
+            </div>
+
+            <div class="grupo-control">
+                <label for="edit-txt">Contenido:</label>
+                <textarea id="edit-txt"></textarea>
+            </div>
+
+            <div class="grupo-control">
+                <label>Cambiar imagen desde archivo:</label>
+                <input type="file" id="edit-imgArchivo" accept="image/*">
+            </div>
+
+            <div class="grupo-control">
+                <label for="edit-imgUrl">O cambiar con enlace (URL):</label>
+                <input type="text" id="edit-imgUrl">
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" onclick="guardarEdicion()">Guardar Cambios</button>
+                <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BLOQUE HTML / JAVASCRIPT (EL CEREBRO DEL BLOG VERSIÓN ORIGINAL INTACTA) -->
+    <script>
+// ==========================================
+// 1. LA LISTA DE COMPRAS (El Arreglo)
+// ==========================================
+//Guardamos toda la información en una Lista ordenadita (Arreglo). Empieza vacía [].
+let miListaDePublicaciones = [];
+
+// Esta es una memoria para recordar en qué "número de fila" de la lista está el post que queremos editar.
+let posicionEnLaLista = null;
+
+// ==========================================
+// 2. NAVEGACIÓN Y AYUDANTES
+// ==========================================
+// TAREA: CAMBIAR ENTRE PANTALLAS
+function cambiarVista(pantallaDestino) {
+// Escondemos todas las pantallas (display: none).
+document.getElementById('vista-inicio').style.display = 'none';
+document.getElementById('vista-publicaciones').style.display = 'none';
+document.getElementById('vista-crear').style.display = 'none';
+document.getElementById('vista-editar').style.display = 'none';
+
+// Mostramos solo la pantalla elegida (display: block).
+document.getElementById(pantallaDestino).style.display = 'block';
+}
+
+// TAREA: PROCESAR LA IMAGEN
+function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+let archivoDePC = document.getElementById(cajaArchivo).files[0];
+// .trim() es como una tijera que corta los espacios vacíos que el usuario puso por accidente al principio o al final.
+let linkDeInternet = document.getElementById(cajaLink).value.trim();
+
+if (archivoDePC) {
+return URL.createObjectURL(archivoDePC);
+} else if (linkDeInternet !== "") {
+return linkDeInternet;
+} else if (cajaFotoVieja) {
+return document.getElementById(cajaFotoVieja).value;
+}
+return "";
+}
+
+// ==========================================
+// 3. DIBUJAR TODO EL MURO (La magia del Ciclo)
+// ==========================================
+function mostrarPosts() {
+let cajaMuro = document.getElementById("muro");
+
+// PASO CRÍTICO: ¡Borrador mágico!
+// Borramos toda la pantalla para que no se nos dupliquen las cosas cuando el ciclo empiece a dibujar.
+cajaMuro.innerHTML = "";
+
+// LA MÁQUINA DE REPETICIÓN (Ciclo For)
+// Esto le dice al computador: "Empieza a contar en 0 (let i = 0).
+// Repite esta tarea mientras no te pases de la cantidad de cosas que hay en nuestra lista (i < miListaDePublicaciones.length).
+// Y avanza de uno en uno (i++)".
+for (let i = 0; i < miListaDePublicaciones.length; i++) {
+// Sacamos la información pura del objeto que está en la fila 'i'.
+let postActual = miListaDePublicaciones[i];
+
+// Y ahora, le sumamos (+=) a la pantalla el diseño HTML, rellenándolo con la info pura.
+// Fíjate en los botones: Ahora enviamos el número 'i'. Así los botones saben exactamente qué posición de la lista deben borrar o editar.
+cajaMuro.innerHTML += `<div class="tarjeta-post"><h3 class="t-post">${postActual.titulo}</h3><img src="${postActual.imagen}" class="img-post"><p class="p-post">${postActual.texto}</p><div class="caja-botones"><button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button><button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button></div></div>`;
+}
+}
+
+// ==========================================
+// 4. CREAR NUEVA PUBLICACIÓN
+// ==========================================
+function crearPost() {
+// 1. Rescatamos los textos de las cajas y les cortamos los espacios extra (.trim).
+let tituloEscrito = document.getElementById("tit").value.trim();
+let textoEscrito = document.getElementById("txt").value.trim();
+let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+// 2. Si escribieron puras cosas vacías, los frenamos.
+if (tituloEscrito === "" && textoEscrito === "") {
+alert("¡Debes escribir un título o un texto antes de publicar!");
+return;
+}
+
+// 3.EMPUJAMOS (.push) toda la información empaquetada como un "Objeto" hacia nuestra Lista principal.
+miListaDePublicaciones.push({
+titulo: tituloEscrito,
+imagen: imagenFinal,
+texto: textoEscrito
+});
+
+// 4. Limpiamos las cajas para que el formulario quede listo para el próximo uso.
+document.getElementById("tit").value = "";
+document.getElementById("txt").value = "";
+document.getElementById("imgUrl").value = "";
+document.getElementById("imgArchivo").value = "";
+
+// 5. Como nuestra Lista acaba de crecer, le ordenamos a nuestra Tarea 3 (mostrarPosts)
+// que vuelva a encender su Ciclo For y dibuje la lista actualizada en pantalla.
+mostrarPosts();
+
+// 6. Cambiamos de pantalla para ir a ver nuestro muro.
+cambiarVista('vista-publicaciones');
+}
+
+// ==========================================
+// 5. ELIMINAR UNA PUBLICACIÓN
+// ==========================================
+// Esta función recibe un número ('numeroEnLaFila'), que es la posición que el ciclo For le puso al botón.
+function borrarPost(numeroEnLaFila) {
+let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+
+if (confirmacion === true) {
+// Usamos el poder '.splice()'. Esto se mete directo a nuestra Lista en la memoria,
+// busca la posición exacta 'numeroEnLaFila', destruye '1' elemento, y empuja a los demás hacia arriba para no dejar un hueco.
+miListaDePublicaciones.splice(numeroEnLaFila, 1);
+
+// Como la Lista cambió (tiene una cosa menos), ordenamos al muro que se dibuje de nuevo para actualizarse.
+mostrarPosts();
+}
+}
+
+// ==========================================
+// 6. EDITAR PUBLICACIONES
+// ==========================================
+// Parte 1: Cargar la información. También recibe el número de la fila.
+function abrirEditar(numeroEnLaFila) {
+// 1. Anotamos en nuestro cuaderno global en qué número estamos para que no se nos olvide.
+posicionEnLaLista = numeroEnLaFila;
+
+// 2. Extraemos toda la información desde la memoria de la Lista.
+let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+// 3. Rellenamos las cajas de edición con la información pura de la Lista (ya no leemos el HTML).
+document.getElementById("edit-tit").value = postParaCorregir.titulo;
+document.getElementById("edit-txt").value = postParaCorregir.texto;
+document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+
+// Vaciamos las cajas de imagen nueva.
+document.getElementById("edit-imgArchivo").value = "";
+document.getElementById("edit-imgUrl").value = "";
+
+// Mostramos la pantalla de editar.
+cambiarVista('vista-editar');
+}
+
+// Parte 2: Guardar las correcciones
+function guardarEdicion() {
+// 1. Rescatamos los nuevos textos corregidos.
+let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+let nuevoTexto = document.getElementById("edit-txt").value.trim();
+let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+
+// 2. ¡Sobreescribimos la memoria! Vamos a nuestra Lista, ubicamos la posición exacta
+// que teníamos anotada, y le chancamos la información vieja con la información nueva.
+miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+
+// 3. Como modificamos algo de la Lista, volvemos a dibujar el muro y cambiamos de pantalla.
+mostrarPosts();
+cambiarVista('vista-publicaciones');
+}
+    </script>
+</body>
+</html>

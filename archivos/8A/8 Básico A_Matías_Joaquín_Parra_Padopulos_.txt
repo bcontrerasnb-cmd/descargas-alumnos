@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Claudio Bravo - Historia y Legenda del Fútbol</title>
+    <!-- BLOQUE CSS (DISEÑO) -->
+    <style id="estilos-ia">
+        :root {
+            --primary: #002855;
+            --secondary: #d50032;
+            --accent: #f0f4f8;
+            --dark: #222222;
+            --light: #ffffff;
+            --gray: #666666;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* MENÚ DE NAVEGACIÓN */
+        nav {
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .btn {
+            background-color: var(--secondary);
+            color: var(--light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #b00028;
+            transform: translateY(-2px);
+        }
+
+        .btn-secundario {
+            background-color: transparent;
+            border: 2px solid var(--light);
+        }
+
+        .btn-secundario:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .btn-peligro {
+            background-color: #e74c3c;
+        }
+
+        .btn-peligro:hover {
+            background-color: #c0392b;
+        }
+
+        /* SECCIONES GENERALES */
+        section {
+            max-width: 900px;
+            margin: 30px auto;
+            background: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* 1. PANTALLA DE INICIO */
+        #vista-inicio {
+            text-align: center;
+            background: linear-gradient(rgba(0,40,85,0.85), rgba(0,40,85,0.85)), url('https://upload.wikimedia.org/wikipedia/commons/4/47/Claudio_Bravo_2018.jpg');
+            background-size: cover;
+            background-position: center;
+            color: var(--light);
+            padding: 80px 20px;
+        }
+
+        #vista-inicio h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #vista-inicio p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #vista-inicio .btn {
+            margin: 5px;
+        }
+
+        /* 2. MURO DE PUBLICACIONES */
+        #vista-publicaciones h2 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tarjeta-post {
+            background: var(--accent);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .t-post {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .p-post {
+            color: var(--gray);
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* 3 Y 4. FORMULARIOS (CREAR / EDITAR) */
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input[type="file"] {
+            margin-top: 5px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        /* CONTROL DE VISIBILIDAD INICIAL */
+        #vista-publicaciones, #vista-crear, #vista-editar { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML -->
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav>
+        <button class="btn" onclick="cambiarVista('vista-inicio')">Inicio</button>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">Ver Publicaciones</button>
+        <button class="btn" onclick="cambiarVista('vista-crear')">Crear Publicación</button>
+    </nav>
+
+    <!-- 1. PANTALLA DE INICIO -->
+    <section id="vista-inicio">
+        <h1>Claudio Bravo: Leyenda del Arco</h1>
+        <p>Un espacio dedicado a repasar la brillante carrera deportiva de uno de los mejores arqueros de la historia de Chile y Sudamérica.</p>
+        <button class="btn" onclick="cambiarVista('vista-crear')">¡Crear mi post!</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Ir al Muro</button>
+    </section>
+
+    <!-- 2. PANTALLA DEL MURO DE PUBLICACIONES -->
+    <section id="vista-publicaciones">
+        <h2>Muro de Publicaciones</h2>
+        <div id="muro">
+            <!-- Aquí el ciclo For de JavaScript dibujará las tarjetas -->
+        </div>
+    </section>
+
+    <!-- 3. PANTALLA PARA CREAR PUBLICACIÓN -->
+    <section id="vista-crear">
+        <h2>Nueva Publicación</h2>
+        
+        <label for="tit">Título:</label><br>
+        <input type="text" id="tit" placeholder="Escribe un título..."><br><br>
+
+        <label for="imgArchivo">Subir imagen desde el computador:</label><br>
+        <input type="file" id="imgArchivo" accept="image/*"><br><br>
+
+        <label for="imgUrl">O pegar enlace (URL) de una imagen:</label><br>
+        <input type="text" id="imgUrl" placeholder="https://ejemplo.com/foto.jpg"><br><br>
+
+        <label for="txt">Contenido:</label><br>
+        <textarea id="txt" rows="5" placeholder="¿Qué quieres contar hoy?"></textarea><br><br>
+
+        <button class="btn" onclick="crearPost()">Publicar</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </section>
+
+    <!-- 4. PANTALLA PARA EDITAR PUBLICACIÓN -->
+    <section id="vista-editar">
+        <h2>Editar Publicación</h2>
+
+        <!-- Campo oculto para recordar la imagen que ya tenía el post -->
+        <input type="hidden" id="edit-imgActual">
+
+        <label for="edit-tit">Título:</label><br>
+        <input type="text" id="edit-tit"><br><br>
+
+        <label for="edit-imgArchivo">Cambiar imagen (desde el computador):</label><br>
+        <input type="file" id="edit-imgArchivo" accept="image/*"><br><br>
+
+        <label for="edit-imgUrl">O cambiar por otro enlace (URL):</label><br>
+        <input type="text" id="edit-imgUrl" placeholder="Dejar vacío para mantener la foto actual"><br><br>
+
+        <label for="edit-txt">Contenido:</label><br>
+        <textarea id="edit-txt" rows="5"></textarea><br><br>
+
+        <button class="btn" onclick="guardarEdicion()">Guardar Cambios</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </section>
+
+    <!-- (EL CEREBRO DEL BLOG VERSIÓN) -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE COMPRAS (El Arreglo)
+        // ==========================================
+        
+        // Precargamos la historia de Claudio Bravo con 3 publicaciones iniciales
+        let miListaDePublicaciones = [
+            {
+                titulo: "Los Inicios en Colo-Colo",
+                imagen: "https://upload.wikimedia.org/wikipedia/commons/4/47/Claudio_Bravo_2018.jpg",
+                texto: "Claudio Bravo formó parte de las divisiones inferiores de Colo-Colo, debutando en el primer equipo en 2002. Rápidamente se ganó la titularidad gracias a su seguridad bajo los tres palos y su gran juego de pies, convirtiéndose en campeón del torneo nacional en el año 2006."
+            },
+            {
+                titulo: "Salto a Europa: Real Sociedad y FC Barcelona",
+                imagen: "https://upload.wikimedia.org/wikipedia/commons/b/b5/Claudio_Bravo_2015_%28cropped%29.jpg",
+                texto: "En 2006 dio el gran salto al fútbol europeo fichando por la Real Sociedad en España. Años más tarde, tras destacar de forma brillante, fichó por el FC Barcelona, donde ganó múltiples títulos importantes, incluyendo la Liga Española y la UEFA Champions League, siendo una pieza fundamental."
+            },
+            {
+                titulo: "La Generación Dorada y el Bicampeonato de América",
+                imagen: "https://upload.wikimedia.org/wikipedia/commons/2/22/Claudio_Bravo_-_Chile_vs_Colombia%2C_2017_%28cropped%29.jpg",
+                texto: "Como capitán y líder de la Selección Chilena, Claudio Bravo condujo al equipo a conseguir los dos hitos más grandes en la historia del fútbol chileno: la Copa América 2015 y la Copa América Centenario 2016, destacando por sus tapadas decisivas en las tandas de penales."
+            }
+        ];
+        
+        // Esta es una memoria para recordar en qué "número de fila" de la lista está el post que queremos editar.
+        let posicionEnLaLista = null;
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        
+        // TAREA: CAMBIAR ENTRE PANTALLAS
+        function cambiarVista(pantallaDestino) {
+            // Escondemos todas las pantallas (display: none).
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            // Mostramos solo la pantalla elegida (display: block).
+            document.getElementById(pantallaDestino).style.display = 'block';
+
+            // Si abren las publicaciones, nos aseguramos de dibujarlas
+            if(pantallaDestino === 'vista-publicaciones') {
+                mostrarPosts();
+            }
+        }
+
+        // TAREA: PROCESAR LA IMAGEN
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            // .trim() es como una tijera que corta los espacios vacíos que el usuario puso por accidente al principio o al final.
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO (La magia del Ciclo)
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            
+            // PASO CRÍTICO: ¡Borrador mágico! 
+            // Borramos toda la pantalla para que no se nos dupliquen las cosas cuando el ciclo empiece a dibujar.
+            cajaMuro.innerHTML = "";
+
+            // LA MÁQUINA DE REPETICIÓN (Ciclo For)
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                let postActual = miListaDePublicaciones[i];
+
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal !== "" ? imagenFinal : "https://upload.wikimedia.org/wikipedia/commons/4/47/Claudio_Bravo_2018.jpg",
+                texto: textoEscrito
+            });
+            
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            mostrarPosts();
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        function borrarPost(numeroEnLaFila) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        function abrirEditar(numeroEnLaFila) {
+            posicionEnLaLista = numeroEnLaFila;
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            cambiarVista('vista-editar'); 
+        }
+
+        function guardarEdicion() {
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+
+        // Llamada inicial para cargar el muro al iniciar la página
+        mostrarPosts();
+    </script>
+</body>
+</html>

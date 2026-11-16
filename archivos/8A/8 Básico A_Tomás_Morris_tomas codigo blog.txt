@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog de Fútbol - 8° Básico</title>
+    <!-- BLOQUE CSS (DISEÑO) -->
+    <style id="estilos-ia">
+        :root {
+            --color-cancha: #1b4d3e;
+            --color-pasto: #2e8b57;
+            --color-acento: #ffcc00;
+            --color-fondo: #f4f7f6;
+            --color-texto: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Barra de Navegación */
+        nav {
+            background-color: var(--color-cancha);
+            padding: 15px 30px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Secciones */
+        section {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        #vista-publicaciones, #vista-crear, #vista-editar { display: none; }
+
+        /* Títulos */
+        h1, h2 {
+            color: var(--color-cancha);
+            border-bottom: 3px solid var(--color-acento);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* Botones estilo deportivo */
+        .btn {
+            background-color: var(--color-pasto);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #246b43;
+        }
+
+        .btn-secundario {
+            background-color: #555555;
+        }
+        .btn-secundario:hover {
+            background-color: #333333;
+        }
+
+        .btn-peligro {
+            background-color: #d9534f;
+        }
+        .btn-peligro:hover {
+            background-color: #c9302c;
+        }
+
+        /* Formularios */
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        label {
+            font-weight: bold;
+            color: #444;
+        }
+
+        /* Tarjetas del Muro de Fútbol */
+        .tarjeta-post {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-left: 6px solid var(--color-acento);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .t-post {
+            margin-top: 0;
+            color: var(--color-cancha);
+        }
+
+        .img-post {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 10px 0;
+            max-height: 400px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML -->
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav>
+        <button class="btn" onclick="cambiarVista('vista-inicio')">⚽ Inicio</button>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">📰 Ver Publicaciones</button>
+        <button class="btn" onclick="cambiarVista('vista-crear')">➕ Crear Publicación</button>
+    </nav>
+
+    <!-- 1. PANTALLA DE INICIO -->
+    <section id="vista-inicio">
+        <h1>Bienvenido al Blog de Fútbol ⚽</h1>
+        <p>Este es el espacio definitivo de 8° Básico para hablar de goles, jugadores, jugadas maestras, pases, nuestros equipos favoritos y las mejores polémicas dentro de la cancha.</p>
+        <button class="btn" onclick="cambiarVista('vista-crear')">¡Crear mi primer post!</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Ir al Muro</button>
+    </section>
+
+    <!-- 2. PANTALLA DEL MURO DE PUBLICACIONES -->
+    <section id="vista-publicaciones">
+        <h2>Muro de Publicaciones</h2>
+        <div id="muro">
+            <!-- Aquí el JavaScript dibujará las tarjetas -->
+        </div>
+    </section>
+
+    <!-- 3. PANTALLA PARA CREAR PUBLICACIÓN -->
+    <section id="vista-crear">
+        <h2>Nueva Publicación</h2>
+        
+        <label for="tit">Título:</label><br>
+        <input type="text" id="tit" placeholder="Ej: ¡Tremend

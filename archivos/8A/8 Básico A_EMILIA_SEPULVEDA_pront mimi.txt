@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Little Pony - Amistad y Magia</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* Estilo base para los bloques con borde de arcoíris */
+        .pony-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .pony-card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* Borde decorativo de arcoíris animado */
+        .pony-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 15px;
+            border: 4px solid transparent;
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Títulos y textos con letras negras */
+        .pony-card h2 {
+            color: #000000;
+            margin-top: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pony-card p {
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Estrellas decorativas */
+        .stars {
+            color: #ffd700;
+            text-shadow: 0 0 3px #ff8c00;
+            font-size: 1.2rem;
+        }
+
+        /* Detalles personalizados por poni */
+        .twilight { border-top: 6px solid #9b59b6; }
+        .applejack { border-top: 6px solid #e67e22; }
+        .rarity { border-top: 6px solid #3498db; }
+        .rainbow { border-top: 6px solid #00cec9; }
+        .fluttershy { border-top: 6px solid #ffeaa7; }
+        .pinkie { border-top: 6px solid #ff7675; }
+    </style>
+</head>
+<body>
+
+    <h1>✨ ¡La Magia de la Amistad! ✨</h1>
+
+    <div class="container">
+        <!-- Twilight Sparkle -->
+        <div class="pony-card twilight">
+            <h2>Twilight Sparkle <span class="stars">⭐⭐⭐</span></h2>
+            <p>La princesa de la amistad y ávida lectora. Con su gran intelecto y su poderosa magia, Twilight siempre investiga sobre el poder de los lazos afectivos en Equestria.</p>
+        </div>
+
+        <!-- Applejack -->
+        <div class="pony-card applejack">
+            <h2>Applejack <span class="stars">⭐⭐⭐</span></h2>
+            <p>La ponis más honesta y trabajadora de Sweet Apple Acres. Fuerte, leal y confiable, siempre está lista para ayudar a su familia y amigos con una sonrisa.</p>
+        </div>
+
+        <!-- Rarity -->
+        <div class="pony-card rarity">
+            <h2>Rarity <span class="stars">⭐⭐⭐</span></h2>
+            <p>Diseñadora de modas con un corazón tan generoso como deslumbrante. Rarity busca la belleza en todo y siempre demuestra que la verdadera elegancia viene de adentro.</p>
+        </div>
+
+        <!-- Rainbow Dash -->
+        <div class="pony-card rainbow">
+            <h2>Rainbow Dash <span class="stars">⭐⭐⭐</span></h2>
+            <p>Valiente, veloz y leal hasta el extremo. Capaz de ejecutar la famosa Rainplosión Sónica, vive con el sueño de unirse a los Wonderbolts y ser la más rápida.</p>
+        </div>
+
+        <!-- Fluttershy -->
+        <div class="pony-card fluttershy">
+            <h2>Fluttershy <span class="stars">⭐⭐⭐</span></h2>
+            <p>Tierna y amante de todos los animales. Aunque es muy tímida, posee una fuerza interior inquebrantable cuando se trata de proteger a sus amigos y criaturas del bosque.</p>
+        </div>
+
+        <!-- Pinkie Pie -->
+        <div class="pony-card pinkie">
+            <h2>Pinkie Pie <span class="stars">⭐⭐⭐</span></h2>
+            <p>El alma de la fiesta en Ponyville. Llena de energía ilimitada, risas y sonrisas, su misión en la vida es hacer feliz a todos los que la rodean con un buen pastel.</p>
+        </div>
+    </div>
+
+</body>
+</html>

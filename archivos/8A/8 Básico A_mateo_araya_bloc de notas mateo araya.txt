@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALORANT BLOG</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --fondo: #0f1923;
+            --tarjeta: #1f2731;
+            --rojo: #ff4655;
+            --rojo-hover: #fa4454;
+            --verde: #0ece9b;
+            --blanco: #ece8e1;
+            --gris: #8b97a2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--fondo);
+            background-image:
+                linear-gradient(rgba(15,25,35,.92), rgba(15,25,35,.92)),
+                radial-gradient(circle, #293847, transparent);
+            color: var(--blanco);
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: #101820;
+            border-bottom: 3px solid var(--rojo);
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px #0008;
+        }
+
+        .logo {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--rojo);
+            margin-right: auto;
+            letter-spacing: 3px;
+        }
+
+        .btn {
+            background: var(--blanco);
+            color: var(--fondo);
+            border: none;
+            padding: 9px 22px;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            clip-path: polygon(10% 0,100% 0,90% 100%,0 100%);
+            transition: .2s;
+        }
+
+        .btn:hover {
+            background: var(--rojo);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secundario {
+            background: transparent;
+            color: var(--blanco);
+            border: 1px solid var(--gris);
+            clip-path: none;
+        }
+
+        .btn-secundario:hover {
+            background: var(--gris);
+            color: var(--fondo);
+        }
+
+        .btn-peligro {
+            background: transparent;
+            color: var(--rojo);
+            border: 1px solid var(--rojo);
+            clip-path: none;
+        }
+
+        .btn-peligro:hover {
+            background: var(--rojo);
+            color: white;
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(31,39,49,.85);
+            border-left: 4px solid var(--rojo);
+            box-shadow: 0 10px 30px #0005;
+        }
+
+        h1, h2 {
+            font-family: 'Teko', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2.8rem;
+            margin-top: 0;
+            border-bottom: 1px dashed #ffffff40;
+            padding-bottom: 10px;
+        }
+
+        h1 span {
+            color: var(--rojo);
+        }
+
+        p {
+            color: var(--gris);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .portada {
+            text-align: center;
+            padding: 70px 30px;
+            background:
+                linear-gradient(120deg,#0f1923ee,#1f2731dd),
+                repeating-linear-gradient(45deg,#ffffff08 0 2px,transparent 2px 10px);
+            border: 1px solid #384454;
+        }
+
+        .portada h1 {
+            font-size: 5rem;
+            line-height: 1;
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        .portada p {
+            max-width: 650px;
+            margin: 15px auto 25px;
+            font-size: 1.15rem;
+        }
+
+        .etiqueta {
+            color: var(--verde);
+            letter-spacing: 4px;
+            font-size: .85rem;
+        }
+
+        .estadisticas {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .estadistica {
+            background: #101820;
+            padding: 20px;
+            border-bottom: 3px solid var(--rojo);
+            text-align: center;
+        }
+
+        .estadistica strong {
+            display: block;
+            color: var(--rojo);
+            font-family: 'Teko',sans-serif;
+            font-size: 2rem;
+        }
+
+        .estadistica span {
+            color: var(--gris);
+            font-size: .8rem;
+        }
+
+        .categorias {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .categoria {
+            background: #101820;
+            padding: 22px;
+            border: 1px solid #384454;
+            transition: .2s;
+        }
+
+        .categoria:hover {
+            border-color: var(--rojo);
+            transform: translateY(-4px);
+        }
+
+        .categoria h3 {
+            color: var(--rojo);
+            font-family: 'Teko',sans-serif;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        #muro {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .tarjeta-post {
+            background: var(--tarjeta);
+            border: 1px solid #384454;
+            padding: 22px;
+            position: relative;
+            transition: .2s;
+        }
+
+        .tarjeta-post:hover {
+            border-color: var(--rojo);
+            transform: translateY(-3px);
+        }
+
+        .t-post {
+            font-family: 'Teko',sans-serif;
+            font-size: 2rem;
+            color: var(--blanco);
+            margin: 0 0 10px;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            background: #101820;
+            border: 1px solid #384454;
+            margin-bottom: 15px;
+        }
+
+        .p-post {
+            color: var(--blanco);
+            white-space: pre-wrap;
+        }
+
+        .categoria-post {
+            color: var(--verde);
+            font-size: .8rem;
+            text-transform: uppercase;
+        }
+
+        .caja-botones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        label {
+            font-family: 'Teko',sans-serif;
+            font-size: 1.4rem;
+            color: var(--blanco);
+        }
+
+        input[type="text"], input[type="file"], textarea, select {
+            width: 100%;
+            background: #0c131d;
+            border: 1px solid #384454;
+            color: var(--blanco);
+            padding: 12px;
+            font-family: 'Share Tech Mono',monospace;
+            font-size: 1rem;
+            margin: 6px 0 18px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--rojo);
+            box-shadow: 0 0 8px #ff465550;
+        }
+
+        #vista-publicaciones, #vista-crear, #vista-editar {
+            display: none;
+        }
+
+        .sin-posts {
+            text-align: center;
+            padding: 35px;
+            border: 1px dashed var(--gris);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--gris);
+            border-top: 2px solid var(--rojo);
+            margin-top: 50px;
+        }
+
+        footer span {
+            color: var(--rojo);
+        }
+
+        @media(max-width:600px) {
+            nav {
+                justify-content: center;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: center;
+            }
+
+            section {
+                margin: 20px 12px;
+                padding: 20px;
+            }
+
+            .portada h1 {
+                font-size: 3.5rem;
+            }
+
+            .estadisticas {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- MENU -->
+    <nav>
+        <div class="logo">VALORANT.</div>
+        <button class="btn" onclick="cambiarVista('vista-inicio')">Inicio</button>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">Publicaciones</button>
+        <button class="btn" onclick="cambiarVista('vista-crear')">Crear post</button>
+    </nav>
+
+    <!-- INICIO -->
+    <section id="vista-inicio" class="portada">
+        <div class="etiqueta">PROTOCOLO VALORANT // ACTIVADO</div>
+
+        <h1>VALORANT <span>BLOG</span></h1>
+
+        <p>
+            Bienvenido al campo de batalla. Descubre los agentes,
+            conoce los mapas, aprende sobre las armas y descubre
+            estrategias para convertirte en un verdadero campeón.
+        </p>
+
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">
+            EXPLORAR BLOG
+        </button>
+
+        <button class="btn btn-secundario"
+            onclick="cambiarVista('vista-crear')">
+            CREAR PUBLICACIÓN
+        </button>
+
+        <div class="estadisticas">
+            <div class="estadistica">
+                <strong>AGENTES</strong>
+                <span>PERSONAJES Y HABILIDADES</span>
+            </div>
+            <div class="estadistica">
+                <strong>MAPAS</strong>
+                <span>ESCENARIOS DE COMBATE</span>
+            </div>
+            <div class="estadistica">
+                <strong>ARMAS</strong>
+                <span>EQUIPAMIENTO TÁCTICO</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFORMACION -->
+    <section id="informacion">
+        <h2>¿QUÉ ES VALORANT?</h2>
+
+        <p>
+            VALORANT es un videojuego de disparos táctico en primera
+            persona desarrollado por Riot Games. En sus partidas,
+            dos equipos de cinco jugadores se enfrentan para completar
+            objetivos y conseguir la victoria.
+        </p>
+
+        <p>
+            Un equipo puede atacar para colocar el Spike, mientras
+            el otro debe defender los sitios e impedir que se active.
+            Cada personaje posee habilidades especiales que permiten
+            desarrollar diferentes estrategias.
+        </p>
+
+        <h2>EXPLORA EL UNIVERSO</h2>
+
+        <div class="categorias">
+            <div class="categoria">
+                <h3>AGENTES</h3>
+                <p>Conoce personajes como Jett, Reyna, Phoenix, Sage y Omen.</p>
+            </div>
+
+            <div class="categoria">
+                <h3>MAPAS</h3>
+                <p>Descubre escenarios como Ascent, Bind, Haven y Split.</p>
+            </div>
+
+            <div class="categoria">
+                <h3>ARMAS</h3>
+                <p>Aprende sobre Vandal, Phantom, Operator, Sheriff y Ghost.</p>
+            </div>
+
+            <div class="categoria">
+                <h3>ESTRATEGIAS</h3>
+                <p>Mejora tu puntería, comunicación y trabajo en equipo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PUBLICACIONES -->
+    <section id="vista-publicaciones">
+        <h2>MURO DE PUBLICACIONES</h2>
+        <p>Descubre información y comparte tus conocimientos sobre VALORANT.</p>
+        <div id="muro"></div>
+    </section>
+
+    <!-- CREAR -->
+    <section id="vista-crear">
+        <h2>NUEVA PUBLICACIÓN</h2>
+
+        <label for="tit">Título de la publicación:</label>
+        <input type="text" id="tit" placeholder="Ejemplo: Los mejores agentes">
+
+        <label for="categoria">Categoría:</label>
+        <select id="categoria">
+            <option>Agentes</option>
+            <option>Mapas</option>
+            <option>Armas</option>
+            <option>Estrategias</option>
+            <option>Noticias</option>
+            <option>Otros</option>
+        </select>
+
+        <label for="imgArchivo">Subir imagen desde el computador:</label>
+        <input type="file" id="imgArchivo" accept="image/*">
+
+        <label for="imgUrl">O pegar enlace de una imagen:</label>
+        <input type="text" id="imgUrl" placeholder="https://ejemplo.com/imagen.jpg">
+
+        <label for="txt">Contenido:</label>
+        <textarea id="txt" rows="6" placeholder="Escribe aquí tu publicación..."></textarea>
+
+        <button class="btn" onclick="crearPost()">PUBLICAR</button>
+        <button class="btn btn-secundario"
+            onclick="cambiarVista('vista-publicaciones')">CANCELAR</button>
+    </section>
+
+    <!-- EDITAR -->
+    <section id="vista-editar">
+        <h2>EDITAR PUBLICACIÓN</h2>
+
+        <input type="hidden" id="edit-imgActual">
+
+        <label for="edit-tit">Título:</label>
+        <input type="text" id="edit-tit">
+
+        <label for="edit-categoria">Categoría:</label>
+        <select id="edit-categoria">
+            <option>Agentes</option>
+            <option>Mapas</option>
+            <option>Armas</option>
+            <option>Estrategias</option>
+            <option>Noticias</option>
+            <option>Otros</option>
+        </select>
+
+        <label for="edit-imgArchivo">Cambiar imagen desde el computador:</label>
+        <input type="file" id="edit-imgArchivo" accept="image/*">
+
+        <label for="edit-imgUrl">O cambiar enlace de imagen:</label>
+        <input type="text" id="edit-imgUrl"
+            placeholder="Vacío para mantener la imagen actual">
+
+        <label for="edit-txt">Contenido:</label>
+        <textarea id="edit-txt" rows="6"></textarea>
+
+        <button class="btn" onclick="guardarEdicion()">GUARDAR CAMBIOS</button>
+        <button class="btn btn-secundario"
+            onclick="cambiarVista('vista-publicaciones')">CANCELAR</button>
+    </section>
+
+    <footer>
+        <p>VALORANT BLOG // <span>YOUR GAME. YOUR RULES.</span></p>
+        <p>Blog creado para los fanáticos de VALORANT.</p>
+    </footer>
+
+    <script>
+        // LISTA DE PUBLICACIONES INICIALES
+        let miListaDePublicaciones = [
+            {
+                titulo: "Jett: La agente más veloz",
+                categoria: "Agentes",
+                imagen: "",
+                texto: "Jett es una duelista originaria de Corea del Sur. Se caracteriza por su gran movilidad y velocidad. Sus habilidades le permiten desplazarse rápidamente, esquivar ataques y sorprender a sus enemigos. Es una excelente opción para jugadores agresivos."
+            },
+            {
+                titulo: "Vandal vs Phantom",
+                categoria: "Armas",
+                imagen: "",
+                texto: "La Vandal y la Phantom son dos de los rifles más populares de VALORANT. La Vandal elimina con un disparo a la cabeza a cualquier distancia si no hay obstáculos, mientras que la Phantom tiene silenciador y una mayor cadencia de fuego. La elección depende del estilo de cada jugador."
+            },
+            {
+                titulo: "Los mapas de VALORANT",
+                categoria: "Mapas",
+                imagen: "",
+                texto: "Los mapas son fundamentales para desarrollar estrategias. Ascent tiene puertas que se pueden abrir y cerrar, Bind destaca por sus teletransportadores y Haven cuenta con tres sitios de colocación del Spike. Conocer cada escenario puede marcar la diferencia."
+            },
+            {
+                titulo: "La importancia del trabajo en equipo",
+                categoria: "Estrategias",
+                imagen: "",
+                texto: "En VALORANT no todo depende de la puntería. La comunicación, la coordinación y el uso inteligente de las habilidades son esenciales. Ayudar a los compañeros, compartir información y organizar los ataques puede llevar al equipo a la victoria."
+            }
+        ];
+
+        let posicionEnLaLista = null;
+
+        // CAMBIAR DE PANTALLA
+        function cambiarVista(pantallaDestino) {
+            const pantallas = [
+                "vista-inicio",
+                "vista-publicaciones",
+                "vista-crear",
+                "vista-editar",
+                "informacion"
+            ];
+
+            pantallas.forEach(id => {
+                document.getElementById(id).style.display = "none";
+            });
+
+            document.getElementById(pantallaDestino).style.display = "block";
+
+            if (pantallaDestino === "vista-publicaciones") {
+                mostrarPosts();
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        // MOSTRAR PUBLICACIONES
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            cajaMuro.innerHTML = "";
+
+            if (miListaDePublicaciones.length === 0) {
+                cajaMuro.innerHTML =
+                    '<div class="sin-posts"><h3>NO HAY PUBLICACIONES</h3><p>¡Sé el primero en compartir información!</p></div>';
+                return;
+            }
+
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                let post = miListaDePublicaciones[i];
+
+                let tarjeta = document.createElement("article");
+                tarjeta.className = "tarjeta-post";
+
+                let categoria = document.createElement("div");
+                categoria.className = "categoria-post";
+                categoria.textContent = "// " + post.categoria;
+
+                let titulo = document.createElement("h3");
+                titulo.className = "t-post";
+                titulo.textContent = post.titulo;
+
+                tarjeta.appendChild(categoria);
+                tarjeta.appendChild(titulo);
+
+                if (post.imagen) {
+                    let imagen = document.createElement("img");
+                    imagen.src = post.imagen;
+                    imagen.className = "img-post";
+                    imagen.alt = post.titulo;
+                    tarjeta.appendChild(imagen);
+                }
+
+                let texto = document.createElement("p");
+                texto.className = "p-post";
+                texto.textContent = post.texto;
+                tarjeta.appendChild(texto);
+
+                let botones = document.createElement("div");
+                botones.className = "caja-botones";
+
+                let editar = document.createElement("button");
+                editar.className = "btn btn-secundario";
+                editar.textContent = "EDITAR";
+                editar.onclick = () => abrirEditar(i);
+
+                let eliminar = document.createElement("button");
+                eliminar.className = "btn btn-peligro";
+                eliminar.textContent = "ELIMINAR";
+                eliminar.onclick = () => borrarPost(i);
+
+                botones.appendChild(editar);
+                botones.appendChild(eliminar);
+                tarjeta.appendChild(botones);
+
+                cajaMuro.appendChild(tarjeta);
+            }
+        }
+
+        // OBTENER IMAGEN
+        function obtenerImagen(archivoId, linkId, imagenAnterior = "") {
+            let archivo = document.getElementById(archivoId).files[0];
+            let enlace = document.getElementById(linkId).value.trim();
+
+            if (archivo) {
+                return new Promise((resolve, reject) => {
+                    let lector = new FileReader();
+                    lector.onload = () => resolve(lector.result);
+                    lector.onerror = () => reject(new Error("No se pudo leer la imagen"));
+                    lector.readAsDataURL(archivo);
+                });
+            }
+
+            if (enlace !== "") {
+                return Promise.resolve(enlace);
+            }
+
+            return Promise.resolve(imagenAnterior);
+        }
+
+        // CREAR PUBLICACIÓN
+        async function crearPost() {
+            let titulo = document.getElementById("tit").value.trim();
+            let texto = document.getElementById("txt").value.trim();
+            let categoria = document.getElementById("categoria").value;
+
+            if (titulo === "" || texto === "") {
+                alert("¡Debes escribir un título y un contenido!");
+                return;
+            }
+
+            try {
+                let imagen = await obtenerImagen("imgArchivo", "imgUrl");
+
+                miListaDePublicaciones.push({
+                    titulo: titulo,
+                    categoria: categoria,
+                    imagen: imagen,
+                    texto: texto
+                });
+
+                document.getElementById("tit").value = "";
+                document.getElementById("txt").value = "";
+                document.getElementById("imgUrl").value = "";
+                document.getElementById("imgArchivo").value = "";
+                document.getElementById("categoria").selectedIndex = 0;
+
+                cambiarVista("vista-publicaciones");
+            } catch (error) {
+                alert("No se pudo cargar la imagen.");
+            }
+        }
+
+        // ELIMINAR PUBLICACIÓN
+        function borrarPost(numero) {
+            if (confirm("¿Seguro que quieres eliminar esta publicación?")) {
+                miListaDePublicaciones.splice(numero, 1);
+                mostrarPosts();
+            }
+        }
+
+        // ABRIR EDITOR
+        function abrirEditar(numero) {
+            posicionEnLaLista = numero;
+
+            let post = miListaDePublicaciones[numero];
+
+            document.getElementById("edit-tit").value = post.titulo;
+            document.getElementById("edit-categoria").value = post.categoria;
+            document.getElementById("edit-txt").value = post.texto;
+            document.getElementById("edit-imgActual").value = post.imagen;
+            document.getElementById("edit-imgUrl").value = "";
+            document.getElementById("edit-imgArchivo").value = "";
+
+            cambiarVista("vista-editar");
+        }
+
+        // GUARDAR EDICIÓN
+        async function guardarEdicion() {
+            if (posicionEnLaLista === null) return;
+
+            let titulo = document.getElementById("edit-tit").value.trim();
+            let texto = document.getElementById("edit-txt").value.trim();
+            let categoria = document.getElementById("edit-categoria").value;
+
+            if (titulo === "" || texto === "") {
+                alert("¡El título y el contenido son obligatorios!");
+                return;
+            }
+
+            try {
+                let imagen = await obtenerImagen(
+                    "edit-imgArchivo",
+                    "edit-imgUrl",
+                    document.getElementById("edit-imgActual").value
+                );
+
+                miListaDePublicaciones[posicionEnLaLista] = {
+                    titulo: titulo,
+                    categoria: categoria,
+                    imagen: imagen,
+                    texto: texto
+                };
+
+                posicionEnLaLista = null;
+                cambiarVista("vista-publicaciones");
+            } catch (error) {
+                alert("No se pudo cargar la imagen.");
+            }
+        }
+
+        // MOSTRAR LA PANTALLA INICIAL
+        cambiarVista("vista-inicio");
+    </script>
+
+</body>
+</html>

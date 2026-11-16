@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Fanclub - Ado</title>
+    <!-- BLOQUE CSS (DISEÑO) -->
+    <style id="estilos-ia">
+        :root {
+            --fondo-oscuro: #0b0f19;
+            --tarjeta-bg: #151b2b;
+            --acento-azul: #3b82f6;
+            --acento-neon: #06b6d4;
+            --peligro: #ef4444;
+            --texto: #f3f4f6;
+            --texto-secundario: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--fondo-oscuro);
+            color: var(--texto);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+            border-bottom: 2px solid var(--acento-azul);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        header h1 {
+            color: var(--acento-neon);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+        }
+
+        header p {
+            color: var(--texto-secundario);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: rgba(15, 23, 42, 0.9);
+        }
+
+        main {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Control de vistas requerido por tu JS */
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        .vista {
+            background-color: var(--tarjeta-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .vista h2 {
+            margin-bottom: 1.5rem;
+            color: var(--acento-neon);
+        }
+
+        /* Estilos de Botones */
+        .btn {
+            background-color: var(--acento-azul);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-secundario {
+            background-color: #4b5563;
+        }
+        .btn-secundario:hover {
+            background-color: #374151;
+        }
+
+        .btn-peligro {
+            background-color: var(--peligro);
+        }
+        .btn-peligro:hover {
+            background-color: #dc2626;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--texto-secundario);
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--acento-neon);
+        }
+
+        /* Tarjetas de Posts (Muro) */
+        #muro {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tarjeta-post {
+            background-color: #1e293b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--acento-neon);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .t-post {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: white;
+        }
+
+        .img-post {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .p-post {
+            color: var(--texto-secundario);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .hero-banner {
+            text-align: center;
+        }
+        .hero-banner img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML -->
+    <header>
+        <h1>Ado Official Fan Blog</h1>
+        <p>Un espacio dedicado a la talentosa utaite japonesa 💙</p>
+        <nav>
+            <button class="btn" onclick="cambiarVista('vista-inicio')">Inicio</button>
+            <button class="btn" onclick="cambiarVista('vista-publicaciones'); mostrarPosts();">Ver Muro</button>
+            <button class="btn" onclick="cambiarVista('vista-crear')">Crear Post</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Vista Inicio -->
+        <section id="vista-inicio" class="vista" style="display: block;">
+            <div class="hero-banner">
+                <h2>¡Bienvenido al rincón de Ado!</h2>
+                <p>Explora las últimas noticias, canciones favoritas y publicaciones de la comunidad sobre la artista detrás de "Shinunoga E-Wa" y "New Genesis".</p>
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" alt="Concierto y música">
+                <br><br>
+                <button class="btn" onclick="cambiarVista('vista-publicaciones'); mostrarPosts();">Ir al Muro de Publicaciones</button>
+            </div>
+        </section>
+
+        <!-- Vista Publicaciones (Muro) -->
+        <section id="vista-publicaciones" class="vista">
+            <h2>Muro de Publicaciones</h2>
+            <button class="btn" onclick="cambiarVista('vista-crear')">+ Nueva Publicación</button>
+            <div id="muro">
+                <!-- Aquí el ciclo JS inyectará las tarjetas -->
+            </div>
+        </section>
+
+        <!-- Vista Crear -->
+        <section id="vista-crear" class="vista">
+            <h2>Crear Nueva Publicación</h2>
+            <div class="form-group">
+                <label for="tit">Título del post:</label>
+                <input type="text" id="tit" placeholder="Ej: ¡Nuevo álbum Kodo anunciado!">
+            </div>
+            <div class="form-group">
+                <label for="txt">Contenido:</label>
+                <textarea id="txt" rows="4" placeholder="Escribe tus opiniones o información sobre Ado..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="imgUrl">Imagen por enlace (URL):</label>
+                <input type="text" id="imgUrl" placeholder="https://ejemplo.com/imagen.jpg">
+            </div>
+            <div class="form-group">
+                <label for="imgArchivo">O subir imagen desde tu dispositivo:</label>
+                <input type="file" id="imgArchivo" accept="image/*">
+            </div>
+            <button class="btn" onclick="crearPost()">Publicar</button>
+            <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+        </section>
+
+        <!-- Vista Editar -->
+        <section id="vista-editar" class="vista">
+            <h2>Editar Publicación</h2>
+            <input type="hidden" id="edit-imgActual">
+            <div class="form-group">
+                <label for="edit-tit">Editar Título:</label>
+                <input type="text" id="edit-tit">
+            </div>
+            <div class="form-group">
+                <label for="edit-txt">Editar Texto:</label>
+                <textarea id="edit-txt" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit-imgUrl">Nuevo enlace de imagen (Opcional):</label>
+                <input type="text" id="edit-imgUrl">
+            </div>
+            <div class="form-group">
+                <label for="edit-imgArchivo">O subir nueva imagen:</label>
+                <input type="file" id="edit-imgArchivo" accept="image/*">
+            </div>
+            <button class="btn" onclick="guardarEdicion()">Guardar Cambios</button>
+            <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+        </section>
+    </main>
+
+    <!-- (EL CEREBRO DEL BLOG VERSIÓN) -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE COMPRAS (El Arreglo)
+        // ==========================================
+        let miListaDePublicaciones = [
+            {
+                titulo: "¡El éxito arrollador de Show!",
+                imagen: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80",
+                texto: "El sencillo 'Show' de Ado sigue rompiendo récords en todo el mundo con esa energía inigualable y su voz tan característica."
+            }
+        ];
+        
+        let posicionEnLaLista = null;
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        function cambiarVista(pantallaDestino) {
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO (La magia del Ciclo)
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            cajaMuro.innerHTML = "";
+
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                let postActual = miListaDePublicaciones[i];
+
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal,
+                texto: textoEscrito
+            });
+            
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            mostrarPosts();
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        function borrarPost(numeroEnLaFila) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        function abrirEditar(numeroEnLaFila) {
+            posicionEnLaLista = numeroEnLaFila;
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            cambiarVista('vista-editar'); 
+        }
+
+        function guardarEdicion() {
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Reino Felino — Blog Completo sobre Gatos</title>
+  
+  <style>
+    /* ====================================================
+       SISTEMA DE DISEÑO CSS: UNIVERSO Y PAISAJE FELINO
+       ==================================================== */
+
+    :root {
+      /* Pelajes y características felinas */
+      --color-calico-orange: #E66A37;  /* Naranja terracota de manchas calicó */
+      --color-siamese-blue: #0088CC;   /* Azul intenso de ojos siameses */
+      --color-tabby-brown: #4A3525;    /* Raya atigrada / tierra */
+      --color-amber-eyes: #FFB300;     /* Ámbar de ojos en la noche */
+      
+      /* Paisajes y monumentos felinos */
+      --bg-cream-fur: #FAF7F2;         /* Crema suave de pelaje / pared de templo */
+      --roof-tile-red: #8B3A2B;        /* Teja de tejado al atardecer */
+      --garden-green: #3A5F43;         /* Verde follaje de jardín donde cazan */
+      --slate-stone: #2A2F35;          /* Piedra de monumento antiguo / noche urbana */
+      
+      /* Elementos funcionales */
+      --text-dark: #231F20;
+      --card-bg: #FFFFFF;
+      --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Reseteo y base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream-fur);
+      color: var(--text-dark);
+      font-family: var(--font-main);
+      line-height: 1.6;
+    }
+
+    /* Cabecera: Inspirada en tejados al atardecer y monumentos */
+    header.hero-header {
+      background: linear-gradient(135deg, var(--roof-tile-red), var(--tabby-brown));
+      color: #FFFFFF;
+      padding: 4rem 2rem 3rem 2rem;
+      text-align: center;
+      border-bottom: 6px solid var(--color-calico-orange);
+      position: relative;
+    }
+
+    header.hero-header h1 {
+      font-size: 2.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    header.hero-header p {
+      font-size: 1.2rem;
+      color: #F0E6DF;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .badge-header {
+      display: inline-block;
+      margin-top: 1rem;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    /* Navegación inspirada en tipos de pelajes */
+    nav.cat-nav {
+      background-color: var(--slate-stone);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    nav.cat-nav a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    nav.cat-nav a:hover,
+    nav.cat-nav a.active {
+      background-color: var(--color-calico-orange);
+      color: #FFFFFF;
+    }
+
+    /* Layout principal del Blog */
+    .blog-layout {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+
+    /* Mensajes vacíos o de filtro */
+    .no-results {
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 12px;
+      text-align: center;
+      color: #666;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    /* Tarjetas de publicaciones */
+    article.post-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border-left: 6px solid var(--color-siamese-blue);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    article.post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+    }
+
+    .post-tag {
+      display: inline-block;
+      background-color: var(--garden-green);
+      color: #FFFFFF;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+    }
+
+    article.post-card h2 {
+      color: var(--tabby-brown);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    article.post-card p {
+      margin-bottom: 1.2rem;
+      color: #444;
+    }
+
+    /* Botón de lectura */
+    .btn-read {
+      display: inline-block;
+      background-color: var(--color-calico-orange);
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 20px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      font-size: 0.95rem;
+    }
+
+    .btn-read:hover {
+      background-color: var(--roof-tile-red);
+      transform: scale(1.02);
+    }
+
+    /* Barra lateral (Sidebar) */
+    aside.sidebar-cat {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .widget {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border-top: 4px solid var(--color-amber-eyes);
+    }
+
+    .widget h3 {
+      color: var(--slate-stone);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Buscador */
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #E2DCD5;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--color-calico-orange);
+    }
+
+    .monument-list {
+      list-style: none;
+    }
+
+    .monument-list li {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px dashed #DDD;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .monument-list li:hover {
+      background-color: var(--bg-cream-fur);
+      color: var(--color-calico-orange);
+    }
+
+    .monument-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Widget Paleta Interactivas */
+    .palette-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--bg-cream-fur);
+      border-radius: 8px;
+      border: 1px solid #E8E2D9;
+    }
+
+    .palette-swatches {
+      display: flex;
+      height: 32px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 0.8rem 0;
+    }
+
+    .swatch {
+      flex: 1;
+      height: 100%;
+      transition: opacity 0.2s;
+    }
+
+    .swatch:hover {
+      opacity: 0.85;
+    }
+
+    .btn-palette {
+      width: 100%;
+      background: var(--slate-stone);
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-palette:hover {
+      background: var(--tabby-brown);
+    }
+
+    /* Formulario Boletín */
+    .newsletter-form input[type="email"] {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 0.6rem;
+      border: 1px solid #CCC;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .newsletter-form button {
+      width: 100%;
+      background-color: var(--garden-green);
+      color: white;
+      border: none;
+      padding: 0.7rem;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .newsletter-form button:hover {
+      background-color: #2D4A34;
+    }
+
+    /* Feedback del Newsletter */
+    .newsletter-msg {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--garden-green);
+      display: none;
+    }
+
+    /* Modal de Lectura */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #FFFFFF;
+      border-radius: 16px;
+      max-width: 750px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+      border-top: 6px solid var(--color-calico-orange);
+      animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--roof-tile-red);
+    }
+
+    .modal-body {
+      margin-top: 1.5rem;
+    }
+
+    .modal-body p {
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #333;
+    }
+
+    .modal-body h3 {
+      color: var(--tabby-brown);
+      margin: 1.5rem 0 0.8rem 0;
+      font-size: 1.3rem;
+    }
+
+    /* Pie de página */
+    footer.blog-footer {
+      background-color: var(--slate-stone);
+      color: #999999;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      border-top: 4px solid var(--color-amber-eyes);
+    }
+
+    footer.blog-footer a {
+      color: #D3C9C1;
+      text-decoration: underline;
+    }
+
+    /* Adaptabilidad Móvil */
+    @media (max-width: 768px) {
+      .blog-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      header.hero-header {
+        padding: 2.5rem 1rem 2rem 1rem;
+      }
+
+      header.hero-header h1 {
+        font-size: 2rem;
+      }
+
+      nav.cat-nav {
+        gap: 0.5rem;
+      }
+
+      nav.cat-nav a {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.7rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CABECERA PRINCIPAL -->
+  <header class="hero-header">
+    <h1>El Reino Felino</h1>
+    <p>Historias, paisajes, genética y secretos del universo felino vistos desde los tejados</p>
+    <div class="badge-header">🐾 Edición Digital • Monografías y Divulgación</div>
+  </header>
+
+  <!-- NAVEGACIÓN (FILTROS POR CATEGORÍA) -->
+  <nav class="cat-nav" id="main-nav">
+    <a data-category="todos" class="active">Todos los Artículos</a>
+    <a data-category="Monumentos e Historia">Monumentos e Historia</a>
+    <a data-category="Razas y Pelajes">Razas y Pelajes</a>
+    <a data-category="Comportamiento">Comportamiento</a>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="blog-layout">
+
+    <!-- SECCIÓN DE ARTÍCULOS DINÁMICOS -->
+    <main class="posts-stream" id="posts-container">
+      <!-- Los artículos serán renderizados mediante JavaScript -->
+    </main>
+
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <aside class="sidebar-cat">
+
+      <!-- Widget: Buscador -->
+      <section class="widget">
+        <h3>🔍 Buscar En El Reino</h3>
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar por tema, palabra..." aria-label="Buscar en el blog">
+      </section>
+
+      <!-- Widget: Santuarios Felinos -->
+      <section class="widget">
+        <h3>🏛️ Santuarios Felinos</h3>
+        <p style="font-size:0.85rem; color:#666; margin-bottom:0.8rem;">Haz clic en un monumento para ver detalles rápidos:</p>
+        <ul class="monument-list" id="monuments-list">
+          <li data-monument="tashirojima"><strong>Tashirojima:</strong> La isla de los gatos en Japón.</li>
+          <li data-monument="argentina"><strong>Torre Argentina:</strong> Ruinas felinas de Roma.</li>
+          <li data-monument="hermitage"><strong>Museo Hermitage:</strong> Los guardianes de San Petersburgo.</li>
+          <li data-monument="hemingway"><strong>Ernest Hemingway Home:</strong> Los felinos de 6 dedos en Key West.</li>
+        </ul>
+      </section>
+
+      <!-- Widget: Paleta & Ficha del Día -->
+      <section class="widget">
+        <h3>🎨 Paleta Felina del Día</h3>
+        <div id="palette-display" class="palette-box">
+          <!-- Renderizado dinámico -->
+        </div>
+        <button id="btn-next-palette" class="btn-palette" style="margin-top:0.8rem;">Ver Otra Paleta / Pelaje 🐾</button>
+      </section>
+
+      <!-- Widget: Suscripción -->
+      <section class="widget">
+        <h3>💌 Carta de los Tejados</h3>
+        <p style="font-size:0.9rem; margin-bottom:1rem; color:#555;">Recibe nuestras crónicas históricas y curiosidades etológicas directamente en tu bandeja de entrada.</p>
+        <form class="newsletter-form" id="newsletter-form">
+          <input type="email" placeholder="Tu correo electrónico" required id="newsletter-email">
+          <button type="submit">Suscribirme al Blog</button>
+          <div class="newsletter-msg" id="newsletter-msg">¡Gracias por suscribirte! Recibirás noticias de los tejados pronto. 🐾</div>
+        </form>
+      </section>
+
+    </aside>
+  </div>
+
+  <!-- MODAL DE LECTURA DE ARTÍCULO COMPLETO -->
+  <div class="modal-overlay" id="article-modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn" aria-label="Cerrar modal">&times;</button>
+      <span class="post-tag" id="modal-tag">Categoría</span>
+      <h2 id="modal-title" style="color: var(--tabby-brown); font-size: 1.8rem; margin: 0.5rem 0;">Título del Artículo</h2>
+      <div class="post-meta" id="modal-meta">Meta información</div>
+      <div class="modal-body" id="modal-body">
+        <!-- Contenido detallado renderizado por JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="blog-footer">
+    <p>&copy; 2026 El Reino Felino. Todos los derechos reservados.</p>
+    <p style="margin-top:0.5rem; font-size:0.8rem; color:#777;">Diseñado con inspiración en pelajes calicó, siameses y monumentos felinos antiguos.</p>
+  </footer>
+
+  <!-- JAVASCRIPT VANILLA INTERACTIVO -->
+  <script>
+    /* ====================================================
+       BASE DE DATOS DE ARTÍCULOS Y CONTENIDO DEL BLOG
+       ==================================================== */
+
+    const ARTICLES = [
+      {
+        id: 1,
+        title: "Largo di Torre Argentina: El santuario en ruinas romanas",
+        category: "Monumentos e Historia",
+        date: "12 de Noviembre, 2026",
+        author: "Liliana",
+        colorTag: "var(--garden-green)",
+        borderAccent: "var(--color-siamese-blue)",
+        summary: "En pleno corazón de Roma, entre las columnas donde cayó Julio César, cientos de gatos callejeros descansan al sol. Este monumento histórico se ha convertido en uno de los refugios felinos más emblemáticos del mundo.",
+        content: `
+          <p>En la vasta plaza de <strong>Largo di Torre Argentina</strong> en Roma, se sitúan las ruinas de cuatro templos de la República Romana y los restos del Teatro de Pompeyo. Fue en este espacio histórico donde, en el año 44 a.C., fue asesinado Julio César. Sin embargo, en la actualidad, las ruinas albergan a unos habitantes muy particulares: más de 150 gatos comunitarios que reinan entre las piedras milenarias.</p>
+          
+          <h3>De ruina olvidada a refugio protegido</h3>
+          <p>Tras las excavaciones arqueológicas promovidas por Benito Mussolini en la década de 1920, el sitio quedó al descubierto por debajo del nivel de la calle. Poco a poco, los gatos de los barrios aledaños comenzaron a habitar la zona protegida de los vehículos. Las protectoras locales y voluntarias (conocidas cariñosamente como <em>le gattare</em>) empezaron a alimentarlos y cuidarlos.</p>
+          
+          <h3>El santuario moderno</h3>
+          <p>Hoy en día, el lugar alberga un santuario subterráneo que ofrece esterilización, atención médica y adopción responsable. Los visitantes pueden observar a los felinos estirarse sobre vestigios de columnas corintias o dormir plácidamente sobre frisos de mármol de más de dos mil años de antigüedad, convirtiendo la historia romana y la causa felina en un solo paisaje.</p>
+        `
+      },
+      {
+        id: 2,
+        title: "La ciencia tras el pelaje Calicó y su personalidad única",
+        category: "Razas y Pelajes",
+        date: "8 de Noviembre, 2026",
+        author: "Liliana",
+        colorTag: "var(--color-calico-orange)",
+        borderAccent: "var(--color-calico-orange)",
+        summary: "Los gatos calicó no son una raza, sino una maravillosa combinación genética de blanco, naranja y negro que se da casi exclusivamente en hembras. Explora cómo sus tonos influyen en su carácter independiente.",
+        content: `
+          <p>El término <strong>Calicó</strong> no hace referencia a una raza específica (como el Persa o el Maine Coon), sino a un patrón de coloración en el pelaje caracterizado por presentar manchas blancas, naranjas y negras bien definidas.</p>
+
+          <h3>Inactivación del cromosoma X: El secreto genético</h3>
+          <p>En los felinos, los genes responsables de los colores naranja y negro se encuentran ubicados exclusivamente en el cromosoma X. Las hembras poseen dos cromosomas X (XX), mientras que los machos poseen uno X y uno Y (XY). Para que un gato manifieste simultáneamente los colores negro y naranja (más el blanco codificado en otro gen), requiere disponer de dos cromosomas X.</p>
+          <p>Durante el desarrollo embrionario de las hembras, uno de los cromosomas X se inactiva al azar en cada célula (proceso denominado <em>Lyonización</em>). Este mosaico genético da origen al icónico patrón tricolor. Por esta razón, se estima que <strong>más del 99.9% de los gatos calicó son hembras</strong>. Un macho calicó es un evento extremadamente raro (1 entre 3.000) derivado de la anomalía cromosómica XXY (Síndrome de Klinefelter).</p>
+
+          <h3>¿Tienen un carácter particular?</h3>
+          <p>Diversos estudios etológicos y encuestas a propietarios sugieren que las hembras calicó suelen caracterizarse por un temperamento decidido, independiente y sumamente leal con sus cuidadores. En muchas culturas, como en Japón con el famoso <em>Maneki-neko</em>, los gatos calicó son considerados símbolos indiscutibles de buena suerte y prosperidad.</p>
+        `
+      },
+      {
+        id: 3,
+        title: "El lenguaje de la cola: Guía visual para comprender a tu felino",
+        category: "Comportamiento",
+        date: "2 de Noviembre, 2026",
+        author: "Liliana",
+        colorTag: "var(--color-amber-eyes)",
+        borderAccent: "var(--color-amber-eyes)",
+        summary: "La cola felina es un barómetro emocional de alta precisión. Desde la cola erguida en forma de interrogación hasta el movimiento rápido en látigo, aprende a leer sus mensajes corporales.",
+        content: `
+          <p>A diferencia de los perros, cuyo movimiento de cola suele interpretarse erróneamente como alegría universal, los gatos poseen un código expresivo sutil y complejo donde la posición, el movimiento y la curvatura del apéndice caudal revelan su estado interno exacto.</p>
+
+          <h3>1. Cola alta y recta (con ligera curvatura en la punta)</h3>
+          <p>Es la postura de saludo por excelencia. Indica confianza, amabilidad y apertura al contacto. Si la punta forma una especie de signo de interrogación (<strong>?</strong>), el gato está expresando curiosidad amistosa e invitación al juego.</p>
+
+          <h3>2. Movimiento de látigo o latigazos laterales</h3>
+          <p>Si la cola se mueve enérgicamente de un lado a otro, es señal clara de agitación, sobreestimulación o molestia. Es el momento adecuado para pausar las caricias o darle su espacio vital.</p>
+
+          <h3>3. Cola erizada y en forma de arco (Efecto "Cepillo")</h3>
+          <p>Indica miedo profundo o intento de intimidación frente a una amenaza. El felino eriza su pelaje para parecer más grande y disuadir a un potencial adversario.</p>
+
+          <h3>4. Cola baja o entre las patas</h3>
+          <p>Denota sumisión, timidez o incertidumbre ante una situación novedosa o un entorno estresante.</p>
+        `
+      },
+      {
+        id: 4,
+        title: "Los gatos del Museo del Hermitage: Guardianes de las obras de arte",
+        category: "Monumentos e Historia",
+        date: "25 de Octubre, 2026",
+        author: "Liliana",
+        colorTag: "var(--garden-green)",
+        borderAccent: "var(--roof-tile-red)",
+        summary: "Desde el siglo XVIII, decenas de felinos patrullan los sótanos del Palacio de Invierno en San Petersburgo para proteger valiosas obras de arte de la amenaza de los roedores.",
+        content: `
+          <p>En San Petersburgo, Rusia, el legendario <strong>Museo del Hermitage</strong> no solo alberga una de las colecciones de arte más valiosas del planeta, sino también una nómina oficial de guardianes felinos con siglos de tradición.</p>
+
+          <h3>Un decreto imperial</h3>
+          <p>La tradición comenzó oficialmente cuando la emperatriz Isabel Petrovna promulgó un decreto en 1745 ordenando traer los felinos más cazadores de la ciudad de Kazán para combatir las plagas de roedores que infestaban el Palacio de Invierno. Posteriormente, Catalina la Grande les otorgó el estatus oficial de 'Guardianes de las Galerías de Arte'.</p>
+
+          <h3>El Hermitage en la actualidad</h3>
+          <p>En la actualidad, aproximadamente 50 a 70 gatos residen en los vastos sótanos del museo. Tienen su propio personal de cuidadores, veterinarios y áreas de alimentación financiadas por donaciones. Cada 27 de mayo se celebra el <em>"Día del Gato del Hermitage"</em>, abriendo los sótanos al público e incentivando la adopción responsable.</p>
+        `
+      },
+      {
+        id: 5,
+        title: "El misterio del Siamés: Ojos azules y pigmentación térmica",
+        category: "Razas y Pelajes",
+        date: "18 de Octubre, 2026",
+        author: "Liliana",
+        colorTag: "var(--color-calico-orange)",
+        borderAccent: "var(--color-siamese-blue)",
+        summary: "El gato Siamés destaca por sus deslumbrantes ojos azules y su pelaje 'Point'. Descubre por qué sus extremidades son oscuras mientras su cuerpo permanece claro debido a la temperatura.",
+        content: `
+          <p>El gato Siamés Tradicional (o <em>Thaï</em>) es una de las razas más antiguas y veneradas del mundo, originario del antiguo Reino de Siam (actual Tailandia), donde era considerado un felino sagrado que custodiaba palacios y templos.</p>
+
+          <h3>El fenómeno del patrón 'Colorpoint' y el gen albinismo térmico</h3>
+          <p>La característica visual más fascinante del Siamés es su oscurecimiento selectivo en las extremidades (cara, orejas, patas y cola). Esto se debe a una mutación genética de albinismo sensible a la temperatura:</p>
+          <ul>
+            <li>La enzima responsable de producir melanina (pigmento oscuro) sólo funciona a temperaturas corporales bajas (por debajo de los 37°C).</li>
+            <li>Las extremidades del cuerpo suelen estar más frías que el torso, por lo que el pigmento oscuro se desarrolla ahí.</li>
+            <li>Al nacer, las crías son totalmente blancas debido al calor constante del vientre materno. A medida que crecen y se exponen al ambiente, sus puntos fríos empiezan a oscurecerse.</li>
+          </ul>
+
+          <h3>Mirada azul zafiro</h3>
+          <p>La falta de pigmentación en el iris refleja la luz produciendo su característico e intenso color azul celeste, lo que los convierte en una de las joyas de la genética felina.</p>
+        `
+      },
+      {
+        id: 6,
+        title: "El ronroneo y el amasado: Los rituales de bienestar y sanación",
+        category: "Comportamiento",
+        date: "10 de Octubre, 2026",
+        author: "Liliana",
+        colorTag: "var(--color-amber-eyes)",
+        borderAccent: "var(--garden-green)",
+        summary: "¿Por qué los gatos amasan cobijas o a sus dueños mientras ronronean? Exploramos el origen infantil y los beneficios curativos de las frecuencias sonoras felinas.",
+        content: `
+          <p>Tanto el amasado (movimiento rítmico de patas delanteras) como el ronroneo son dos de las conductas felinas más gratificantes y enigmáticas para los amantes de las mascotas.</p>
+
+          <h3>El origen del amasado (hacer pan)</h3>
+          <p>Este comportamiento se remonta a la etapa neonatal. Las crías amasan las mamas de la madre para estimular el flujo de leche durante la lactancia. Cuando un gato adulto amasa una manta suave o a su tutor humano, está liberando endorfinas y evocando ese estado primario de seguridad, confort y afecto materno.</p>
+
+          <h3>La vibración sanadora del ronroneo</h3>
+          <p>El ronroneo se produce mediante oscilaciones rítmicas de la laringe y los músculos diafragmáticos a frecuencias constantes entre <strong>20 Hz y 140 Hz</strong>.</p>
+          <p>Estudios en medicina veterinaria han demostrado que las frecuencias vibratorias dentro de este rango favorecen la regeneración ósea, alivian el dolor, reducen la inflamación muscular y calman el sistema nervioso tanto del felino como de la persona a su lado.</p>
+        `
+      }
+    ];
+
+    // Datos del Widget: Santuarios Felinos
+    const MONUMENTS_DATA = {
+      tashirojima: {
+        title: "Tashirojima (Isla de los Gatos, Japón)",
+        desc: "En esta isla pesquera de la prefectura de Miyagi, la población felina supera con creces a la humana. Los pescadores locales veneran a los felinos creyendo que traen buena fortuna y abundante pesca."
+      },
+      argentina: {
+        title: "Largo di Torre Argentina (Roma, Italia)",
+        desc: "Ruinas romanas donde fue asesinado Julio César, convertidas en un refugio santuario protegido para más de 150 gatos callejeros comunitarios."
+      },
+      hermitage: {
+        title: "Museo del Hermitage (San Petersburgo, Rusia)",
+        desc: "Gatos contratados oficialmente desde el siglo XVIII para proteger los sótanos e invaluables obras de arte de los palacios imperiales."
+      },
+      hemingway: {
+        title: "Casa de Ernest Hemingway (Key West, EE.UU.)",
+        desc: "Hogar de cerca de 60 gatos polidáctilos (con 6 dedos en sus patas), descendientes de 'Snow White', la célebre gata regalada al escritor por un capitán de barco."
+      }
+    };
+
+    // Datos del Widget: Paletas de Pelajes
+    const COAT_PALETTES = [
+      {
+        name: "Gato Siamés Clásico",
+        desc: "Tonos crema cremoso con matices café chocolate y destellos azul zafiro.",
+        colors: ["#F5EBE0", "#D5BDA9", "#4A3525", "#0088CC"]
+      },
+      {
+        name: "Calicó Atardecer",
+        desc: "Combinación de terracota, negro azabache y blanco tiza puro.",
+        colors: ["#E66A37", "#231F20", "#FFFFFF", "#FFB300"]
+      },
+      {
+        name: "Atigrado Silvestre (Tabby)",
+        desc: "Tonos tierra, musgo de jardín y sombras de corteza dorada.",
+        colors: ["#4A3525", "#8C6D53", "#3A5F43", "#D4A373"]
+      },
+      {
+        name: "Pantera Nocturna (Bombai)",
+        desc: "Negro pizarra profundo con destellos ámbar dorados en los ojos.",
+        colors: ["#1A1A1A", "#2A2F35", "#FFB300", "#FFE6A7"]
+      }
+    ];
+
+    /* ====================================================
+       LÓGICA Y MANEJO DEL DOM (JAVASCRIPT VANILLA)
+       ==================================================== */
+
+    let currentCategory = "todos";
+    let searchQuery = "";
+    let currentPaletteIndex = 0;
+
+    // Elementos del DOM
+    const postsContainer = document.getElementById("posts-container");
+    const navLinks = document.querySelectorAll("#main-nav a");
+    const searchInput = document.getElementById("search-input");
+    const monumentsList = document.getElementById("monuments-list");
+    const paletteDisplay = document.getElementById("palette-display");
+    const btnNextPalette = document.getElementById("btn-next-palette");
+    const newsletterForm = document.getElementById("newsletter-form");
+    const newsletterMsg = document.getElementById("newsletter-msg");
+
+    // Modal elements
+    const articleModal = document.getElementById("article-modal");
+    const modalCloseBtn = document.getElementById("modal-close-btn");
+    const modalTag = document.getElementById("modal-tag");
+    const modalTitle = document.getElementById("modal-title");
+    const modalMeta = document.getElementById("modal-meta");
+    const modalBody = document.getElementById("modal-body");
+
+    // Inicialización del Blog
+    document.addEventListener("DOMContentLoaded", () => {
+      renderPosts();
+      renderPalette();
+      setupEventListeners();
+    });
+
+    // Función principal para renderizar publicaciones
+    function renderPosts() {
+      postsContainer.innerHTML = "";
+
+      const filtered = ARTICLES.filter(post => {
+        const matchesCategory = (currentCategory === "todos") || (post.category === currentCategory);
+        const matchesSearch = searchQuery === "" || 
+          post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.category.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        postsContainer.innerHTML = `
+          <div class="no-results">
+            <h3 style="font-size:1.4rem; margin-bottom:0.5rem; color:var(--tabby-brown);">🐾 Sin huellas por aquí</h3>
+            <p>No encontramos ningún artículo que coincida con tu búsqueda o categoría seleccionada.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(post => {
+        const articleEl = document.createElement("article");
+        articleEl.className = "post-card";
+        articleEl.style.borderLeftColor = post.borderAccent;
+
+        articleEl.innerHTML = `
+          <span class="post-tag" style="background-color: ${post.colorTag};">${post.category}</span>
+          <h2>${post.title}</h2>
+          <div class="post-meta">Publicado el ${post.date} • Por ${post.author}</div>
+          <p>${post.summary}</p>
+          <button class="btn-read" data-id="${post.id}">Leer artículo completo</button>
+        `;
+
+        postsContainer.appendChild(articleEl);
+      });
+
+      // Asignar eventos a los botones "Leer artículo completo"
+      document.querySelectorAll(".btn-read").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const postId = parseInt(e.target.getAttribute("data-id"));
+          openArticleModal(postId);
+        });
+      });
+    }
+
+    // Modal: Abrir y mostrar artículo completo
+    function openArticleModal(id) {
+      const article = ARTICLES.find(a => a.id === id);
+      if (!article) return;
+
+      modalTag.textContent = article.category;
+      modalTag.style.backgroundColor = article.colorTag;
+      modalTitle.textContent = article.title;
+      modalMeta.textContent = `Publicado el ${article.date} • Por ${article.author}`;
+      modalBody.innerHTML = article.content;
+
+      articleModal.classList.add("active");
+      document.body.style.overflow = "hidden"; // Bloquear scroll de fondo
+    }
+
+    // Modal: Cerrar
+    function closeModal() {
+      articleModal.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+
+    // Renderizado dinámico de la Paleta del Día
+    function renderPalette() {
+      const item = COAT_PALETTES[currentPaletteIndex];
+      
+      const swatchesHtml = item.colors.map(color => 
+        `<div class="swatch" style="background-color: ${color};" title="${color}"></div>`
+      ).join('');
+
+      paletteDisplay.innerHTML = `
+        <strong style="color:var(--tabby-brown); font-size:1rem;">${item.name}</strong>
+        <div class="palette-swatches">
+          ${swatchesHtml}
+        </div>
+        <p style="font-size:0.85rem; color:#555;">${item.desc}</p>
+      `;
+    }
+
+    // Configuración de todos los Event Listeners
+    function setupEventListeners() {
+      // 1. Navegación por Categorías
+      navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+          navLinks.forEach(l => l.classList.remove("active"));
+          e.target.classList.add("active");
+          currentCategory = e.target.getAttribute("data-category");
+          renderPosts();
+        });
+      });
+
+      // 2. Buscador en vivo
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value.trim();
+        renderPosts();
+      });
+
+      // 3. Widget Santuarios (Alertas informativas limpias)
+      monumentsList.addEventListener("click", (e) => {
+        const li = e.target.closest("li");
+        if (!li) return;
+        const key = li.getAttribute("data-monument");
+        const data = MONUMENTS_DATA[key];
+        if (data) {
+          openInfoBox(data.title, data.desc);
+        }
+      });
+
+      // 4. Generador de Paleta siguiente
+      btnNextPalette.addEventListener("click", () => {
+        currentPaletteIndex = (currentPaletteIndex + 1) % COAT_PALETTES.length;
+        renderPalette();
+      });
+
+      // 5. Suscripción Newsletter
+      newsletterForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById("newsletter-email");
+        if (emailInput.value) {
+          newsletterMsg.style.display = "block";
+          emailInput.value = "";
+          setTimeout(() => {
+            newsletterMsg.style.display = "none";
+          }, 4000);
+        }
+      });
+
+      // 6. Eventos Modal
+      modalCloseBtn.addEventListener("click", closeModal);
+      articleModal.addEventListener("click", (e) => {
+        if (e.target === articleModal) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && articleModal.classList.contains("active")) {
+          closeModal();
+        }
+      });
+    }
+
+    // Caja modal rápida para los Santuarios Felinos de la sidebar
+    function openInfoBox(title, text) {
+      modalTag.textContent = "Santuario Felino Destacado";
+      modalTag.style.backgroundColor = "var(--garden-green)";
+      modalTitle.textContent = title;
+      modalMeta.textContent = "Información Turística y Geográfica Felina";
+      modalBody.innerHTML = `
+        <p style="font-size:1.1rem; line-height:1.7; color:#333;">${text}</p>
+        <div style="margin-top:1.5rem; padding:1rem; background:var(--bg-cream-fur); border-radius:8px; border-left:4px solid var(--color-amber-eyes);">
+          💡 <strong>Tip de viaje:</strong> Recuerda siempre respetar el espacio de los felinos comunitarios y colaborar con las protectoras locales en tus viajes.
+        </div>
+      `;
+      articleModal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+  </script>
+</body>
+</html>

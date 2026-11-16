@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Fútbol Europeo - El Blog Oficial</title>
+    <!-- BLOQUE CSS (DISEÑO MODERNO Y DEPORTIVO) -->
+    <style id="estilos-ia">
+        /* Variables y Estilos Generales */
+        :root {
+            --bg-principal: #0f172a;
+            --bg-card: #1e293b;
+            --color-primario: #38bdf8;
+            --color-hover: #0284c7;
+            --texto-principal: #f8fafc;
+            --texto-secundario: #94a3b8;
+            --peligro: #ef4444;
+            --peligro-hover: #dc2626;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-principal);
+            color: var(--texto-principal);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Menú de Navegación */
+        nav {
+            background-color: #020617;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Botones Generales */
+        .btn {
+            background-color: var(--color-primario);
+            color: #0f172a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background-color: var(--color-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secundario {
+            background-color: #334155;
+            color: var(--texto-principal);
+        }
+
+        .btn-secundario:hover {
+            background-color: #475569;
+        }
+
+        .btn-peligro {
+            background-color: var(--peligro);
+            color: white;
+        }
+
+        .btn-peligro:hover {
+            background-color: var(--peligro-hover);
+        }
+
+        /* Secciones */
+        section {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        /* Pantalla de Inicio */
+        #vista-inicio {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+        }
+
+        #vista-inicio h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-primario);
+        }
+
+        #vista-inicio p {
+            color: var(--texto-secundario);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Formularios */
+        label {
+            font-weight: 600;
+            color: var(--texto-secundario);
+            font-size: 0.95rem;
+        }
+
+        input[type="text"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.4rem;
+            background-color: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            color: var(--texto-principal);
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--color-primario);
+        }
+
+        input[type="file"] {
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+
+        /* Muro de Publicaciones y Tarjetas */
+        #muro {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tarjeta-post {
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .t-post {
+            margin-top: 0;
+            color: var(--color-primario);
+            font-size: 1.4rem;
+        }
+
+        .img-post {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 1rem 0;
+            max-height: 400px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .p-post {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML -->
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav>
+        <button class="btn" onclick="cambiarVista('vista-inicio')">Inicio</button>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">Ver Publicaciones</button>
+        <button class="btn" onclick="cambiarVista('vista-crear')">Crear Publicación</button>
+    </nav>
+
+    <!-- 1. PANTALLA DE INICIO -->
+    <section id="vista-inicio">
+        <h1>Fútbol Europeo: Análisis y Pasión</h1>
+        <p>Tu espacio definitivo para debatir sobre la Champions League, la Premier League, LaLiga y las grandes estrellas del viejo continente.</p>
+        <button class="btn" onclick="cambiarVista('vista-crear')">¡Crear mi primer post!</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Ir al Muro</button>
+    </section>
+
+    <!-- 2. PANTALLA DEL MURO DE PUBLICACIONES -->
+    <section id="vista-publicaciones">
+        <h2>Muro de Publicaciones</h2>
+        <div id="muro">
+            <!-- Aquí el ciclo For de JavaScript dibujará las tarjetas -->
+        </div>
+    </section>
+
+    <!-- 3. PANTALLA PARA CREAR PUBLICACIÓN -->
+    <section id="vista-crear">
+        <h2>Nueva Publicación</h2>
+        
+        <label for="tit">Título:</label><br>
+        <input type="text" id="tit" placeholder="Ej: El partidazo de la jornada en la Champions..."><br><br>
+
+        <label for="imgArchivo">Subir imagen desde el computador:</label><br>
+        <input type="file" id="imgArchivo" accept="image/*"><br><br>
+
+        <label for="imgUrl">O pegar enlace (URL) de una imagen:</label><br>
+        <input type="text" id="imgUrl" placeholder="https://ejemplo.com/estadio.jpg"><br><br>
+
+        <label for="txt">Contenido:</label><br>
+        <textarea id="txt" rows="5" placeholder="¿Qué opinas del último encuentro o fichaje?"></textarea><br><br>
+
+        <button class="btn" onclick="crearPost()">Publicar</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </section>
+
+    <!-- 4. PANTALLA PARA EDITAR PUBLICACIÓN -->
+    <section id="vista-editar">
+        <h2>Editar Publicación</h2>
+
+        <!-- Campo oculto para recordar la imagen que ya tenía el post -->
+        <input type="hidden" id="edit-imgActual">
+
+        <label for="edit-tit">Título:</label><br>
+        <input type="text" id="edit-tit"><br><br>
+
+        <label for="edit-imgArchivo">Cambiar imagen (desde el computador):</label><br>
+        <input type="file" id="edit-imgArchivo" accept="image/*"><br><br>
+
+        <label for="edit-imgUrl">O cambiar por otro enlace (URL):</label><br>
+        <input type="text" id="edit-imgUrl" placeholder="Dejar vacío para mantener la foto actual"><br><br>
+
+        <label for="edit-txt">Contenido:</label><br>
+        <textarea id="edit-txt" rows="5"></textarea><br><br>
+
+        <button class="btn" onclick="guardarEdicion()">Guardar Cambios</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </section>
+
+    <!-- (EL CEREBRO DEL BLOG VERSIÓN) -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE COMPRAS (El Arreglo)
+        // ==========================================
+        
+        // Empezamos con un par de publicaciones precargadas sobre fútbol europeo para que el muro no esté vacío al entrar.
+        let miListaDePublicaciones = [
+            {
+                titulo: "La noche mágica de Champions en el Bernabéu",
+                imagen: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80",
+                texto: "Increíble remontada en los minutos finales. El ambiente estuvo a otro nivel y la efectividad en ataque marcó la diferencia."
+            }
+        ];
+        
+        let posicionEnLaLista = null;
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        
+        function cambiarVista(pantallaDestino) {
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO (La magia del Ciclo)
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            cajaMuro.innerHTML = "";
+
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                let postActual = miListaDePublicaciones[i];
+
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal,
+                texto: textoEscrito
+            });
+            
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            mostrarPosts();
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        function borrarPost(numeroEnLaFila) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        function abrirEditar(numeroEnLaFila) {
+            posicionEnLaLista = numeroEnLaFila;
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            cambiarVista('vista-editar'); 
+        }
+
+        function guardarEdicion() {
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+
+        // Ejecutamos una vez al cargar para mostrar el post inicial de ejemplo
+        mostrarPosts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog de Vóleibol - 8° Básico</title>
+    <!-- BLOQUE CSS (DISEÑO DE VÓLEIBOL) -->
+    <style id="estilos-ia">
+        /* Estilos generales y variables */
+        :root {
+            --color-primario: #0a2540;   /* Azul cancha profesional */
+            --color-secundario: #0077b6; /* Celeste dinámico */
+            --color-acento: #ff6b35;     /* Naranja balón de vóleibol */
+            --color-fondo: #f0f4f8;      /* Fondo suave */
+            --color-blanco: #ffffff;
+            --color-texto: #333333;
+            --color-peligro: #d90429;    /* Rojo para eliminar */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        /* Control de vistas original */
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        /* Menú de navegación */
+        nav {
+            background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Botones generales */
+        .btn {
+            background-color: var(--color-acento);
+            color: var(--color-blanco);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+        }
+
+        .btn-secundario {
+            background-color: var(--color-secundario);
+        }
+
+        .btn-peligro {
+            background-color: var(--color-peligro);
+        }
+
+        /* Secciones y contenedores */
+        section {
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--color-blanco);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2 {
+            color: var(--color-primario);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #vista-inicio {
+            text-align: center;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 50px 20px;
+        }
+
+        #vista-inicio p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        /* Formularios (Crear y Editar) */
+        label {
+            font-weight: bold;
+            color: var(--color-primario);
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="file"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--color-secundario);
+            outline: none;
+        }
+
+        input[type="file"] {
+            background: #f9f9f9;
+            cursor: pointer;
+        }
+
+        /* Tarjetas del Muro */
+        #muro {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .tarjeta-post {
+            background: var(--color-blanco);
+            border: 1px solid #e1e8ed;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .t-post {
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+            padding: 15px 20px;
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .p-post {
+            padding: 20px;
+            font-size: 1.05rem;
+            color: #444;
+            white-space: pre-wrap;
+        }
+
+        .caja-botones {
+            padding: 0 20px 20px 20px;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML -->
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav>
+        <button class="btn" onclick="cambiarVista('vista-inicio')">Inicio</button>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">Ver Publicaciones</button>
+        <button class="btn" onclick="cambiarVista('vista-crear')">Crear Publicación</button>
+    </nav>
+
+    <!-- 1. PANTALLA DE INICIO -->
+    <section id="vista-inicio">
+        <h1>¡Pasión por el Vóleibol! 🏐</h1>
+        <p>Este es mi espacio personal de 8° Básico para compartir jugadas, tácticas, torneos y fotos de nuestro deporte favorito.</p>
+        <button class="btn" onclick="cambiarVista('vista-crear')">¡Crear mi primer post!</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Ir al Muro</button>
+    </section>
+
+    <!-- 2. PANTALLA DEL MURO DE PUBLICACIONES -->
+    <section id="vista-publicaciones">
+        <h2>Muro de Vóleibol</h2>
+        <div id="muro">
+            <!-- Aquí el ciclo For de JavaScript dibujará las tarjetas -->
+        </div>
+    </section>
+
+    <!-- 3. PANTALLA PARA CREAR PUBLICACIÓN -->
+    <section id="vista-crear">
+        <h2>Nueva Publicación</h2>
+        
+        <label for="tit">Título:</label><br>
+        <input type="text" id="tit" placeholder="Ej: ¡Gran victoria en el campeonato escolar!"><br><br>
+
+        <label for="imgArchivo">Subir imagen desde el computador:</label><br>
+        <input type="file" id="imgArchivo" accept="image/*"><br><br>
+
+        <label for="imgUrl">O pegar enlace (URL) de una imagen:</label><br>
+        <input type="text" id="imgUrl" placeholder="https://ejemplo.com/foto-voley.jpg"><br><br>
+
+        <label for="txt">Contenido:</label><br>
+        <textarea id="txt" rows="5" placeholder="¿Qué jugada o experiencia quieres contar hoy?"></textarea><br><br>
+
+        <button class="btn" onclick="crearPost()">Publicar</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </section>
+
+    <!-- 4. PANTALLA PARA EDITAR PUBLICACIÓN -->
+    <section id="vista-editar">
+        <h2>Editar Publicación</h2>
+
+        <!-- Campo oculto para recordar la imagen que ya tenía el post -->
+        <input type="hidden" id="edit-imgActual">
+
+        <label for="edit-tit">Título:</label><br>
+        <input type="text" id="edit-tit"><br><br>
+
+        <label for="edit-imgArchivo">Cambiar imagen (desde el computador):</label><br>
+        <input type="file" id="edit-imgArchivo" accept="image/*"><br><br>
+
+        <label for="edit-imgUrl">O cambiar por otro enlace (URL):</label><br>
+        <input type="text" id="edit-imgUrl" placeholder="Dejar vacío para mantener la foto actual"><br><br>
+
+        <label for="edit-txt">Contenido:</label><br>
+        <textarea id="edit-txt" rows="5"></textarea><br><br>
+
+        <button class="btn" onclick="guardarEdicion()">Guardar Cambios</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </section>
+
+    <!-- (EL CEREBRO DEL BLOG VERSIÓN) -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE COMPRAS (El Arreglo)
+        // ==========================================
+        
+        //Guardamos toda la información en una Lista ordenadita (Arreglo). Empieza vacía [].
+        let miListaDePublicaciones = [];
+        
+        // Esta es una memoria para recordar en qué "número de fila" de la lista está el post que queremos editar.
+        let posicionEnLaLista = null;
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        
+        // TAREA: CAMBIAR ENTRE PANTALLAS
+        function cambiarVista(pantallaDestino) {
+            // Escondemos todas las pantallas (display: none).
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            // Mostramos solo la pantalla elegida (display: block).
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        // TAREA: PROCESAR LA IMAGEN
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            // .trim() es como una tijera que corta los espacios vacíos que el usuario puso por accidente al principio o al final.
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO (La magia del Ciclo)
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            
+            // PASO CRÍTICO: ¡Borrador mágico! 
+            // Borramos toda la pantalla para que no se nos dupliquen las cosas cuando el ciclo empiece a dibujar.
+            cajaMuro.innerHTML = "";
+
+            // LA MÁQUINA DE REPETICIÓN (Ciclo For)
+            // Esto le dice al computador: "Empieza a contar en 0 (let i = 0). 
+            // Repite esta tarea mientras no te pases de la cantidad de cosas que hay en nuestra lista (i < miListaDePublicaciones.length).
+            // Y avanza de uno en uno (i++)".
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                
+                // Sacamos la información pura del objeto que está en la fila 'i'.
+                let postActual = miListaDePublicaciones[i];
+
+                // Y ahora, le sumamos (+=) a la pantalla el diseño HTML, rellenándolo con la info pura.
+                // Fíjate en los botones: Ahora enviamos el número 'i'. Así los botones saben exactamente qué posición de la lista deben borrar o editar.
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            // 1. Rescatamos los textos de las cajas y les cortamos los espacios extra (.trim).
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            // 2. Si escribieron puras cosas vacías, los frenamos.
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            // 3.EMPUJAMOS (.push) toda la información empaquetada como un "Objeto" hacia nuestra Lista principal.
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal,
+                texto: textoEscrito
+            });
+            
+            // 4. Limpiamos las cajas para que el formulario quede listo para el próximo uso.
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            // 5. Como nuestra Lista acaba de crecer, le ordenamos a nuestra Tarea 3 (mostrarPosts) 
+            // que vuelva a encender su Ciclo For y dibuje la lista actualizada en pantalla.
+            mostrarPosts();
+            
+            // 6. Cambiamos de pantalla para ir a ver nuestro muro.
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        // Esta función recibe un número ('numeroEnLaFila'), que es la posición que el ciclo For le puso al botón.
+        function borrarPost(numeroEnLaFila) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                // Usamos el poder '.splice()'. Esto se mete directo a nuestra Lista en la memoria,
+                // busca la posición exacta 'numeroEnLaFila', destruye '1' elemento, y empuja a los demás hacia arriba para no dejar un hueco.
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+                
+                // Como la Lista cambió (tiene una cosa menos), ordenamos al muro que se dibuje de nuevo para actualizarse.
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        
+        // Parte 1: Cargar la información. También recibe el número de la fila.
+        function abrirEditar(numeroEnLaFila) {
+            // 1. Anotamos en nuestro cuaderno global en qué número estamos para que no se nos olvide.
+            posicionEnLaLista = numeroEnLaFila;
+            
+            // 2. Extraemos toda la información desde la memoria de la Lista.
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            // 3. Rellenamos las cajas de edición con la información pura de la Lista (ya no leemos el HTML).
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            // Vaciamos las cajas de imagen nueva.
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            // Mostramos la pantalla de editar.
+            cambiarVista('vista-editar'); 
+        }
+
+        // Parte 2: Guardar las correcciones
+        function guardarEdicion() {
+            // 1. Rescatamos los nuevos textos corregidos.
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            // 2. ¡Sobreescribimos la memoria! Vamos a nuestra Lista, ubicamos la posición exacta
+            // que teníamos anotada, y le chancamos la información vieja con la información nueva.
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            // 3. Como modificamos algo de la Lista, volvemos a dibujar el muro y cambiamos de pantalla.
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+</body>
+</html>

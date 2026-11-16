@@ -1,0 +1,140 @@
+<!--
+   rafaaapizarro.html
+   
+   Copyright 2026 Alumno-30 <Alumno-30@DESKTOP-0E3QUBO>
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+   
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>sin título</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="Geany 2.1" />
+</head>
+
+<body>
+	
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Blog de Snoopy</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                120deg,
+                #ff8fab,
+                #ffd166,
+                #a0e7e5,
+                #bdb2ff,
+                #ffc6ff
+            );
+            color: #333;
+        }
+
+        .publicacion {
+            width: 80%;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 8px 20px #777;
+            border: 5px solid #ffb3c6;
+        }
+
+        h1 {
+            color: #ff4d8d;
+            font-size: 35px;
+        }
+
+        h2 {
+            color: #7b61ff;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        img {
+            width: 80%;
+            border-radius: 20px;
+            border: 5px solid #ffd166;
+        }
+
+        .boton {
+            background: linear-gradient(
+                90deg,
+                #ff4d8d,
+                #ffa62b,
+                #7b61ff
+            );
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .boton:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="publicacion">
+        <h1>¡El Rincón de Snoopy! 🐾</h1>
+        <h2>El perrito más filosófico del mundo</h2>
+        
+        <p>
+            Bienvenid@ a este espacio dedicado a <strong>Snoopy</strong>, el entrañable beagle creado por Charles M. Schulz. 
+            Más que una mascota, Snoopy es un escritor nocturno, un as de la aviación de la Primera Guerra Mundial y, sobre todo, 
+            un amigo fiel que siempre sabe cómo disfrutar de las pequeñas cosas de la vida (como una buena siesta sobre su caseta).
+        </p>
+
+        <!-- Puedes cambiar el enlace de la imagen por una foto de Snoopy -->
+        <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&w=600&q=80" alt="Snoopy y amigos">
+
+        <h2>¿Sabías qué...?</h2>
+        <p>
+            Aunque hoy lo conocemos durmiendo plácidamente sobre el techo rojo de su caseta, en sus primeras tiras cómicas 
+            de 1950 caminaba a cuatro patas como un perro normal. ¡Con el tiempo aprendió a caminar en dos y a expresar sus pensamientos!
+        </p>
+
+        <a href="#" class="boton">Leer más historias</a>
+    </div>
+
+</body>
+</html>

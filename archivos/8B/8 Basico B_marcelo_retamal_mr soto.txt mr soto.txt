@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rangers de Talca - Blog Rojinegro</title>
+
+    <!-- BLOQUE CSS (DISEÑO) -->
+    <style id="estilos-ia">
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eeeeee;
+            color: #222;
+        }
+
+        header {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+            border-bottom: 6px solid #d71920;
+        }
+
+        .escudo {
+            font-size: 65px;
+            font-weight: bold;
+            color: #e21b2d;
+            text-shadow: 2px 2px white;
+        }
+
+        header h1 {
+            font-size: 34px;
+            margin: 10px;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            color: #ddd;
+            font-size: 16px;
+        }
+
+        nav {
+            background: #d71920;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav button {
+            background: #111;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 18px;
+            margin: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        nav button:hover {
+            background: white;
+            color: #d71920;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 25px auto;
+            padding: 15px;
+        }
+
+        .portada {
+            background: linear-gradient(120deg, #111 50%, #c8102e 50%);
+            color: white;
+            text-align: center;
+            padding: 65px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .portada h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .portada p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .seccion {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px #0002;
+        }
+
+        .seccion h2 {
+            color: #c8102e;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #111;
+            padding-bottom: 10px;
+        }
+
+        .historia {
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .dato {
+            background: #171717;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            border-bottom: 5px solid #d71920;
+        }
+
+        .dato h3 {
+            color: #ff303b;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        #vista-publicaciones,
+        #vista-crear,
+        #vista-editar {
+            display: none;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            color: #c8102e;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .formulario {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px #0002;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 15px 0 7px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .btn-principal {
+            background: #d71920;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background: #a90010;
+        }
+
+        .btn-secundario {
+            background: #222;
+            color: white;
+        }
+
+        .btn-peligro {
+            background: #d71920;
+            color: white;
+        }
+
+        .tarjeta-post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border-left: 6px solid #d71920;
+            box-shadow: 0 3px 10px #0002;
+        }
+
+        .t-post {
+            color: #c8102e;
+            font-size: 23px;
+            margin-bottom: 15px;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .img-post[src=""] {
+            display: none;
+        }
+
+        .p-post {
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 10px;
+        }
+
+        footer {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            border-top: 5px solid #d71920;
+            margin-top: 40px;
+        }
+
+        footer span {
+            color: #e21b2d;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 25px;
+            }
+
+            .portada h2 {
+                font-size: 27px;
+            }
+
+            nav button {
+                padding: 10px;
+                font-size: 12px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- BLOQUE HTML -->
+
+    <header>
+        <div class="escudo">R</div>
+        <h1>RANGERS DE TALCA</h1>
+        <p>El orgullo rojinegro del Maule</p>
+    </header>
+
+    <nav>
+        <button onclick="cambiarVista('vista-inicio')">Inicio</button>
+        <button onclick="cambiarVista('vista-publicaciones')">Publicaciones</button>
+        <button onclick="cambiarVista('vista-crear')">Crear publicación</button>
+    </nav>
+
+    <main>
+
+        <!-- INICIO -->
+        <section id="vista-inicio">
+
+            <div class="portada">
+                <h2>¡FUERZA ROJINEGRA!</h2>
+                <p>
+                    Bienvenidos al blog de Rangers de Talca.
+                    Un espacio dedicado a la historia, los colores
+                    y la pasión por nuestro equipo.
+                </p>
+            </div>
+
+            <div class="seccion">
+                <h2>Historia del club</h2>
+
+                <p class="historia">
+                    Rangers de Talca es uno de los clubes más
+                    tradicionales del fútbol chileno. Fue fundado
+                    el 2 de noviembre de 1902 en la ciudad de Talca,
+                    Región del Maule.
+
+                    Sus colores característicos son el rojo y el
+                    negro, que representan la identidad y la pasión
+                    de sus seguidores.
+
+                    A lo largo de su historia ha conseguido grandes
+                    logros deportivos y ha representado a la ciudad
+                    en importantes competencias del fútbol chileno.
+                </p>
+            </div>
+
+            <div class="seccion">
+                <h2>Datos importantes</h2>
+
+                <div class="datos">
+
+                    <div class="dato">
+                        <h3>1902</h3>
+                        <p>Año de fundación</p>
+                    </div>
+
+                    <div class="dato">
+                        <h3>Rojo y Negro</h3>
+                        <p>Colores oficiales</p>
+                    </div>
+
+                    <div class="dato">
+                        <h3>Talca</h3>
+                        <p>Ciudad del club</p>
+                    </div>
+
+                    <div class="dato">
+                        <h3>3</h3>
+                        <p>Títulos de Primera B</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h2>El estadio</h2>
+
+                <p class="historia">
+                    Rangers juega sus partidos como local en el
+                    Estadio Bicentenario Iván Azócar Bernales,
+                    conocido tradicionalmente como Estadio Fiscal
+                    de Talca. Allí los hinchas acompañan al equipo
+                    y alientan con los colores rojinegros.
+                </p>
+            </div>
+
+            <div class="seccion">
+                <h2>¡Comparte tu pasión!</h2>
+                <p>
+                    Puedes crear publicaciones sobre partidos,
+                    jugadores, historia, fotografías y noticias
+                    relacionadas con Rangers de Talca.
+                </p>
+                <button class="btn btn-principal"
+                    onclick="cambiarVista('vista-crear')">
+                    Crear publicación
+                </button>
+            </div>
+
+        </section>
+
+        <!-- PUBLICACIONES -->
+        <section id="vista-publicaciones">
+            <h2 class="titulo-seccion">Muro Rojinegro</h2>
+            <div id="muro"></div>
+
+            <button class="btn btn-principal"
+                onclick="cambiarVista('vista-crear')">
+                Nueva publicación
+            </button>
+        </section>
+
+        <!-- CREAR PUBLICACIÓN -->
+        <section id="vista-crear">
+            <h2 class="titulo-seccion">Crear publicación</h2>
+
+            <div class="formulario">
+
+                <label>Título de la publicación:</label>
+                <input type="text" id="tit"
+                    placeholder="Ejemplo: Rangers gana el partido">
+
+                <label>Subir una fotografía:</label>
+                <input type="file" id="imgArchivo" accept="image/*">
+
+                <label>O pegar un enlace de imagen:</label>
+                <input type="text" id="imgUrl"
+                    placeholder="https://...">
+
+                <label>Contenido:</label>
+                <textarea id="txt"
+                    placeholder="Escribe aquí tu noticia o publicación..."></textarea>
+
+                <button class="btn btn-principal"
+                    onclick="crearPost()">
+                    Publicar
+                </button>
+
+                <button class="btn btn-secundario"
+                    onclick="cambiarVista('vista-inicio')">
+                    Volver
+                </button>
+
+            </div>
+        </section>
+
+        <!-- EDITAR PUBLICACIÓN -->
+        <section id="vista-editar">
+            <h2 class="titulo-seccion">Editar publicación</h2>
+
+            <div class="formulario">
+
+                <label>Nuevo título:</label>
+                <input type="text" id="edit-tit">
+
+                <label>Fotografía actual:</label>
+                <input type="hidden" id="edit-imgActual">
+
+                <label>Subir una nueva fotografía:</label>
+                <input type="file" id="edit-imgArchivo"
+                    accept="image/*">
+
+                <label>O colocar un nuevo enlace:</label>
+                <input type="text" id="edit-imgUrl">
+
+                <label>Nuevo contenido:</label>
+                <textarea id="edit-txt"></textarea>
+
+                <button class="btn btn-principal"
+                    onclick="guardarEdicion()">
+                    Guardar cambios
+                </button>
+
+                <button class="btn btn-secundario"
+                    onclick="cambiarVista('vista-publicaciones')">
+                    Cancelar
+                </button>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Blog dedicado a <span>Rangers de Talca</span></p>
+        <p>Pasión rojinegra desde 1902</p>
+        <p>¡Vamos Rangers!</p>
+    </footer>
+
+
+    <!-- (EL CEREBRO DEL BLOG VERSIÓN) -->
+    <script>
+
+        // 1. LISTA DE PUBLICACIONES
+        let miListaDePublicaciones = [];
+        let posicionEnLaLista = null;
+
+        // 2. NAVEGACIÓN Y AYUDANTES
+
+        function cambiarVista(pantallaDestino) {
+
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            let linkDeInternet = document.getElementById(cajaLink).value.trim();
+
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC);
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet;
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value;
+            }
+
+            return "";
+        }
+
+        // 3. DIBUJAR TODO EL MURO
+
+        function mostrarPosts() {
+
+            let cajaMuro = document.getElementById("muro");
+
+            cajaMuro.innerHTML = "";
+
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+
+                let postActual = miListaDePublicaciones[i];
+
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario"
+                                onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro"
+                                onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (miListaDePublicaciones.length === 0) {
+                cajaMuro.innerHTML =
+                    "<p>Todavía no hay publicaciones. ¡Sé el primero en compartir algo de Rangers!</p>";
+            }
+        }
+
+        // 4. CREAR NUEVA PUBLICACIÓN
+
+        function crearPost() {
+
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal,
+                texto: textoEscrito
+            });
+
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            mostrarPosts();
+
+            cambiarVista('vista-publicaciones');
+        }
+
+        // 5. ELIMINAR UNA PUBLICACIÓN
+
+        function borrarPost(numeroEnLaFila) {
+
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+
+            if (confirmacion === true) {
+
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+
+                mostrarPosts();
+            }
+        }
+
+        // 6. EDITAR PUBLICACIONES
+
+        function abrirEditar(numeroEnLaFila) {
+
+            posicionEnLaLista = numeroEnLaFila;
+
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+        }
+
+        function guardarEdicion() {
+
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+
+            let nuevaImagen = obtenerImagen(
+                "edit-imgArchivo",
+                "edit-imgUrl",
+                "edit-imgActual"
+            );
+
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+
+            mostrarPosts();
+
+            cambiarVista('vista-publicaciones');
+        }
+
+    </script>
+
+</body>
+</html>

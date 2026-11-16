@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Reino del Tigre - 8° Básico</title>
+    <!-- BLOQUE CSS (DISEÑO) -->
+    <style id="estilos-ia">
+        /* Reset y estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Encabezado y Navegación */
+        header {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #1f2937;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0.75rem;
+        }
+
+        nav button {
+            background: transparent;
+            color: #f3f4f6;
+            border: 1px solid #4b5563;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        nav button:hover {
+            background-color: #d97706;
+            border-color: #d97706;
+            color: white;
+        }
+
+        /* Contenedor principal */
+        main {
+            max-width: 900px;
+            width: 90%;
+            margin: 2rem auto;
+            flex-grow: 1;
+        }
+
+        /* Vistas y ocultación por defecto */
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        .seccion-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .seccion-card h2 {
+            color: #b45309;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #fef3c7;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Formularios */
+        .grupo-form {
+            margin-bottom: 1.25rem;
+        }
+
+        .grupo-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .grupo-form input[type="text"],
+        .grupo-form input[type="url"],
+        .grupo-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .grupo-form input[type="file"] {
+            margin-top: 0.25rem;
+        }
+
+        .grupo-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primario {
+            background-color: #d97706;
+            color: white;
+        }
+
+        .btn-primario:hover {
+            background-color: #b45309;
+        }
+
+        .btn-secundario {
+            background-color: #4b5563;
+            color: white;
+        }
+
+        .btn-secundario:hover {
+            background-color: #374151;
+        }
+
+        .btn-peligro {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .btn-peligro:hover {
+            background-color: #b91c1c;
+        }
+
+        /* Tarjetas de Publicación (Muro) */
+        #muro {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .tarjeta-post {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .img-post {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #e5e7eb;
+        }
+
+        .t-post {
+            font-size: 1.25rem;
+            color: #1f2937;
+            padding: 1rem 1rem 0.5rem 1rem;
+        }
+
+        .p-post {
+            padding: 0 1rem 1rem 1rem;
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .caja-botones {
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-top: 1px solid #f3f4f6;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #1f2937;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML -->
+    <header>
+        <h1>El Reino del Tigre</h1>
+        <p>Un espacio dedicado a explorar la vida y conservación del felino más grande del mundo</p>
+    </header>
+
+    <nav>
+        <button onclick="cambiarVista('vista-inicio')">Inicio</button>
+        <button onclick="cambiarVista('vista-publicaciones')">Ver Muro</button>
+        <button onclick="cambiarVista('vista-crear')">Nueva Publicación</button>
+    </nav>
+
+    <main>
+        <!-- VISTA: INICIO -->
+        <section id="vista-inicio" class="seccion-card">
+            <h2>Bienvenido a nuestro Blog sobre Tigres</h2>
+            <p>Los tigres (<em>Panthera tigris</em>) son los miembros más grandes de la familia de los felinos. Conocidos por su fuerza, su pelaje anaranjado con rayas negras y su agilidad, estos majestuosos depredadores habitan en diversos ecosistemas de Asia, desde bosques densos hasta sabanas.</p>
+            <br>
+            <p>Usa la barra de navegación para explorar las publicaciones existentes, editarlas o agregar tu propia información sobre la vida salvaje y la conservación de esta especie.</p>
+        </section>
+
+        <!-- VISTA: PUBLICACIONES (MURO) -->
+        <section id="vista-publicaciones" class="seccion-card">
+            <h2>Muro de Publicaciones</h2>
+            <div id="muro">
+                <!-- Las tarjetas de publicaciones se generarán aquí con JS -->
+            </div>
+        </section>
+
+        <!-- VISTA: CREAR POST -->
+        <section id="vista-crear" class="seccion-card">
+            <h2>Crear Nueva Publicación</h2>
+            <div class="grupo-form">
+                <label for="tit">Título de la publicación:</label>
+                <input type="text" id="tit" placeholder="Ej: Hábitat del Tigre de Bengala">
+            </div>
+
+            <div class="grupo-form">
+                <label for="imgUrl">Imagen desde enlace (URL):</label>
+                <input type="url" id="imgUrl" placeholder="https://ejemplo.com/tigre.jpg">
+            </div>
+
+            <div class="grupo-form">
+                <label for="imgArchivo">O subir imagen desde tu equipo:</label>
+                <input type="file" id="imgArchivo" accept="image/*">
+            </div>
+
+            <div class="grupo-form">
+                <label for="txt">Contenido o descripción:</label>
+                <textarea id="txt" placeholder="Escribe aquí los detalles sobre el tigre..."></textarea>
+            </div>
+
+            <button class="btn btn-primario" onclick="crearPost()">Publicar</button>
+        </section>
+
+        <!-- VISTA: EDITAR POST -->
+        <section id="vista-editar" class="seccion-card">
+            <h2>Editar Publicación</h2>
+            <input type="hidden" id="edit-imgActual">
+
+            <div class="grupo-form">
+                <label for="edit-tit">Título:</label>
+                <input type="text" id="edit-tit">
+            </div>
+
+            <div class="grupo-form">
+                <label for="edit-imgUrl">Cambiar enlace de imagen (URL):</label>
+                <input type="url" id="edit-imgUrl">
+            </div>
+
+            <div class="grupo-form">
+                <label for="edit-imgArchivo">O cambiar por imagen local:</label>
+                <input type="file" id="edit-imgArchivo" accept="image/*">
+            </div>
+
+            <div class="grupo-form">
+                <label for="edit-txt">Contenido:</label>
+                <textarea id="edit-txt"></textarea>
+            </div>
+
+            <button class="btn btn-primario" onclick="guardarEdicion()">Guardar Cambios</button>
+            <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Blog Escolar - 8° Básico | Proyecto de Ciencia y Tecnología</p>
+    </footer>
+
+    <!-- (EL CEREBRO DEL BLOG VERSIÓN) -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE COMPRAS (El Arreglo)
+        // ==========================================
+        
+        // Carga inicial con datos de ejemplo sobre tigres
+        let miListaDePublicaciones = [
+            {
+                titulo: "El Tigre de Bengala",
+                imagen: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
+                texto: "Es la subespecie más numerosa y representa cerca del 50% de la población total de tigres silvestres. Habita principalmente en la India y Nepal."
+            },
+            {
+                titulo: "Patrón Único de Rayas",
+                imagen: "https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=600&q=80",
+                texto: "¿Sabías que las rayas de cada tigre son únicas? Al igual que las huellas dactilares humanas, no existen dos tigres con exactamente el mismo patrón."
+            }
+        ];
+        
+        // Esta es una memoria para recordar en qué "número de fila" de la lista está el post que queremos editar.
+        let posicionEnLaLista = null;
+
+        // Inicializamos mostrando la lista al cargar
+        window.onload = function() {
+            mostrarPosts();
+        };
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        
+        // TAREA: CAMBIAR ENTRE PANTALLAS
+        function cambiarVista(pantallaDestino) {
+            // Escondemos todas las pantallas (display: none).
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            // Mostramos solo la pantalla elegida (display: block).
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        // TAREA: PROCESAR LA IMAGEN
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            // .trim() es como una tijera que corta los espacios vacíos que el usuario puso por accidente al principio o al final.
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO (La magia del Ciclo)
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            
+            // PASO CRÍTICO: ¡Borrador mágico! 
+            // Borramos toda la pantalla para que no se nos dupliquen las cosas cuando el ciclo empiece a dibujar.
+            cajaMuro.innerHTML = "";
+
+            // LA MÁQUINA DE REPETICIÓN (Ciclo For)
+            // Esto le dice al computador: "Empieza a contar en 0 (let i = 0). 
+            // Repite esta tarea mientras no te pases de la cantidad de cosas que hay en nuestra lista (i < miListaDePublicaciones.length).
+            // Y avanza de uno en uno (i++)".
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                
+                // Sacamos la información pura del objeto que está en la fila 'i'.
+                let postActual = miListaDePublicaciones[i];
+
+                // Y ahora, le sumamos (+=) a la pantalla el diseño HTML, rellenándolo con la info pura.
+                // Fíjate en los botones: Ahora enviamos el número 'i'. Así los botones saben exactamente qué posición de la lista deben borrar o editar.
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post" alt="${postActual.titulo}">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            // 1. Rescatamos los textos de las cajas y les cortamos los espacios extra (.trim).
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            // 2. Si escribieron puras cosas vacías, los frenamos.
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            // 3.EMPUJAMOS (.push) toda la información empaquetada como un "Objeto" hacia nuestra Lista principal.
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal,
+                texto: textoEscrito
+            });
+            
+            // 4. Limpiamos las cajas para que el formulario quede listo para el próximo uso.
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            // 5. Como nuestra Lista acaba de crecer, le ordenamos a nuestra Tarea 3 (mostrarPosts) 
+            // que vuelva a encender su Ciclo For y dibuje la lista actualizada en pantalla.
+            mostrarPosts();
+            
+            // 6. Cambiamos de pantalla para ir a ver nuestro muro.
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        // Esta función recibe un número ('numeroEnLaFila'), que es la posición que el ciclo For le puso al botón.
+        function borrarPost(numeroEnLaFila) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                // Usamos el poder '.splice()'. Esto se mete directo a nuestra Lista en la memoria,
+                // busca la posición exacta 'numeroEnLaFila', destruye '1' elemento, y empuja a los demás hacia arriba para no dejar un hueco.
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+                
+                // Como la Lista cambió (tiene una cosa menos), ordenamos al muro que se dibuje de nuevo para actualizarse.
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        
+        // Parte 1: Cargar la información. También recibe el número de la fila.
+        function abrirEditar(numeroEnLaFila) {
+            // 1. Anotamos en nuestro cuaderno global en qué número estamos para que no se nos olvide.
+            posicionEnLaLista = numeroEnLaFila;
+            
+            // 2. Extraemos toda la información desde la memoria de la Lista.
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            // 3. Rellenamos las cajas de edición con la información pura de la Lista (ya no leemos el HTML).
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            // Vaciamos las cajas de imagen nueva.
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            // Mostramos la pantalla de editar.
+            cambiarVista('vista-editar'); 
+        }
+
+        // Parte 2: Guardar las correcciones
+        function guardarEdicion() {
+            // 1. Rescatamos los nuevos textos corregidos.
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            // 2. ¡Sobreescribimos la memoria! Vamos a nuestra Lista, ubicamos la posición exacta
+            // que teníamos anotada, y le chancamos la información vieja con la información nueva.
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            // 3. Como modificamos algo de la Lista, volvemos a dibujar el muro y cambiamos de pantalla.
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+</body>
+</html>

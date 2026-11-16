@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>El Blog de Rayo McQueen - ¡Ka-Chow!</title>
+    <!-- BLOQUE CSS (DISEÑO) -->
+   
+    <style id="estilos-ia">
+        /* --- ESTILOS GENERALES Y TEMA RAYO MCQUEEN --- */
+        :root {
+            --rojo-mcqueen: #d90429;
+            --rojo-oscuro: #8d0801;
+            --amarillo-rayo: #ffb703;
+            --negro-asfalto: #121212;
+            --gris-carbon: #2b2b2b;
+            --blanco-humo: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--negro-asfalto);
+            color: var(--blanco-humo);
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(rgba(18,18,18,0.9), rgba(18,18,18,0.9)), url('https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* --- MENÚ DE NAVEGACIÓN --- */
+        nav {
+            background-color: var(--gris-carbon);
+            padding: 15px 30px;
+            display: flex;
+            gap: 15px;
+            border-bottom: 4px solid var(--rojo-mcqueen);
+            box-shadow: 0 4px 15px rgba(217, 4, 41, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* --- BOTONES GENERALES --- */
+        .btn {
+            background-color: var(--rojo-mcqueen);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background-color: #ef233c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(217, 4, 41, 0.5);
+        }
+
+        .btn-secundario {
+            background-color: var(--amarillo-rayo);
+            color: #000;
+        }
+
+        .btn-secundario:hover {
+            background-color: #ffc300;
+        }
+
+        .btn-peligro {
+            background-color: #333;
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
+        }
+
+        .btn-peligro:hover {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        /* --- SECCIONES Y CONTENEDORES --- */
+        section {
+            max-width: 800px;
+            margin: 40px auto;
+            background: rgba(30, 30, 30, 0.95);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Control de visualización de vistas (mantenido de tu estructura inicial) */
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        /* --- 1. PANTALLA DE INICIO --- */
+        #vista-inicio {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 6px solid var(--amarillo-rayo);
+        }
+
+        #vista-inicio h1 {
+            font-size: 3rem;
+            color: var(--amarillo-rayo);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-style: italic;
+        }
+
+        #vista-inicio p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        /* --- 2. MURO DE PUBLICACIONES Y TARJETAS --- */
+        h2 {
+            color: var(--amarillo-rayo);
+            border-bottom: 2px solid var(--rojo-mcqueen);
+            padding-bottom: 10px;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #muro {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .tarjeta-post {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid var(--rojo-mcqueen);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .t-post {
+            color: white;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin: 15px 0;
+            border: 2px solid #333;
+        }
+
+        .p-post {
+            color: #ddd;
+            line-height: 1.6;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* --- 3 Y 4. FORMULARIOS (CREAR Y EDITAR) --- */
+        label {
+            font-weight: bold;
+            color: var(--amarillo-rayo);
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--amarillo-rayo);
+            outline: none;
+        }
+
+        input[type="file"] {
+            color: #ccc;
+            background: #111;
+            padding: 10px;
+            border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px dashed #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML -->
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav>
+        <button class="btn" onclick="cambiarVista('vista-inicio')">Inicio</button>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">Ver Publicaciones</button>
+        <button class="btn" onclick="cambiarVista('vista-crear')">Crear Publicación</button>
+    </nav>
+
+    <!-- 1. PANTALLA DE INICIO -->
+    <section id="vista-inicio">
+        <h1>¡Ka-Chow! Bienvenido al Blog de Rayo McQueen</h1>
+        <p>El sitio oficial de Radiador Springs para compartir noticias de la Copa Pistón, fotos de Sally y proyectos de velocidad de 8° Básico.</p>
+        <button class="btn" onclick="cambiarVista('vista-crear')">¡Crear mi primer post!</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Ir al Muro</button>
+    </section>
+
+    <!-- 2. PANTALLA DEL MURO DE PUBLICACIONES -->
+    <section id="vista-publicaciones">
+        <h2>Muro de Publicaciones</h2>
+        <div id="muro">
+            <!-- Aquí el ciclo For de JavaScript dibujará las tarjetas -->
+        </div>
+    </section>
+
+    <!-- 3. PANTALLA PARA CREAR PUBLICACIÓN -->
+    <section id="vista-crear">
+        <h2>Nueva Publicación</h2>
+        
+        <label for="tit">Título:</label><br>
+        <input type="text" id="tit" placeholder="Escribe un título..."><br><br>
+
+        <label for="imgArchivo">Subir imagen desde el computador:</label><br>
+        <input type="file" id="imgArchivo" accept="image/*"><br><br>
+
+        <label for="imgUrl">O pegar enlace (URL) de una imagen:</label><br>
+        <input type="text" id="imgUrl" placeholder="https://ejemplo.com/foto.jpg"><br><br>
+
+        <label for="txt">Contenido:</label><br>
+        <textarea id="txt" rows="5" placeholder="¿Qué quieres contar hoy?"></textarea><br><br>
+
+        <button class="btn" onclick="crearPost()">Publicar</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </section>
+
+    <!-- 4. PANTALLA PARA EDITAR PUBLICACIÓN -->
+    <section id="vista-editar">
+        <h2>Editar Publicación</h2>
+
+        <!-- Campo oculto para recordar la imagen que ya tenía el post -->
+        <input type="hidden" id="edit-imgActual">
+
+        <label for="edit-tit">Título:</label><br>
+        <input type="text" id="edit-tit"><br><br>
+
+        <label for="edit-imgArchivo">Cambiar imagen (desde el computador):</label><br>
+        <input type="file" id="edit-imgArchivo" accept="image/*"><br><br>
+
+        <label for="edit-imgUrl">O cambiar por otro enlace (URL):</label><br>
+        <input type="text" id="edit-imgUrl" placeholder="Dejar vacío para mantener la foto actual"><br><br>
+
+        <label for="edit-txt">Contenido:</label><br>
+        <textarea id="edit-txt" rows="5"></textarea><br><br>
+
+        <button class="btn" onclick="guardarEdicion()">Guardar Cambios</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </section>
+
+    <!-- (EL CEREBRO DEL BLOG VERSIÓN) -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE COMPRAS (El Arreglo)
+        // ==========================================
+        
+        // Guardamos toda la información en una Lista ordenadita (Arreglo). Empieza vacía [].
+        let miListaDePublicaciones = [];
+        
+        // Esta es una memoria para recordar en qué "número de fila" de la lista está el post que queremos editar.
+        let posicionEnLaLista = null;
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        
+        // TAREA: CAMBIAR ENTRE PANTALLAS
+        function cambiarVista(pantallaDestino) {
+            // Escondemos todas las pantallas (display: none).
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            // Mostramos solo la pantalla elegida (display: block).
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        // TAREA: PROCESAR LA IMAGEN
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            // .trim() es como una tijera que corta los espacios vacíos que el usuario puso por accidente al principio o al final.
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO (La magia del Ciclo)
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            
+            // PASO CRÍTICO: ¡Borrador mágico! 
+            // Borramos toda la pantalla para que no se nos dupliquen las cosas cuando el ciclo empiece a dibujar.
+            cajaMuro.innerHTML = "";
+
+            // LA MÁQUINA DE REPETICIÓN (Ciclo For)
+            // Esto le dice al computador: "Empieza a contar en 0 (let i = 0). 
+            // Repite esta tarea mientras no te pases de la cantidad de cosas que hay en nuestra lista (i < miListaDePublicaciones.length).
+            // Y avanza de uno en uno (i++)".
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                
+                // Sacamos la información pura del objeto que está en la fila 'i'.
+                let postActual = miListaDePublicaciones[i];
+
+                // Y ahora, le sumamos (+=) a la pantalla el diseño HTML, rellenándolo con la info pura.
+                // Fíjate en los botones: Ahora enviamos el número 'i'. Así los botones saben qué posición de la lista deben borrar o editar.
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            // 1. Rescatamos los textos de las cajas y les cortamos los espacios extra (.trim).
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            // 2. Si escribieron puras cosas vacías, los frenamos.
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            // 3. EMPUJAMOS (.push) toda la información empaquetada como un "Objeto" hacia nuestra Lista principal.
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal,
+                texto: textoEscrito
+            });
+            
+            // 4. Limpiamos las cajas para que el formulario quede listo para el próximo uso.
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            // 5. Como nuestra Lista acaba de crecer, le ordenamos a nuestra Tarea 3 (mostrarPosts) 
+            // que vuelva a encender su Ciclo For y dibuje la lista actualizada en pantalla.
+            mostrarPosts();
+            
+            // 6. Cambiamos de pantalla para ir a ver nuestro muro.
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        // Esta función recibe un número ('numeroEnLaFila'), que es la posición que el ciclo For le puso al botón.
+        function borrarPost(numeroEnLaFiel) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                // Usamos el poder '.splice()'. Esto se mete directo a nuestra Lista en la memoria,
+                // busca la posición exacta, destruye '1' elemento, y empuja a los demás hacia arriba para no dejar huecos.
+                miListaDePublicaciones.splice(numeroEnLaFiel, 1);
+                
+                // Como la Lista cambió, ordenamos al muro que se dibuje de nuevo para actualizarse.
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        
+        // Parte 1: Cargar la información. También recibe el número de la fila.
+        function abrirEditar(numeroEnLaFila) {
+            // 1. Anotamos en nuestro cuaderno global en qué número estamos para que no se nos olvide.
+            posicionEnLaLista = numeroEnLaFila;
+            
+            // 2. Extraemos toda la información desde la memoria de la Lista.
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            // 3. Rellenamos las cajas de edición con la información pura de la Lista.
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            // Vaciamos las cajas de imagen nueva.
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            // Mostramos la pantalla de editar.
+            cambiarVista('vista-editar'); 
+        }
+
+        // Parte 2: Guardar las correcciones
+        function guardarEdicion() {
+            // 1. Rescatamos los nuevos textos corregidos.
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            // 2. ¡Sobreescribimos la memoria! Vamos a nuestra Lista, ubicamos la posición exacta
+            // que teníamos anotada, y le actualizamos la información.
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            // 3. Como modificamos algo de la Lista, volvemos a dibujar el muro y cambiamos de pantalla.
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+</body>
+</html>

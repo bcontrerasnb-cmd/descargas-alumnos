@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Escolar: El Jaguar - 8° Básico</title>
+    
+    <!-- BLOQUE CSS (DISEÑO) -->
+    <style id="estilos-ia">
+        :root {
+            --color-principal: #d97706; /* Tono ámbar/selva */
+            --color-secundario: #047857; /* Verde selva */
+            --color-fondo: #fef3c7; /* Fondo cálido suave */
+            --color-tarjeta: #ffffff;
+            --color-texto: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fef3c7 0%, #d1fae5 100%);
+            color: var(--color-texto);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .contenedor-principal {
+            width: 100%;
+            max-width: 650px;
+        }
+
+        header {
+            text-align: center;
+            background: #111827;
+            color: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0 0 8px 0;
+            color: #f59e0b;
+            font-size: 2rem;
+        }
+
+        header p {
+            margin: 0;
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+
+        /* Control de Vistas */
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        .vista {
+            background: var(--color-tarjeta);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-top: 5px solid var(--color-principal);
+        }
+
+        /* Botones */
+        .btn {
+            background-color: var(--color-principal);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 5px 2px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.95;
+        }
+
+        .btn-secundario {
+            background-color: var(--color-secundario);
+        }
+
+        .btn-peligro {
+            background-color: #dc2626;
+        }
+
+        .btn-volver {
+            background-color: #4b5563;
+            margin-bottom: 15px;
+        }
+
+        /* Formularios */
+        .campo-formulario {
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campo-formulario label {
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #374151;
+        }
+
+        .campo-formulario input, 
+        .campo-formulario textarea {
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .campo-formulario input:focus, 
+        .campo-formulario textarea:focus {
+            border-color: var(--color-principal);
+        }
+
+        /* Tarjetas de Posts */
+        .tarjeta-post {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-2px);
+        }
+
+        .t-post {
+            margin-top: 0;
+            color: #b45309;
+            font-size: 1.5rem;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .p-post {
+            line-height: 1.6;
+            color: #4b5563;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body onload="mostrarPosts()">
+
+    <div class="contenedor-principal">
+        
+        <header>
+            <h1>🐾 El Reino del Jaguar</h1>
+            <p>Proyecto Escolar - 8° Básico: Protegiendo a nuestro gran felino</p>
+        </header>
+
+        <!-- ========================================== -->
+        <!-- VISTA 1: INICIO (Pantalla de Bienvenida)   -->
+        <!-- ========================================== -->
+        <div id="vista-inicio" class="vista" style="text-align: center;">
+            <h2>¡Bienvenidos a la aventura del Yaguareté!</h2>
+            <p>Explora este espacio dedicado a conocer las características, hábitat y curiosidades del felino más imponente de América.</p>
+            <div style="margin-top: 25px;">
+                <button class="btn" onclick="cambiarVista('vista-publicaciones')">📖 Ver el Muro del Blog</button>
+                <button class="btn btn-secundario" onclick="cambiarVista('vista-crear')">✍️ Crear Nuevo Post</button>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VISTA 2: PUBLICACIONES (El Muro)           -->
+        <!-- ========================================== -->
+        <div id="vista-publicaciones" class="vista">
+            <button class="btn btn-volver" onclick="cambiarVista('vista-inicio')">⬅ Volver al Inicio</button>
+            <button class="btn btn-secundario" onclick="cambiarVista('vista-crear')">➕ Nuevo Post</button>
+            <hr style="margin: 20px 0; border: 0; border-top: 2px solid #e5e7eb;">
+            
+            <h2>Muro de Publicaciones</h2>
+            <div id="muro"></div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VISTA 3: CREAR NUEVA PUBLICACIÓN           -->
+        <!-- ========================================== -->
+        <div id="vista-crear" class="vista">
+            <button class="btn btn-volver" onclick="cambiarVista('vista-publicaciones')">⬅ Cancelar</button>
+            <h2>✍️ Escribe un nuevo artículo sobre el Jaguar</h2>
+            
+            <div class="campo-formulario">
+                <label for="tit">Título del Post:</label>
+                <input type="text" id="tit" placeholder="Ej: ¿Dónde viven los jaguares?">
+            </div>
+
+            <div class="campo-formulario">
+                <label for="txt">¿Qué quieres contar?</label>
+                <textarea id="txt" rows="4" placeholder="Escribe la información aquí..."></textarea>
+            </div>
+
+            <div class="campo-formulario">
+                <label for="imgArchivo">Sube una imagen desde tu PC:</label>
+                <input type="file" id="imgArchivo" accept="image/*">
+            </div>
+
+            <div class="campo-formulario">
+                <label for="imgUrl">O pega un link de internet para tu imagen:</label>
+                <input type="text" id="imgUrl" placeholder="https://ejemplo.com/jaguar.jpg">
+            </div>
+
+            <button class="btn" onclick="crearPost()">¡Publicar ahora!</button>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VISTA 4: EDITAR PUBLICACIÓN EXISTENTE      -->
+        <!-- ========================================== -->
+        <div id="vista-editar" class="vista">
+            <button class="btn btn-volver" onclick="cambiarVista('vista-publicaciones')">⬅ Cancelar</button>
+            <h2>✏️ Corregir Artículo</h2>
+            
+            <input type="hidden" id="edit-imgActual">
+
+            <div class="campo-formulario">
+                <label for="edit-tit">Nuevo Título:</label>
+                <input type="text" id="edit-tit">
+            </div>
+
+            <div class="campo-formulario">
+                <label for="edit-txt">Nuevo Texto:</label>
+                <textarea id="edit-txt" rows="4"></textarea>
+            </div>
+
+            <div class="campo-formulario">
+                <label for="edit-imgArchivo">Cambiar imagen (desde tu PC):</label>
+                <input type="file" id="edit-imgArchivo" accept="image/*">
+            </div>
+
+            <div class="campo-formulario">
+                <label for="edit-imgUrl">O cambiar imagen con un nuevo Link:</label>
+                <input type="text" id="edit-imgUrl">
+            </div>
+
+            <button class="btn btn-secundario" onclick="guardarEdicion()">Guardar Cambios</button>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- (EL CEREBRO DEL BLOG - JAVASCRIPT)         -->
+    <!-- ========================================== -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE PUBLICACIONES (Pre-cargada con Jaguares)
+        // ==========================================
+        let miListaDePublicaciones = [
+            {
+                titulo: "El Yaguareté: El rey de la selva americana",
+                imagen: "https://images.unsplash.com/photo-1549451371-72aa3d30cf0f?auto=format&fit=crop&w=800&q=80",
+                texto: "El jaguar (Panthera onca), conocido en Sudamérica como yaguareté, es el felino más grande de América. Su nombre proviene de la lengua guaraní y significa 'el que mata de un salto'. Es un animal solitario, nocturno y un excelente nadador."
+            },
+            {
+                titulo: "Curiosidades asombrosas sobre su mordida",
+                imagen: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=800&q=80",
+                texto: "A diferencia de otros felinos, los jaguares adoran el agua y cruzan ríos con facilidad. Además, poseen la mordida más potente de todos los grandes felinos en relación a su tamaño, capaz de perforar con facilidad caparazones de tortugas y presas acorazadas."
+            }
+        ];
+        
+        let posicionEnLaLista = null;
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        function cambiarVista(pantallaDestino) {
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO (La magia del Ciclo)
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            cajaMuro.innerHTML = "";
+
+            if (miListaDePublicaciones.length === 0) {
+                cajaMuro.innerHTML = `<p style="text-align: center; color: #6b7280;">Aún no hay publicaciones. ¡Crea la primera!</p>`;
+                return;
+            }
+
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                let postActual = miListaDePublicaciones[i];
+
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        ${postActual.imagen ? `<img src="${postActual.imagen}" class="img-post">` : ''}
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal,
+                texto: textoEscrito
+            });
+            
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            mostrarPosts();
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        function borrarPost(numeroEnLaFila) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        function abrirEditar(numeroEnLaFila) {
+            posicionEnLaLista = numeroEnLaFila;
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            cambiarVista('vista-editar'); 
+        }
+
+        function guardarEdicion() {
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+</body>
+</html>

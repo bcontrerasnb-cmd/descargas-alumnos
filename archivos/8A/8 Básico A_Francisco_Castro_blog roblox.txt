@@ -1,0 +1,304 @@
+from pathlib import Path
+
+src = Path("/mnt/data/Material_Blog8°.txt")
+html = src.read_text(encoding="utf-8")
+
+css = """
+        /* DISEÑO DEL BLOG: ROBLOX */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 30px 18px 50px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #f4f7fb;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(0, 162, 255, .22), transparent 28%),
+                radial-gradient(circle at 90% 85%, rgba(0, 200, 120, .16), transparent 25%),
+                #101722;
+        }
+
+        nav {
+            max-width: 1050px;
+            margin: 0 auto 28px;
+            padding: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(24, 36, 52, .92);
+            border: 1px solid #2d4058;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
+        }
+
+        section {
+            width: min(100%, 900px);
+            margin: 0 auto;
+            padding: clamp(24px, 5vw, 48px);
+            background: rgba(25, 38, 55, .96);
+            border: 1px solid #30465f;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, .28);
+            animation: aparecer .3s ease;
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            color: #ffffff;
+            letter-spacing: -.4px;
+        }
+
+        h1 {
+            margin-bottom: 14px;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            line-height: 1.1;
+        }
+
+        h1::after {
+            content: "";
+            display: block;
+            width: 76px;
+            height: 5px;
+            margin-top: 18px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #00a2ff, #00d084);
+        }
+
+        h2 {
+            margin-bottom: 26px;
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+        }
+
+        p {
+            color: #c8d5e4;
+            line-height: 1.7;
+        }
+
+        #vista-inicio {
+            text-align: center;
+            padding-top: 70px;
+            padding-bottom: 70px;
+            background:
+                linear-gradient(135deg, rgba(0, 162, 255, .13), rgba(0, 208, 132, .08)),
+                rgba(25, 38, 55, .97);
+        }
+
+        #vista-inicio h1::after {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #vista-inicio p {
+            max-width: 600px;
+            margin: 0 auto 28px;
+            font-size: 1.08rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            margin: 5px 4px;
+            padding: 11px 20px;
+            border: 0;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #087ed1, #00a2ff);
+            color: white;
+            font-size: .95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+            box-shadow: 0 6px 16px rgba(0, 162, 255, .2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+            box-shadow: 0 9px 20px rgba(0, 162, 255, .3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secundario {
+            background: #34465d;
+            box-shadow: none;
+        }
+
+        .btn-secundario:hover {
+            background: #435a75;
+            box-shadow: 0 7px 16px rgba(0, 0, 0, .2);
+        }
+
+        .btn-peligro {
+            background: #c83d50;
+            box-shadow: none;
+        }
+
+        .btn-peligro:hover {
+            background: #e04b5f;
+        }
+
+        label {
+            display: inline-block;
+            margin: 12px 0 7px;
+            color: #e8f1fb;
+            font-weight: 650;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            margin-top: 5px;
+            padding: 13px 14px;
+            border: 1px solid #405873;
+            border-radius: 10px;
+            outline: none;
+            background: #111d2b;
+            color: #f4f7fb;
+            font: inherit;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            color: #c8d5e4;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #8193a8;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #00a2ff;
+            box-shadow: 0 0 0 3px rgba(0, 162, 255, .15);
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        #muro {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+            gap: 22px;
+        }
+
+        .tarjeta-post {
+            min-width: 0;
+            overflow: hidden;
+            padding: 18px;
+            border: 1px solid #3a5069;
+            border-radius: 16px;
+            background: #1b2a3d;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .18);
+            transition: transform .2s ease, border-color .2s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-4px);
+            border-color: #00a2ff;
+        }
+
+        .t-post {
+            margin-bottom: 14px;
+            overflow-wrap: anywhere;
+            font-size: 1.25rem;
+        }
+
+        .img-post {
+            display: block;
+            width: 100%;
+            max-height: 230px;
+            object-fit: cover;
+            border-radius: 11px;
+            background: #101722;
+        }
+
+        .p-post {
+            margin: 15px 0;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .caja-botones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .caja-botones .btn {
+            flex: 1;
+            margin: 0;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 10px 30px;
+            }
+
+            nav {
+                gap: 7px;
+                padding: 10px;
+            }
+
+            nav .btn {
+                flex: 1 1 100%;
+                margin: 0;
+            }
+
+            section {
+                padding: 24px 18px;
+                border-radius: 16px;
+            }
+
+            #vista-inicio {
+                padding-top: 48px;
+                padding-bottom: 48px;
+            }
+
+            #vista-inicio .btn {
+                width: 100%;
+                margin: 6px 0;
+            }
+        }
+"""
+
+html = html.replace(
+    '<style id="estilos-ia">\n        #vista-publicaciones, #vista-crear, #vista-editar { display: none; }\n    </style>',
+    '<style id="estilos-ia">\n        #vista-publicaciones, #vista-crear, #vista-editar { display: none; }\n' + css + '    </style>'
+)
+
+# Adaptar solamente los textos visibles; se conserva la estructura y el JavaScript original.
+replacements = {
+    "<title>Mi Blog Personal - 8° Básico</title>": "<title>Mi Blog de Roblox - 8° Básico</title>",
+    "<h1>Bienvenido a Mi Blog Personal</h1>": "<h1>¡Bienvenido al mundo de Roblox!</h1>",
+    "<p>Este es mi espacio para compartir ideas, fotos y proyectos de 8° Básico.</p>": "<p>Un espacio para compartir tus juegos favoritos, avatares, aventuras, trucos y novedades del universo Roblox.</p>",
+    "<button class=\"btn\" onclick=\"cambiarVista('vista-crear')\">¡Crear mi primer post!</button>": "<button class=\"btn\" onclick=\"cambiarVista('vista-crear')\">¡Compartir mi primera aventura!</button>",
+    "<h2>Muro de Publicaciones</h2>": "<h2>Publicaciones de Roblox</h2>",
+    "<h2>Nueva Publicación</h2>": "<h2>Compartir una aventura de Roblox</h2>",
+    "<input type=\"text\" id=\"tit\" placeholder=\"Escribe un título...\">": "<input type=\"text\" id=\"tit\" placeholder=\"Ej.: Mi juego favorito de Roblox...\">",
+    "<textarea id=\"txt\" rows=\"5\" placeholder=\"¿Qué quieres contar hoy?\"></textarea>": "<textarea id=\"txt\" rows=\"5\" placeholder=\"Cuenta qué juego probaste, qué construiste o qué aventura viviste...\"></textarea>",
+}
+for old, new in replacements.items():
+    html = html.replace(old, new)
+
+out = Path("/mnt/data/Blog_Roblox.html")
+out.write_text(html, encoding="utf-8")
+print(f"Archivo creado: {out}")

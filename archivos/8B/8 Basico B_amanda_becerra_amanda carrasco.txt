@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italia: Arte, Historia y Sabor - 8° Básico</title>
+    
+    <!-- BLOQUE CSS (DISEÑO ITALIANO) -->
+    <style id="estilos-ia">
+        :root {
+            --color-principal: #008C45; /* Verde bandera de Italia */
+            --color-secundario: #CD212A; /* Rojo bandera de Italia */
+            --color-fondo: #F4F1EA; /* Marfil / pergamino claro */
+            --color-texto: #2C2C2C;
+            --color-tarjeta: #FFFFFF;
+            --sombra: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radio: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #008C45 0%, #FFFFFF 50%, #CD212A 100%);
+            color: #222;
+            padding: 30px;
+            border-radius: var(--radio);
+            margin-bottom: 30px;
+            box-shadow: var(--sombra);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #444;
+            margin-top: 5px;
+        }
+
+        /* Contenedores de Vistas */
+        .vista {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--color-tarjeta);
+            padding: 30px;
+            border-radius: var(--radio);
+            box-shadow: var(--sombra);
+            margin-bottom: 30px;
+        }
+
+        /* Control de pantallas (ocultas por defecto según tu script, excepto inicio) */
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        /* Botones generales */
+        .btn {
+            background-color: var(--color-principal);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.1s;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-secundario {
+            background-color: #004aad;
+        }
+
+        .btn-peligro {
+            background-color: var(--color-secundario);
+        }
+
+        .btn-volver {
+            background-color: #6c757d;
+        }
+
+        /* Vista de Inicio */
+        #vista-inicio {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        #vista-inicio h2 {
+            color: var(--color-principal);
+            margin-bottom: 15px;
+        }
+
+        #vista-inicio p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* Estilo de las Tarjetas de Posts (Muro) */
+        .tarjeta-post {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--radio);
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: var(--sombra);
+            transition: transform 0.2s;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-3px);
+        }
+
+        .t-post {
+            color: var(--color-secundario);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .p-post {
+            font-size: 1.05rem;
+            color: #444;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+
+        .caja-botones {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            height: 120px;
+        }
+
+        .ayuda-texto {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🇮🇹 Il Bel Paese: Descubriendo Italia</h1>
+        <p>Blog Personal Escolar - Curso 8° Básico</p>
+    </header>
+
+    <!-- BLOQUE HTML: LAS 4 VISTAS DEL BLOG -->
+
+    <!-- 1. VISTA DE INICIO -->
+    <div id="vista-inicio" class="vista">
+        <h2>¡Bienvenidos a mi Rincón Italiano!</h2>
+        <p>Explora los lugares más fascinantes, la historia y la cultura de Italia. Puedes leer las publicaciones del muro, crear nuevas entradas o editar tus experiencias de viaje.</p>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">Ver Publicaciones</button>
+        <button class="btn btn-secundario" onclick="cambiarVista('vista-crear')">Crear Nuevo Post</button>
+    </div>
+
+    <!-- 2. VISTA DE PUBLICACIONES (EL MURO) -->
+    <div id="vista-publicaciones" class="vista">
+        <h2>Muro de Viajes y Curiosidades</h2>
+        <div style="margin-bottom: 20px;">
+            <button class="btn btn-volver" onclick="cambiarVista('vista-inicio')">⬅ Volver al Inicio</button>
+            <button class="btn btn-secundario" onclick="cambiarVista('vista-crear')">➕ Nuevo Post</button>
+        </div>
+        
+        <!-- Aquí el script dibuja los posts -->
+        <div id="muro"></div>
+    </div>
+
+    <!-- 3. VISTA CREAR PUBLICACIÓN -->
+    <div id="vista-crear" class="vista">
+        <h2>Crear Nueva Publicación</h2>
+        
+        <div class="form-group">
+            <label for="tit">Título del Post:</label>
+            <input type="text" id="tit" class="form-control" placeholder="Ej: Un paseo por los canales de Venecia">
+        </div>
+
+        <div class="form-group">
+            <label for="txt">Texto o Descripción:</label>
+            <textarea id="txt" class="form-control" placeholder="Escribe aquí lo que descubriste sobre Italia..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="imgArchivo">Subir Imagen desde tu Computador:</label>
+            <input type="file" id="imgArchivo" class="form-control" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label for="imgUrl">O pega un Link de Imagen de Internet:</label>
+            <input type="text" id="imgUrl" class="form-control" placeholder="https://ejemplo.com/imagen.jpg">
+            <div class="ayuda-texto">Nota: Si usas ambos, tendrá prioridad la imagen subida desde tu PC.</div>
+        </div>
+
+        <button class="btn" onclick="crearPost()">Publicar en el Muro</button>
+        <button class="btn btn-volver" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </div>
+
+    <!-- 4. VISTA EDITAR PUBLICACIÓN -->
+    <div id="vista-editar" class="vista">
+        <h2>Editar Publicación</h2>
+        
+        <input type="hidden" id="edit-imgActual">
+
+        <div class="form-group">
+            <label for="edit-tit">Editar Título:</label>
+            <input type="text" id="edit-tit" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="edit-txt">Editar Texto:</label>
+            <textarea id="edit-txt" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="edit-imgArchivo">Cambiar Imagen (Archivo):</label>
+            <input type="file" id="edit-imgArchivo" class="form-control" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label for="edit-imgUrl">O cambiar por Link de Internet:</label>
+            <input type="text" id="edit-imgUrl" class="form-control">
+        </div>
+
+        <button class="btn" onclick="guardarEdicion()">Guardar Cambios</button>
+        <button class="btn btn-volver" onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+    </div>
+
+
+    <!-- (EL CEREBRO DEL BLOG - TU SCRIPT ORIGINAL CON DATOS INICIALES DE ITALIA) -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE COMPRAS (El Arreglo) con Posts Iniciales de Italia
+        // ==========================================
+        let miListaDePublicaciones = [
+            {
+                titulo: "El Coliseo Romano: Historia Viva",
+                imagen: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80",
+                texto: "El Coliseo es uno de los monumentos más imponentes de Roma. En la época del Imperio Romano, albergaba batallas de gladiadores y espectáculos masivos. ¡Impresiona mucho verlo en persona por su tamaño gigante!"
+            },
+            {
+                titulo: "Venecia y sus canales mágicos",
+                imagen: "https://images.unsplash.com/photo-1514896856597-1d23f309d1e3?auto=format&fit=crop&w=800&q=80",
+                texto: "Venecia es una ciudad construida sobre más de 100 pequeñas islas en una laguna. No hay autos, ¡todo el transporte se hace en góndolas y botes a través de los canales!"
+            }
+        ];
+        
+        let posicionEnLaLista = null;
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        function cambiarVista(pantallaDestino) {
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            cajaMuro.innerHTML = "";
+
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                let postActual = miListaDePublicaciones[i];
+
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post" alt="Imagen del post">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal !== "" ? imagenFinal : "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=800&q=80",
+                texto: textoEscrito
+            });
+            
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            mostrarPosts();
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        function borrarPost(numeroEnLaFila) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        function abrirEditar(numeroEnLaFila) {
+            posicionEnLaLista = numeroEnLaFila;
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            cambiarVista('vista-editar'); 
+        }
+
+        function guardarEdicion() {
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+
+        // Ejecutar al cargar la página para que aparezcan los posts iniciales de Italia
+        window.onload = function() {
+            mostrarPosts();
+        };
+    </script>
+</body>
+</html>

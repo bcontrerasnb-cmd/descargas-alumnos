@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog - Vóleibol Chileno</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f4f8;
+    color: #202b3c;
+}
+
+/* ENCABEZADO */
+header {
+    background: linear-gradient(120deg, #0033a0, #0055bd);
+    color: white;
+    text-align: center;
+    padding: 35px 15px;
+}
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 16px;
+}
+
+/* MENU */
+nav {
+    background: #d71920;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 7px;
+    padding: 11px 17px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+nav button {
+    background: white;
+    color: #0033a0;
+}
+
+button:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+.btn {
+    background: #0033a0;
+    color: white;
+}
+
+.btn-secundario {
+    background: #64748b;
+    color: white;
+}
+
+.btn-peligro {
+    background: #d71920;
+    color: white;
+}
+
+/* CONTENIDO */
+main {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 15px;
+}
+
+section {
+    display: none;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #00000012;
+}
+
+#vista-inicio {
+    display: block;
+}
+
+h2 {
+    color: #0033a0;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #0033a0;
+    margin-bottom: 12px;
+}
+
+/* PORTADA */
+.portada {
+    text-align: center;
+    padding: 35px 15px;
+    border-top: 6px solid #d71920;
+}
+
+.portada h2 {
+    font-size: 29px;
+}
+
+.portada p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 15px 0;
+}
+
+.bandera {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.frase {
+    background: #eaf0ff;
+    padding: 18px;
+    border-left: 5px solid #d71920;
+    margin: 25px 0;
+    font-weight: bold;
+    color: #0033a0;
+}
+
+/* TARJETAS */
+#inicio-noticias, #muro {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.tarjeta-post {
+    border: 1px solid #e1e5ed;
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 3px 9px #00000010;
+}
+
+.img-post {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+}
+
+.t-post {
+    padding: 15px 15px 0;
+}
+
+.p-post {
+    padding: 10px 15px 15px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.caja-botones {
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* FORMULARIOS */
+label {
+    display: block;
+    font-weight: bold;
+    margin: 15px 0 7px;
+    color: #0033a0;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+footer {
+    background: #0033a0;
+    color: white;
+    text-align: center;
+    padding: 22px;
+    margin-top: 35px;
+}
+
+@media(max-width: 600px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    section {
+        padding: 17px;
+    }
+
+    nav button {
+        flex: 1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENCABEZADO -->
+<header>
+    <h1>🇨🇱 VÓLEIBOL CHILENO 🏐</h1>
+    <p>Blog dedicado a la Selección Chilena de Vóleibol</p>
+</header>
+
+<!-- MENU DE NAVEGACION -->
+<nav>
+    <button onclick="cambiarVista('vista-inicio')">Inicio</button>
+    <button onclick="cambiarVista('vista-publicaciones')">Noticias</button>
+    <button onclick="cambiarVista('vista-crear')">Crear publicación</button>
+</nav>
+
+<main>
+
+<!-- 1. INICIO -->
+<section id="vista-inicio" class="portada">
+
+    <div class="bandera">🇨🇱 🏐</div>
+
+    <h2>¡Bienvenidos al Blog del Vóleibol Chileno!</h2>
+
+    <p>
+        Este espacio está dedicado a nuestra Selección Chilena
+        de Vóleibol. Aquí podrás conocer más sobre sus jugadores,
+        partidos, competencias y logros deportivos.
+    </p>
+
+    <div class="frase">
+        ¡Con esfuerzo, pasión y trabajo en equipo,
+        representamos a Chile!
+    </div>
+
+    <button class="btn" onclick="cambiarVista('vista-publicaciones')">
+        Ver noticias
+    </button>
+
+    <button class="btn-secundario"
+    onclick="cambiarVista('vista-crear')">
+        Crear publicación
+    </button>
+
+    <h2 style="margin-top:35px;">Últimas publicaciones</h2>
+
+    <div id="inicio-noticias"></div>
+
+</section>
+
+<!-- 2. MURO DE PUBLICACIONES -->
+<section id="vista-publicaciones">
+
+    <h2>🏐 Noticias y publicaciones</h2>
+
+    <p>Conoce las novedades de nuestra selección.</p>
+
+    <div id="muro"></div>
+
+</section>
+
+<!-- 3. CREAR PUBLICACION -->
+<section id="vista-crear">
+
+    <h2>📝 Crear nueva publicación</h2>
+
+    <label for="tit">Título de la noticia:</label>
+    <input type="text" id="tit"
+    placeholder="Ejemplo: Chile juega un nuevo partido">
+
+    <label for="imgArchivo">Subir fotografía desde el computador:</label>
+    <input type="file" id="imgArchivo" accept="image/*">
+
+    <label for="imgUrl">O pegar enlace de una imagen:</label>
+    <input type="text" id="imgUrl"
+    placeholder="https://ejemplo.com/foto.jpg">
+
+    <label for="txt">Contenido de la publicación:</label>
+    <textarea id="txt" rows="5"
+    placeholder="Escribe aquí la noticia del vóleibol chileno..."></textarea>
+
+    <div class="acciones">
+        <button class="btn" onclick="crearPost()">Publicar</button>
+        <button class="btn-secundario"
+        onclick="cambiarVista('vista-inicio')">Cancelar</button>
+    </div>
+
+</section>
+
+<!-- 4. EDITAR PUBLICACION -->
+<section id="vista-editar">
+
+    <h2>✏️ Editar publicación</h2>
+
+    <input type="hidden" id="edit-imgActual">
+
+    <label for="edit-tit">Título:</label>
+    <input type="text" id="edit-tit">
+
+    <label for="edit-imgArchivo">Cambiar fotografía:</label>
+    <input type="file" id="edit-imgArchivo" accept="image/*">
+
+    <label for="edit-imgUrl">O colocar otro enlace:</label>
+    <input type="text" id="edit-imgUrl"
+    placeholder="Dejar vacío para mantener la imagen">
+
+    <label for="edit-txt">Contenido:</label>
+    <textarea id="edit-txt" rows="5"></textarea>
+
+    <div class="acciones">
+        <button class="btn" onclick="guardarEdicion()">
+            Guardar cambios
+        </button>
+
+        <button class="btn-secundario"
+        onclick="cambiarVista('vista-publicaciones')">
+            Cancelar
+        </button>
+    </div>
+
+</section>
+
+</main>
+
+<!-- PIE DE PAGINA -->
+<footer>
+    <p>🇨🇱 Blog del Vóleibol Chileno 🏐</p>
+    <p>Pasión, esfuerzo y trabajo en equipo.</p>
+    <p>Proyecto de Tecnología - 8° Básico</p>
+</footer>
+
+<script>
+
+// =====================================
+// 1. ARREGLO DE PUBLICACIONES
+// =====================================
+
+let miListaDePublicaciones = [
+    {
+        titulo: "La Selección Chilena de Vóleibol",
+        imagen: "",
+        texto: "Nuestra selección representa a Chile en competencias nacionales e internacionales. Sus jugadores demuestran esfuerzo, compromiso y pasión por este deporte."
+    },
+    {
+        titulo: "El trabajo en equipo",
+        imagen: "",
+        texto: "El vóleibol es un deporte colectivo en el que la comunicación, la coordinación y la confianza entre compañeros son fundamentales para conseguir la victoria."
+    },
+    {
+        titulo: "Chile y las competencias internacionales",
+        imagen: "",
+        texto: "La participación internacional permite a los deportistas chilenos adquirir experiencia, mejorar su nivel y representar con orgullo a nuestro país."
+    }
+];
+
+let posicionEnLaLista = null;
+
+
+// =====================================
+// 2. CAMBIAR ENTRE PANTALLAS
+// =====================================
+
+function cambiarVista(pantallaDestino) {
+
+    document.getElementById('vista-inicio').style.display = 'none';
+
+    document.getElementById('vista-publicaciones').style.display = 'none';
+
+    document.getElementById('vista-crear').style.display = 'none';
+
+    document.getElementById('vista-editar').style.display = 'none';
+
+    document.getElementById(pantallaDestino).style.display = 'block';
+
+    if (pantallaDestino === 'vista-inicio') {
+        mostrarInicio();
+    }
+
+    if (pantallaDestino === 'vista-publicaciones') {
+        mostrarPosts();
+    }
+}
+
+
+// =====================================
+// 3. OBTENER IMAGEN
+// =====================================
+
+function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+
+    let archivoDePC =
+    document.getElementById(cajaArchivo).files[0];
+
+    let linkDeInternet =
+    document.getElementById(cajaLink).value.trim();
+
+    if (archivoDePC) {
+        return URL.createObjectURL(archivoDePC);
+    }
+
+    else if (linkDeInternet !== "") {
+        return linkDeInternet;
+    }
+
+    else if (cajaFotoVieja) {
+        return document.getElementById(cajaFotoVieja).value;
+    }
+
+    return "";
+}
+
+
+// =====================================
+// 4. MOSTRAR PUBLICACIONES
+// =====================================
+
+function mostrarPosts() {
+
+    let cajaMuro = document.getElementById("muro");
+
+    cajaMuro.innerHTML = "";
+
+    for (let i = 0; i < miListaDePublicaciones.length; i++) {
+
+        let postActual = miListaDePublicaciones[i];
+
+        let tarjeta = document.createElement("article");
+        tarjeta.className = "tarjeta-post";
+
+        let titulo = document.createElement("h3");
+        titulo.className = "t-post";
+        titulo.textContent = postActual.titulo;
+
+        tarjeta.appendChild(titulo);
+
+        if (postActual.imagen !== "") {
+            let imagen = document.createElement("img");
+            imagen.src = postActual.imagen;
+            imagen.className = "img-post";
+            imagen.alt = "Imagen de la publicación";
+
+            tarjeta.appendChild(imagen);
+        }
+
+        let texto = document.createElement("p");
+        texto.className = "p-post";
+        texto.textContent = postActual.texto;
+
+        tarjeta.appendChild(texto);
+
+        let botones = document.createElement("div");
+        botones.className = "caja-botones";
+
+        let botonEditar = document.createElement("button");
+        botonEditar.className = "btn-secundario";
+        botonEditar.textContent = "Editar";
+        botonEditar.onclick = function() {
+            abrirEditar(i);
+        };
+
+        let botonEliminar = document.createElement("button");
+        botonEliminar.className = "btn-peligro";
+        botonEliminar.textContent = "Eliminar";
+        botonEliminar.onclick = function() {
+            borrarPost(i);
+        };
+
+        botones.appendChild(botonEditar);
+        botones.appendChild(botonEliminar);
+
+        tarjeta.appendChild(botones);
+
+        cajaMuro.appendChild(tarjeta);
+    }
+}
+
+
+// =====================================
+// 5. MOSTRAR NOTICIAS EN EL INICIO
+// =====================================
+
+function mostrarInicio() {
+
+    let cajaInicio = document.getElementById("inicio-noticias");
+
+    cajaInicio.innerHTML = "";
+
+    for (let i = 0; i < miListaDePublicaciones.length && i < 3; i++) {
+
+        let post = miListaDePublicaciones[i];
+
+        let tarjeta = document.createElement("div");
+        tarjeta.className = "tarjeta-post";
+
+        let titulo = document.createElement("h3");
+        titulo.className = "t-post";
+        titulo.textContent = post.titulo;
+
+        let texto = document.createElement("p");
+        texto.className = "p-post";
+        texto.textContent = post.texto;
+
+        tarjeta.appendChild(titulo);
+
+        if (post.imagen !== "") {
+            let imagen = document.createElement("img");
+            imagen.src = post.imagen;
+            imagen.className = "img-post";
+            imagen.alt = "Fotografía de la noticia";
+            tarjeta.appendChild(imagen);
+        }
+
+        tarjeta.appendChild(texto);
+        cajaInicio.appendChild(tarjeta);
+    }
+}
+
+
+// =====================================
+// 6. CREAR PUBLICACION
+// =====================================
+
+function crearPost() {
+
+    let tituloEscrito =
+    document.getElementById("tit").value.trim();
+
+    let textoEscrito =
+    document.getElementById("txt").value.trim();
+
+    let imagenFinal =
+    obtenerImagen("imgArchivo", "imgUrl");
+
+    if (tituloEscrito === "" && textoEscrito === "") {
+
+        alert("¡Debes escribir un título o un texto!");
+        return;
+    }
+
+    miListaDePublicaciones.push({
+
+        titulo: tituloEscrito,
+        imagen: imagenFinal,
+        texto: textoEscrito
+
+    });
+
+    document.getElementById("tit").value = "";
+    document.getElementById("txt").value = "";
+    document.getElementById("imgUrl").value = "";
+    document.getElementById("imgArchivo").value = "";
+
+    mostrarPosts();
+
+    cambiarVista('vista-publicaciones');
+
+    alert("¡Tu publicación fue creada!");
+}
+
+
+// =====================================
+// 7. ELIMINAR PUBLICACION
+// =====================================
+
+function borrarPost(numeroEnLaFila) {
+
+    let confirmacion =
+    confirm("¿Seguro que quieres eliminar esta publicación?");
+
+    if (confirmacion === true) {
+
+        miListaDePublicaciones.splice(numeroEnLaFila, 1);
+
+        mostrarPosts();
+
+        alert("Publicación eliminada.");
+    }
+}
+
+
+// =====================================
+// 8. ABRIR EDICION
+// =====================================
+
+function abrirEditar(numeroEnLaFila) {
+
+    posicionEnLaLista = numeroEnLaFila;
+
+    let postParaCorregir =
+    miListaDePublicaciones[numeroEnLaFila];
+
+    document.getElementById("edit-tit").value =
+    postParaCorregir.titulo;
+
+    document.getElementById("edit-txt").value =
+    postParaCorregir.texto;
+
+    document.getElementById("edit-imgActual").value =
+    postParaCorregir.imagen;
+
+    document.getElementById("edit-imgArchivo").value = "";
+
+    document.getElementById("edit-imgUrl").value = "";
+
+    cambiarVista('vista-editar');
+}
+
+
+// =====================================
+// 9. GUARDAR EDICION
+// =====================================
+
+function guardarEdicion() {
+
+    let nuevoTitulo =
+    document.getElementById("edit-tit").value.trim();
+
+    let nuevoTexto =
+    document.getElementById("edit-txt").value.trim();
+
+    let nuevaImagen =
+    obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+
+    if (nuevoTitulo === "" && nuevoTexto === "") {
+        alert("Debes escribir un título o contenido.");
+        return;
+    }
+
+    if (posicionEnLaLista === null ||
+        !miListaDePublicaciones[posicionEnLaLista]) {
+        alert("No se encontró la publicación.");
+        return;
+    }
+
+    miListaDePublicaciones[posicionEnLaLista].titulo =
+    nuevoTitulo;
+
+    miListaDePublicaciones[posicionEnLaLista].texto =
+    nuevoTexto;
+
+    miListaDePublicaciones[posicionEnLaLista].imagen =
+    nuevaImagen;
+
+    posicionEnLaLista = null;
+
+    mostrarPosts();
+
+    cambiarVista('vista-publicaciones');
+
+    alert("¡Cambios guardados correctamente!");
+}
+
+
+// =====================================
+// 10. INICIAR BLOG
+// =====================================
+
+mostrarInicio();
+
+</script>
+
+</body>
+</html>

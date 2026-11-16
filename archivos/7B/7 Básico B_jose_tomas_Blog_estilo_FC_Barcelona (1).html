@@ -1,0 +1,504 @@
+
+Material_Codigo 7°.txt
+Iniciar sesión
+100 %
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Blog Personal - 7° Básico</title>
+    <!-- BLOQUE CSS (DISEÑO) -->
+    <style id="estilos-ia">
+
+        /* =========================================
+           ESTILO FC BARCELONA - SOLO CSS
+           Se mantienen intactos el HTML y JavaScript.
+           ========================================= */
+        :root {
+            --color-fondo: #f2f0f5;
+            --color-texto: #172044;
+            --color-primario: #a50044;
+            --color-primario-hover: #75002f;
+            --color-secundario: #edc951;
+            --color-peligro: #c62828;
+            --color-exito: #16834a;
+            --blanco: #ffffff;
+            --borde-suave: 14px;
+            --sombra: 0 8px 24px rgba(10, 25, 74, 0.13);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background:
+                linear-gradient(135deg, rgba(10, 25, 74, 0.96), rgba(165, 0, 68, 0.92)),
+                #172044;
+            background-attachment: fixed;
+            color: var(--color-texto);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        #vista-publicaciones, #vista-crear, #vista-editar {
+            display: none;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #10245e 0%, #10245e 50%, #a50044 50%, #a50044 100%);
+            border-bottom: 5px solid #edc951;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 16px 0;
+        }
+
+        .nav-item {
+            margin: 0 22px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.08rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-block;
+        }
+
+        .nav-link:hover {
+            color: #edc951;
+            transform: translateY(-2px);
+        }
+
+        .contenedor-principal {
+            max-width: 900px;
+            margin: 42px auto;
+            padding: 0 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.5s ease-in-out;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #vista-inicio {
+            text-align: center;
+            background: linear-gradient(145deg, #ffffff, #f8f5f8);
+            padding: 48px 38px;
+            border-radius: 20px;
+            border-top: 8px solid #a50044;
+            border-bottom: 8px solid #10245e;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .titulo-principal {
+            color: #10245e;
+            margin-bottom: 22px;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0 rgba(237, 201, 81, 0.65);
+        }
+
+        .foto-perfil {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #a50044;
+            outline: 4px solid #edc951;
+            margin: 8px 0 24px;
+            box-shadow: 0 8px 20px rgba(16, 36, 94, 0.2);
+        }
+
+        .texto-bienvenida {
+            font-size: 1.15rem;
+            color: #343b55;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .tarjeta-formulario {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 18px;
+            border-top: 7px solid #a50044;
+            box-shadow: var(--sombra);
+            margin-bottom: 40px;
+        }
+
+        .subtitulo {
+            margin-bottom: 22px;
+            color: #10245e;
+            border-bottom: 3px solid #edc951;
+            padding-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.92rem;
+            color: #555d75;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 13px 14px;
+            margin-bottom: 15px;
+            border: 2px solid #d9dce7;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #fbfbfd;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: #a50044;
+            box-shadow: 0 0 0 3px rgba(165, 0, 68, 0.13);
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .btn {
+            padding: 11px 21px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: #ffffff;
+            cursor: pointer;
+            transition: filter 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            filter: brightness(1.08);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.16);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primario {
+            background: linear-gradient(90deg, #10245e, #a50044);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-secundario {
+            background-color: #edb900;
+            color: #172044;
+            margin-right: 10px;
+        }
+
+        .btn-peligro {
+            background-color: #c62828;
+        }
+
+        .btn-exito {
+            background-color: #16834a;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        .tarjeta-post {
+            background: #ffffff;
+            border-radius: 16px;
+            border-left: 7px solid #a50044;
+            box-shadow: 0 8px 24px rgba(10, 25, 74, 0.16);
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 13px 30px rgba(10, 25, 74, 0.22);
+        }
+
+        .t-post {
+            padding: 22px 22px 10px;
+            color: #10245e;
+            font-size: 1.45rem;
+            font-weight: 850;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .img-post[src=""], .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 17px 22px;
+            color: #3e4355;
+            white-space: pre-wrap;
+        }
+
+        .caja-botones {
+            padding: 16px 22px 20px;
+            border-top: 1px solid #e5e7ef;
+            background: #f7f7fa;
+        }
+
+        @media (max-width: 600px) {
+            .nav-lista {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .nav-item {
+                margin: 5px 0;
+            }
+
+            .contenedor-principal {
+                margin: 24px auto;
+                padding: 0 13px;
+            }
+
+            #vista-inicio {
+                padding: 32px 20px;
+            }
+
+            .tarjeta-formulario {
+                padding: 22px;
+            }
+
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secundario, .btn-peligro, .btn-exito {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML (ESTRUCTURA Y VISTAS) -->
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">Inicio</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">Publicaciones</a></li>
+        </ul>
+    </nav>
+
+    <main class="contenedor-principal">
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+            <h1 class="titulo-principal">Bienvenido a mi Blog</h1>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png" class="foto-perfil" alt="Mi Foto">
+            <p class="texto-bienvenida">¡Hola! Soy estudiante de 7° Básico del Colegio Concepción y este es mi espacio donde compartiré mis ideas y proyectos.</p>
+        </section>
+
+        <section id="vista-publicaciones" class="vista-seccion">
+            <button class="btn btn-primario" onclick="cambiarVista('vista-crear')" style="margin-bottom: 20px;">+ Crear Nueva Publicación</button>
+            <div id="muro" class="contenedor-muro"></div>
+        </section>
+
+        <section id="vista-crear" class="vista-seccion">
+            <div class="tarjeta-formulario">
+                <h2 class="subtitulo">Nueva Publicación</h2>
+                <input type="text" id="tit" class="input-formulario" placeholder="Título (máx 50 caracteres)" maxlength="50">
+                <p class="etiqueta-pequena">Imagen (Sube un archivo o pega un link):</p>
+                <input type="file" id="imgArchivo" class="input-formulario" accept="image/*">
+                <input type="text" id="imgUrl" class="input-formulario" placeholder="O pega la URL aquí">
+                <textarea id="txt" class="textarea-formulario" placeholder="¿Qué estás pensando?"></textarea>
+                <button class="btn btn-primario" onclick="crearPost()">Publicar</button>
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+            </div>
+        </section>
+
+        <section id="vista-editar" class="vista-seccion">
+            <div class="tarjeta-formulario">
+                <h2 class="subtitulo">Editar Publicación</h2>
+                <input type="text" id="edit-tit" class="input-formulario" maxlength="50">
+                <p class="etiqueta-pequena">Cambiar imagen (déjalo en blanco para mantener la actual):</p>
+                <input type="file" id="edit-imgArchivo" class="input-formulario" accept="image/*">
+                <input type="text" id="edit-imgUrl" class="input-formulario" placeholder="O nueva URL de imagen">
+                <input type="hidden" id="edit-imgActual">
+                <textarea id="edit-txt" class="textarea-formulario"></textarea>
+                <button class="btn btn-exito" onclick="guardarEdicion()">Guardar Cambios</button>
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- BLOQUE JAVASCRIPT (LÓGICA Y CRUD 7° Básico) -->
+    <script>
+        // FUNCIÓN: CAMBIAR ENTRE VISTAS SIN RECARGAR LA PÁGINA
+        // Recibe como parámetro el ID de la sección que queremos mostrar.
+        function cambiarVista(idVistaDestino) {
+            // Paso 1: Buscamos todas las secciones en el documento y las ocultamos ('none').
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            // Paso 2: Buscamos la sección que pidió el usuario y la mostramos en pantalla ('block').
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+        // FUNCIÓN: SABER QUÉ TIPO DE IMAGEN SUBIÓ EL USUARIO
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+            // Buscamos si hay un archivo seleccionado en el PC y si escribieron un texto en la URL.
+            let archivo = document.getElementById(idArchivo).files[0];
+            let url = document.getElementById(idUrl).value;
+            
+            if (archivo) {
+                // Si subió un archivo, le pedimos al navegador que invente un link temporal para poder verlo.
+                return URL.createObjectURL(archivo); 
+            } else if (url !== "") {
+                // Si pegó una URL de internet, devolvemos ese mismo link.
+                return url; 
+            } else if (idActual) {
+                // Si estamos editando y no subió nada nuevo, mantenemos la imagen vieja oculta en el HTML.
+                return document.getElementById(idActual).value; 
+            }
+            // Si dejó todo vacío, devolvemos un texto vacío.
+            return ""; 
+        }
+
+        // FUNCIÓN: CREAR UNA NUEVA PUBLICACIÓN (La 'C' de CRUD)
+        function crearPost() {
+            // 1. Rescatamos lo que el usuario escribió en las cajas de texto (.value).
+            let titulo = document.getElementById("tit").value;
+            let texto = document.getElementById("txt").value;
+            
+            // 2. Llamamos a nuestra función ayudante para ver qué imagen eligió.
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            // 3. Validamos: si el título Y el texto están vacíos, lanzamos una alerta y cortamos la función (return).
+            if(titulo === "" && texto === "") {
+                alert("¡Debes escribir un título o texto antes de publicar!");
+                return; // Este return frena la ejecución aquí.
+            }
+
+            // 4. Buscamos el div "muro" y le sumamos (+=) el código HTML con los datos inyectados.
+            // Usamos las comillas invertidas (`) para poder escribir HTML de múltiples líneas y variables.
+            document.getElementById("muro").innerHTML += `
+                <div class="tarjeta-post">
+                    <h3 class="t-post">${titulo}</h3>
+                    <img src="${imagenFinal}" class="img-post">
+                    <p class="p-post">${texto}</p>
+                    <div class="caja-botones">
+                        <!-- El botón 'this' envía toda la información de sí mismo a la función -->
+                        <button class="btn btn-secundario" onclick="abrirEditar(this)">Editar</button>
+                        <button class="btn btn-peligro" onclick="borrarPost(this)">Eliminar</button>
+                    </div>
+                </div>
+            `;
+            
+            // 5. Limpiamos las cajas del formulario para que queden vacías para el próximo post.
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            // 6. Finalmente, nos cambiamos de pantalla para ver el muro actualizado.
+            cambiarVista('vista-publicaciones');
+        }
+
+        // FUNCIÓN: ELIMINAR UNA PUBLICACIÓN (La 'D' de CRUD)
+        function borrarPost(botonApretado) {
+            // Lanzamos una alerta que permite elegir Aceptar (true) o Cancelar (false).
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            // Si el usuario dijo que Sí...
+            if (confirmacion === true) {
+                // Buscamos al "abuelo" del botón (El botón está dentro de una caja, y la caja está dentro de la tarjeta).
+                // y usamos .remove() para destruir toda la tarjeta HTML de la pantalla.
+                botonApretado.parentElement.parentElement.remove(); 
+            }
+        }
+
+        // FUNCIÓN: PREPARAR LA EDICIÓN (La 'U' de CRUD - Parte 1)
+        // Creamos una variable global para que el computador "recuerde" qué tarjeta estamos editando.
+        let postAEditar = null; 
+
+        function abrirEditar(botonApretado) {
+            // Guardamos la tarjeta entera (el "abuelo" del botón) en la memoria del computador.
+            postAEditar = botonApretado.parentElement.parentElement; 
+            
+            // Extraemos el texto visible (.innerText) del HTML de la tarjeta y lo ponemos en los inputs del formulario (.value).
+            // Usamos querySelector para buscar la clase específica solo dentro de esa tarjeta.
+            document.getElementById("edit-tit").value = postAEditar.querySelector('.t-post').innerText;
+            document.getElementById("edit-txt").value = postAEditar.querySelector('.p-post').innerText;
+            
+            // Guardamos el link de la imagen vieja en una caja invisible (hidden) por si no quieren cambiarla.
+            document.getElementById("edit-imgActual").value = postAEditar.querySelector('.img-post').src;
+            
+            // Vaciamos las cajas de subida de imagen nueva por defecto.
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            // Mostramos el formulario de edición en pantalla.
+            cambiarVista('vista-editar');
+        }
+
+        // FUNCIÓN: GUARDAR LOS CAMBIOS DE EDICIÓN (La 'U' de CRUD - Parte 2)
+        function guardarEdicion() {
+            // 1. Rescatamos los nuevos textos que el usuario modificó en el formulario.
+            let nuevoTit = document.getElementById("edit-tit").value;
+            let nuevoTxt = document.getElementById("edit-txt").value;
+            
+            // 2. Evaluamos si subió una foto nueva o nos quedamos con la foto vieja oculta.
+            let nuevaImg = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            // 3. Volvemos a la tarjeta que teníamos guardada en la memoria (postAEditar).
+            // Y reemplazamos (.innerText y .src) los datos antiguos por los nuevos.
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+            postAEditar.querySelector('.img-post').src = nuevaImg;
+            
+            // 4. Volvemos al muro para ver el resultado.
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+</body>
+</html>
+Mostrando Material_Codigo 7°.txt.

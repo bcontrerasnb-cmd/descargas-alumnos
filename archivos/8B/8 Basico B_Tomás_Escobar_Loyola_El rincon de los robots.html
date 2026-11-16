@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog de Robots - 8° Básico</title>
+    <!-- BLOQUE CSS (DISEÑO) -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .menu-navegacion {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn-secundario {
+            background-color: #e67e22;
+        }
+        .btn-secundario:hover {
+            background-color: #d35400;
+        }
+        .btn-peligro {
+            background-color: #e74c3c;
+        }
+        .btn-peligro:hover {
+            background-color: #c0392b;
+        }
+        .tarjeta-post {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .img-post {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+        .caja-formulario {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .caja-formulario input, .caja-formulario textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        /* Control de vistas */
+        #vista-publicaciones, #vista-crear, #vista-editar { display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🤖 El Rincón de los Robots</h1>
+        <p>Todo sobre tecnología, inteligencia artificial y autómatas</p>
+    </header>
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <div class="menu-navegacion">
+        <button class="btn" onclick="cambiarVista('vista-inicio')">🏠 Inicio</button>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">📰 Ver Muro</button>
+        <button class="btn" onclick="cambiarVista('vista-crear')">➕ Crear Publicación</button>
+    </div>
+
+    <!-- PANTALLA 1: INICIO -->
+    <div id="vista-inicio" style="text-align: center;">
+        <h2>¡Bienvenidos al Blog de Robótica!</h2>
+        <p>Explora las últimas novedades sobre cómo los robots están cambiando el mundo.</p>
+        <button class="btn" onclick="cambiarVista('vista-publicaciones')">Ver publicaciones de robots</button>
+    </div>
+
+    <!-- PANTALLA 2: MURO DE PUBLICACIONES -->
+    <div id="vista-publicaciones">
+        <h2>Muro de Publicaciones sobre Robots</h2>
+        <div id="muro"></div>
+    </div>
+
+    <!-- PANTALLA 3: CREAR POST -->
+    <div id="vista-crear" class="caja-formulario">
+        <h2>Crear Nueva Publicación</h2>
+        <label>Título:</label>
+        <input type="text" id="tit" placeholder="Ej: Robots en la medicina">
+        
+        <label>Texto:</label>
+        <textarea id="txt" rows="4" placeholder="Escribe sobre los robots..."></textarea>
+        
+        <label>Sube una imagen desde tu PC:</label>
+        <input type="file" id="imgArchivo">
+        
+        <label>O pega el Link de una imagen:</label>
+        <input type="text" id="imgUrl" placeholder="https://ejemplo.com/robot.jpg">
+        
+        <button class="btn" onclick="crearPost()">Publicar</button>
+    </div>
+
+    <!-- PANTALLA 4: EDITAR POST -->
+    <div id="vista-editar" class="caja-formulario">
+        <h2>Editar Publicación</h2>
+        <input type="hidden" id="edit-imgActual">
+        
+        <label>Título:</label>
+        <input type="text" id="edit-tit">
+        
+        <label>Texto:</label>
+        <textarea id="edit-txt" rows="4"></textarea>
+        
+        <label>Nueva imagen (Opcional - PC):</label>
+        <input type="file" id="edit-imgArchivo">
+        
+        <label>O nuevo Link de imagen:</label>
+        <input type="text" id="edit-imgUrl">
+        
+        <button class="btn" onclick="guardarEdicion()">Guardar Cambios</button>
+    </div>
+
+    <!-- CEREBRO DEL BLOG (JAVASCRIPT) -->
+    <script>
+        // ==========================================
+        // 1. LA LISTA DE COMPRAS (El Arreglo con datos iniciales de robots)
+        // ==========================================
+        let miListaDePublicaciones = [
+            {
+                titulo: "Robots Humanoides en la Actualidad",
+                imagen: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80",
+                texto: "Los robots humanoides están evolucionando rápidamente gracias a la inteligencia artificial, permitiéndoles caminar, correr e incluso interactuar con expresiones faciales parecidas a las humanas."
+            },
+            {
+                titulo: "Drones y Exploración Espacial",
+                imagen: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80",
+                texto: "Los rovers y drones enviados a Marte nos permiten estudiar terreno peligroso sin arriesgar vidas humanas. Son verdaderos laboratorios móviles sobre ruedas."
+            },
+            {
+                titulo: "La Automatización en las Fábricas",
+                imagen: "https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=600&q=80",
+                texto: "Los brazos robóticos industriales ensamblan automóviles y dispositivos electrónicos con una precisión milimétrica, trabajando las 24 horas del día sin descanso."
+            }
+        ];
+        
+        let posicionEnLaLista = null;
+
+        // ==========================================
+        // 2. NAVEGACIÓN Y AYUDANTES
+        // ==========================================
+        function cambiarVista(pantallaDestino) {
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            document.getElementById(pantallaDestino).style.display = 'block';
+        }
+
+        function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+            let archivoDePC = document.getElementById(cajaArchivo).files[0];
+            let linkDeInternet = document.getElementById(cajaLink).value.trim(); 
+            
+            if (archivoDePC) {
+                return URL.createObjectURL(archivoDePC); 
+            } else if (linkDeInternet !== "") {
+                return linkDeInternet; 
+            } else if (cajaFotoVieja) {
+                return document.getElementById(cajaFotoVieja).value; 
+            }
+            return ""; 
+        }
+
+        // ==========================================
+        // 3. DIBUJAR TODO EL MURO
+        // ==========================================
+        function mostrarPosts() {
+            let cajaMuro = document.getElementById("muro");
+            cajaMuro.innerHTML = "";
+
+            for (let i = 0; i < miListaDePublicaciones.length; i++) {
+                let postActual = miListaDePublicaciones[i];
+
+                cajaMuro.innerHTML += `
+                    <div class="tarjeta-post">
+                        <h3 class="t-post">${postActual.titulo}</h3>
+                        <img src="${postActual.imagen}" class="img-post">
+                        <p class="p-post">${postActual.texto}</p>
+                        <div class="caja-botones">
+                            <button class="btn btn-secundario" onclick="abrirEditar(${i})">Editar</button>
+                            <button class="btn btn-peligro" onclick="borrarPost(${i})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==========================================
+        // 4. CREAR NUEVA PUBLICACIÓN
+        // ==========================================
+        function crearPost() {
+            let tituloEscrito = document.getElementById("tit").value.trim();
+            let textoEscrito = document.getElementById("txt").value.trim();
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (tituloEscrito === "" && textoEscrito === "") {
+                alert("¡Debes escribir un título o un texto antes de publicar!");
+                return;
+            }
+
+            miListaDePublicaciones.push({
+                titulo: tituloEscrito,
+                imagen: imagenFinal,
+                texto: textoEscrito
+            });
+            
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            mostrarPosts();
+            cambiarVista('vista-publicaciones'); 
+        }
+
+        // ==========================================
+        // 5. ELIMINAR UNA PUBLICACIÓN
+        // ==========================================
+        function borrarPost(numeroEnLaFila) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación sobre robots?");
+            
+            if (confirmacion === true) {
+                miListaDePublicaciones.splice(numeroEnLaFila, 1);
+                mostrarPosts();
+            }
+        }
+
+        // ==========================================
+        // 6. EDITAR PUBLICACIONES
+        // ==========================================
+        function abrirEditar(numeroEnLaFila) {
+            posicionEnLaLista = numeroEnLaFila;
+            let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+            document.getElementById("edit-tit").value = postParaCorregir.titulo;
+            document.getElementById("edit-txt").value = postParaCorregir.texto;
+            document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+            
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            cambiarVista('vista-editar'); 
+        }
+
+        function guardarEdicion() {
+            let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+            let nuevoTexto = document.getElementById("edit-txt").value.trim();
+            let nuevaImagen = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+            miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+            miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+            
+            mostrarPosts();
+            cambiarVista('vista-publicaciones');
+        }
+
+        // Ejecutar al cargar la página para mostrar los posts iniciales
+        mostrarPosts();
+    </script>
+</body>
+</html>
