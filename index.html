@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descarga de Trabajos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5" style="max-width: 750px;">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <h3 class="mb-1 text-primary fw-bold">Portal de Descarga de Trabajos</h3>
+            <p class="text-muted mb-4">Selecciona tu curso, busca tu archivo y haz clic en descargar.</p>
+
+            <!-- Filtros -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Curso</label>
+                    <select id="selectCurso" class="form-select">
+                        <option value="">-- Elige tu curso --</option>
+                        <option value="7A">7° Básico A</option>
+                        <option value="7B">7° Básico B</option>
+                        <option value="8A">8° Básico A</option>
+                        <option value="8B">8° Básico B</option>
+                    </select>
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label fw-semibold">Buscar archivo o alumno</label>
+                    <input type="text" id="inputBuscador" class="form-control" placeholder="Escribe tu nombre o el del archivo..." disabled>
+                </div>
+            </div>
+
+            <!-- Lista de resultados -->
+            <div id="listaArchivos" class="list-group">
+                <div class="text-center text-muted py-4">
+                    Selecciona un curso arriba para cargar los archivos.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==========================================
+    // CONFIGURA AQUÍ TUS DATOS DE GITHUB
+    // ==========================================
+    const USUARIO_GITHUB = "tu-usuario";       // Ej: "bastiancontreras"
+    const NOMBRE_REPO = "descargas-alumnos";   // El nombre exacto de tu repositorio
+    // ==========================================
+
+    const selectCurso = document.getElementById('selectCurso');
+    const inputBuscador = document.getElementById('inputBuscador');
+    const listaArchivos = document.getElementById('listaArchivos');
+
+    let archivosDelCurso = [];
+
+    async function cargarDesdeGitHub(curso) {
+        listaArchivos.innerHTML = `
+            <div class="text-center py-4 text-primary">
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                Buscando archivos de ${curso}...
+            </div>`;
+        inputBuscador.disabled = true;
+        inputBuscador.value = '';
+
+        const urlApi = `https://api.github.com/repos/${USUARIO_GITHUB}/${NOMBRE_REPO}/contents/archivos/${curso}`;
+
+        try {
+            const respuesta = await fetch(urlApi);
+            if (!respuesta.ok) throw new Error("No se pudo leer la carpeta.");
+            
+            const datos = await respuesta.json();
+            
+            // Filtramos solo archivos reales (ignoramos subcarpetas y archivos ocultos como .gitkeep)
+            archivosDelCurso = datos.filter(item => item.type === 'file' && !item.name.startsWith('.'));
+            
+            inputBuscador.disabled = false;
+            renderizarLista();
+        } catch (error) {
+            listaArchivos.innerHTML = `<div class="alert alert-danger mb-0">Aún no hay archivos cargados para este curso o hubo un error al conectar.</div>`;
+        }
+    }
+
+    function renderizarLista() {
+        const filtro = inputBuscador.value.toLowerCase().trim();
+        listaArchivos.innerHTML = '';
+
+        const filtrados = archivosDelCurso.filter(archivo => 
+            archivo.name.toLowerCase().includes(filtro)
+        );
+
+        if (filtrados.length === 0) {
+            listaArchivos.innerHTML = '<div class="alert alert-warning mb-0">No se encontraron archivos con ese nombre.</div>';
+            return;
+        }
+
+        filtrados.forEach(archivo => {
+            // Ruta relativa directa dentro de GitHub Pages
+            const rutaDescarga = `archivos/${selectCurso.value}/${encodeURIComponent(archivo.name)}`;
+            
+            const item = document.createElement('div');
+            item.className = 'list-group-item d-flex justify-content-between align-items-center';
+            item.innerHTML = `
+                <span class="text-break me-3">📄 ${archivo.name}</span>
+                <a href="${rutaDescarga}" download="${archivo.name}" class="btn btn-sm btn-success fw-semibold flex-shrink-0">
+                    Descargar
+                </a>
+            `;
+            listaArchivos.appendChild(item);
+        });
+    }
+
+    selectCurso.addEventListener('change', () => {
+        const curso = selectCurso.value;
+        if (!curso) {
+            inputBuscador.disabled = true;
+            inputBuscador.value = '';
+            listaArchivos.innerHTML = '<div class="text-center text-muted py-4">Selecciona un curso arriba para cargar los archivos.</div>';
+            return;
+        }
+        cargarDesdeGitHub(curso);
+    });
+
+    inputBuscador.addEventListener('input', renderizarLista);
+</script>
+
+</body>
+</html>
