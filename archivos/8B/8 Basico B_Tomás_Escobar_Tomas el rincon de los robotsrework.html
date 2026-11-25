@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Rincón de los Robots - 8° Básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-principal: #0b1120;
+            --bg-tarjeta: #1e293b;
+            --bg-input: #0f172a;
+            --color-primario: #06b6d4;
+            --color-primario-hover: #0891b2;
+            --color-secundario: #f59e0b;
+            --color-peligro: #ef4444;
+            --texto-claro: #f8fafc;
+            --texto-suave: #94a3b8;
+            --borde-neon: rgba(6, 182, 212, 0.3);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-principal);
+            background-image: radial-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px);
+            background-size: 25px 25px;
+            margin: 0;
+            padding: 20px;
+            color: var(--texto-claro);
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 1px solid var(--borde-neon);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+            padding: 30px 20px;
+            border-radius: 16px;
+            max-width: 900px;
+            margin: 0 auto 25px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+        }
+
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            color: var(--color-primario);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        }
+
+        header p {
+            margin: 0;
+            color: var(--texto-suave);
+            font-size: 1.05rem;
+        }
+
+        .menu-navegacion {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: var(--color-primario);
+            color: #0b1120;
+            font-weight: 600;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn:hover {
+            background-color: var(--color-primario-hover);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secundario {
+            background-color: var(--color-secundario);
+            color: #0b1120;
+        }
+        .btn-secundario:hover {
+            background-color: #d97706;
+            color: white;
+        }
+
+        .btn-peligro {
+            background-color: var(--color-peligro);
+            color: white;
+        }
+        .btn-peligro:hover {
+            background-color: #dc2626;
+        }
+
+        .btn-reset {
+            background-color: transparent;
+            border: 1px solid var(--texto-suave);
+            color: var(--texto-suave);
+            box-shadow: none;
+            font-size: 13px;
+            padding: 8px 14px;
+        }
+        .btn-reset:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .contenedor-principal {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* INICIO */
+        #vista-inicio {
+            text-align: center;
+            background-color: var(--bg-tarjeta);
+            padding: 40px 25px;
+            border-radius: 16px;
+            border: 1px solid var(--borde-neon);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .robot-hero {
+            font-size: 4.5rem;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: flotar 3s ease-in-out infinite;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #vista-inicio h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--texto-claro);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        #vista-inicio p {
+            color: var(--texto-suave);
+            max-width: 600px;
+            margin: 0 auto 25px auto;
+            line-height: 1.6;
+        }
+
+        /* MURO */
+        .cabecera-muro {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cabecera-muro h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--color-primario);
+            margin: 0;
+        }
+
+        #muro {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .tarjeta-post {
+            background: var(--bg-tarjeta);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-primario);
+        }
+
+        .img-post {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--color-primario);
+            background-color: #0f172a;
+        }
+
+        .contenido-post {
+            padding: 18px;
+            flex-grow: 1;
+        }
+
+        .t-post {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem;
+            margin: 0 0 10px 0;
+            color: var(--color-primario);
+        }
+
+        .p-post {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .caja-botones {
+            padding: 15px 18px;
+            background-color: rgba(15, 23, 42, 0.6);
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .caja-botones .btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* FORMULARIOS */
+        .caja-formulario {
+            background: var(--bg-tarjeta);
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 520px;
+            margin: 0 auto;
+            border: 1px solid var(--borde-neon);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .caja-formulario h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--color-primario);
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .caja-formulario label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .caja-formulario input[type="text"],
+        .caja-formulario textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            background-color: var(--bg-input);
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .caja-formulario input[type="text"]:focus,
+        .caja-formulario textarea:focus {
+            outline: none;
+            border-color: var(--color-primario);
+        }
+
+        .caja-formulario input[type="file"] {
+            width: 100%;
+            margin-bottom: 18px;
+            padding: 8px;
+            background-color: var(--bg-input);
+            border: 1px dashed #475569;
+            border-radius: 8px;
+            color: var(--texto-suave);
+            box-sizing: border-box;
+        }
+
+        .grupo-botones-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .grupo-botones-form .btn {
+            flex: 1;
+        }
+
+        /* Ocultar vistas por defecto */
+        #vista-publicaciones, #vista-crear, #vista-editar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🤖 EL RINCÓN DE LOS ROBOTS</h1>
+        <p>Todo sobre tecnología, inteligencia artificial y autómatas • 8° Básico</p>
+    </header>
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <div class="menu-navegacion">
+        <button type="button" class="btn" id="btn-nav-inicio">🏠 Inicio</button>
+        <button type="button" class="btn" id="btn-nav-muro">📰 Ver Muro</button>
+        <button type="button" class="btn" id="btn-nav-crear">➕ Crear Publicación</button>
+    </div>
+
+    <div class="contenedor-principal">
+        <!-- PANTALLA 1: INICIO -->
+        <div id="vista-inicio">
+            <div class="robot-hero">🦾🤖🦿</div>
+            <h2>¡Bienvenidos al Blog de Robótica!</h2>
+            <p>Explora las últimas novedades sobre cómo los robots, drones e inteligencias artificiales están transformando nuestro mundo. ¡Crea tus propias publicaciones y comparte tus descubrimientos!</p>
+            <button type="button" class="btn" id="btn-hero-explorar">🚀 Explorar publicaciones de robots</button>
+        </div>
+
+        <!-- PANTALLA 2: MURO DE PUBLICACIONES -->
+        <div id="vista-publicaciones">
+            <div class="cabecera-muro">
+                <h2>📡 Muro de Publicaciones</h2>
+                <button type="button" class="btn btn-reset" id="btn-restaurar">🔄 Restaurar iniciales</button>
+            </div>
+            <div id="muro"></div>
+        </div>
+
+        <!-- PANTALLA 3: CREAR POST -->
+        <div id="vista-crear" class="caja-formulario">
+            <h2>⚡ Nueva Publicación</h2>
+            <label>Título:</label>
+            <input type="text" id="tit" placeholder="Ej: Robots en la medicina">
+            
+            <label>Texto:</label>
+            <textarea id="txt" rows="4" placeholder="Escribe información interesante sobre los robots..."></textarea>
+            
+            <label>Sube una imagen desde tu PC:</label>
+            <input type="file" id="imgArchivo" accept="image/*">
+            
+            <label>O pega el Link de una imagen:</label>
+            <input type="text" id="imgUrl" placeholder="https://ejemplo.com/robot.jpg">
+            
+            <div class="grupo-botones-form">
+                <button type="button" class="btn" id="btn-guardar-nuevo">💾 Publicar</button>
+                <button type="button" class="btn btn-reset" id="btn-cancelar-crear">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 4: EDITAR POST -->
+        <div id="vista-editar" class="caja-formulario">
+            <h2>🛠️ Editar Publicación</h2>
+            <input type="hidden" id="edit-imgActual">
+            
+            <label>Título:</label>
+            <input type="text" id="edit-tit">
+            
+            <label>Texto:</label>
+            <textarea id="edit-txt" rows="4"></textarea>
+            
+            <label>Nueva imagen (Opcional - PC):</label>
+            <input type="file" id="edit-imgArchivo" accept="image/*">
+            
+            <label>O nuevo Link de imagen:</label>
+            <input type="text" id="edit-imgUrl">
+            
+            <div class="grupo-botones-form">
+                <button type="button" class="btn" id="btn-guardar-edicion">✅ Guardar Cambios</button>
+                <button type="button" class="btn btn-reset" id="btn-cancelar-editar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const CLAVE_GUARDADO = "blog_robots_8basico_tomas_v3";
+
+            const publicacionesIniciales = [
+                {
+                    titulo: "Robots Humanoides en la Actualidad",
+                    imagen: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80",
+                    texto: "Los robots humanoides están evolucionando rápidamente gracias a la inteligencia artificial, permitiéndoles caminar, correr e incluso interactuar con expresiones faciales parecidas a las humanas."
+                },
+                {
+                    titulo: "Drones y Exploración Espacial",
+                    imagen: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=600&q=80",
+                    texto: "Los rovers y drones enviados a Marte nos permiten estudiar terreno peligroso sin arriesgar vidas humanas. Son verdaderos laboratorios móviles sobre ruedas."
+                },
+                {
+                    titulo: "La Automatización en las Fábricas",
+                    imagen: "https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=600&q=80",
+                    texto: "Los brazos robóticos industriales ensamblan automóviles y dispositivos electrónicos con una precisión milimétrica, trabajando las 24 horas del día sin descanso."
+                }
+            ];
+
+            let miListaDePublicaciones = [];
+            let posicionEnLaLista = null;
+
+            // Sistema seguro de lectura/escritura en memoria
+            function cargarDatos() {
+                try {
+                    const datos = window.localStorage.getItem(CLAVE_GUARDADO);
+                    if (datos) {
+                        const parsed = JSON.parse(datos);
+                        if (Array.isArray(parsed) && parsed.length > 0) {
+                            miListaDePublicaciones = parsed;
+                            return;
+                        }
+                    }
+                } catch (err) {
+                    console.warn("Almacenamiento local no disponible, usando memoria temporal.");
+                }
+                miListaDePublicaciones = JSON.parse(JSON.stringify(publicacionesIniciales));
+                guardarDatos();
+            }
+
+            function guardarDatos() {
+                try {
+                    window.localStorage.setItem(CLAVE_GUARDADO, JSON.stringify(miListaDePublicaciones));
+                } catch (err) {
+                    console.warn("No se pudo guardar en localStorage:", err);
+                }
+            }
+
+            // Cambio de pantallas
+            function cambiarVista(idPantalla) {
+                document.getElementById('vista-inicio').style.display = 'none';
+                document.getElementById('vista-publicaciones').style.display = 'none';
+                document.getElementById('vista-crear').style.display = 'none';
+                document.getElementById('vista-editar').style.display = 'none';
+
+                const destino = document.getElementById(idPantalla);
+                if (destino) {
+                    destino.style.display = 'block';
+                }
+            }
+
+            // Obtener imagen (Archivo PC o URL)
+            function obtenerImagen(idArchivo, idUrl, valorAnterior, alTerminar) {
+                const inputArchivo = document.getElementById(idArchivo);
+                const link = document.getElementById(idUrl).value.trim();
+
+                if (inputArchivo && inputArchivo.files && inputArchivo.files[0]) {
+                    const lector = new FileReader();
+                    lector.onload = function(e) {
+                        alTerminar(e.target.result);
+                    };
+                    lector.onerror = function() {
+                        alTerminar(valorAnterior);
+                    };
+                    lector.readAsDataURL(inputArchivo.files[0]);
+                } else if (link !== "") {
+                    alTerminar(link);
+                } else {
+                    alTerminar(valorAnterior);
+                }
+            }
+
+            // Dibujar tarjetas en el muro
+            function mostrarPosts() {
+                const muro = document.getElementById("muro");
+                muro.innerHTML = "";
+
+                if (miListaDePublicaciones.length === 0) {
+                    muro.innerHTML = '<p style="color: #94a3b8; grid-column: 1/-1; text-align: center; padding: 30px;">No hay publicaciones todavía. ¡Crea la primera!</p>';
+                    return;
+                }
+
+                const imgRespaldo = "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80";
+
+                miListaDePublicaciones.forEach(function(post, indice) {
+                    const tarjeta = document.createElement("div");
+                    tarjeta.className = "tarjeta-post";
+
+                    const imagenFinal = post.imagen ? post.imagen : imgRespaldo;
+
+                    tarjeta.innerHTML = `
+                        <div>
+                            <img src="${imagenFinal}" class="img-post" onerror="this.src='${imgRespaldo}'">
+                            <div class="contenido-post">
+                                <h3 class="t-post"></h3>
+                                <p class="p-post"></p>
+                            </div>
+                        </div>
+                        <div class="caja-botones">
+                            <button type="button" class="btn btn-secundario btn-editar">✏️ Editar</button>
+                            <button type="button" class="btn btn-peligro btn-eliminar">🗑️ Eliminar</button>
+                        </div>
+                    `;
+
+                    // Asignar textos de forma segura
+                    tarjeta.querySelector(".t-post").textContent = post.titulo;
+                    tarjeta.querySelector(".p-post").textContent = post.texto;
+
+                    // Conectar botones de cada tarjeta
+                    tarjeta.querySelector(".btn-editar").addEventListener("click", function() {
+                        abrirEditar(indice);
+                    });
+
+                    tarjeta.querySelector(".btn-eliminar").addEventListener("click", function() {
+                        borrarPost(indice);
+                    });
+
+                    muro.appendChild(tarjeta);
+                });
+            }
+
+            // Crear publicación
+            function crearPost() {
+                const titulo = document.getElementById("tit").value.trim();
+                const texto = document.getElementById("txt").value.trim();
+
+                if (titulo === "" && texto === "") {
+                    alert("¡Debes escribir un título o un texto antes de publicar!");
+                    return;
+                }
+
+                obtenerImagen("imgArchivo", "imgUrl", "", function(imagenFinal) {
+                    miListaDePublicaciones.unshift({
+                        titulo: titulo || "Robot sin título",
+                        imagen: imagenFinal,
+                        texto: texto
+                    });
+
+                    guardarDatos();
+
+                    document.getElementById("tit").value = "";
+                    document.getElementById("txt").value = "";
+                    document.getElementById("imgUrl").value = "";
+                    document.getElementById("imgArchivo").value = "";
+
+                    mostrarPosts();
+                    cambiarVista("vista-publicaciones");
+                });
+            }
+
+            // Eliminar publicación
+            function borrarPost(indice) {
+                if (confirm("¿Seguro que quieres eliminar esta publicación sobre robots?")) {
+                    miListaDePublicaciones.splice(indice, 1);
+                    guardarDatos();
+                    mostrarPosts();
+                }
+            }
+
+            // Abrir formulario de edición
+            function abrirEditar(indice) {
+                posicionEnLaLista = indice;
+                const post = miListaDePublicaciones[indice];
+
+                document.getElementById("edit-tit").value = post.titulo;
+                document.getElementById("edit-txt").value = post.texto;
+                document.getElementById("edit-imgActual").value = post.imagen;
+                document.getElementById("edit-imgArchivo").value = "";
+                document.getElementById("edit-imgUrl").value = "";
+
+                cambiarVista("vista-editar");
+            }
+
+            // Guardar edición
+            function guardarEdicion() {
+                if (posicionEnLaLista === null) return;
+
+                const nuevoTitulo = document.getElementById("edit-tit").value.trim();
+                const nuevoTexto = document.getElementById("edit-txt").value.trim();
+                const fotoVieja = document.getElementById("edit-imgActual").value;
+
+                obtenerImagen("edit-imgArchivo", "edit-imgUrl", fotoVieja, function(nuevaImagen) {
+                    miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+                    miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+                    miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+
+                    guardarDatos();
+                    mostrarPosts();
+                    cambiarVista("vista-publicaciones");
+                });
+            }
+
+            // Restaurar iniciales
+            function restaurarPorDefecto() {
+                if (confirm("¿Quieres restaurar las 3 publicaciones iniciales?")) {
+                    miListaDePublicaciones = JSON.parse(JSON.stringify(publicacionesIniciales));
+                    guardarDatos();
+                    mostrarPosts();
+                }
+            }
+
+            // Conectar todos los botones principales
+            document.getElementById("btn-nav-inicio").addEventListener("click", function() {
+                cambiarVista("vista-inicio");
+            });
+            document.getElementById("btn-nav-muro").addEventListener("click", function() {
+                mostrarPosts();
+                cambiarVista("vista-publicaciones");
+            });
+            document.getElementById("btn-nav-crear").addEventListener("click", function() {
+                cambiarVista("vista-crear");
+            });
+            document.getElementById("btn-hero-explorar").addEventListener("click", function() {
+                mostrarPosts();
+                cambiarVista("vista-publicaciones");
+            });
+            document.getElementById("btn-restaurar").addEventListener("click", restaurarPorDefecto);
+            document.getElementById("btn-guardar-nuevo").addEventListener("click", crearPost);
+            document.getElementById("btn-cancelar-crear").addEventListener("click", function() {
+                cambiarVista("vista-publicaciones");
+            });
+            document.getElementById("btn-guardar-edicion").addEventListener("click", guardarEdicion);
+            document.getElementById("btn-cancelar-editar").addEventListener("click", function() {
+                cambiarVista("vista-publicaciones");
+            });
+
+            // Arrancar la página inmediatamente
+            cargarDatos();
+            mostrarPosts();
+            cambiarVista("vista-inicio");
+        })();
+    </script>
+</body>
+</html>

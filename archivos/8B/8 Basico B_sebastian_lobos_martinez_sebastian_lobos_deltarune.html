@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DELTARUNE BLOG</title>
+
+<!-- ================= CSS ================= -->
+
+<style id="estilos-ia">
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;600;700&display=swap');
+
+:root {
+    --morado: #713cff;
+    --azul: #236bff;
+    --celeste: #00cfff;
+    --rosa: #ed43c6;
+    --negro: #050516;
+    --blanco: #f5f2ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle at top, #19105b, #050516 65%);
+    color: var(--blanco);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+.contenedor {
+    max-width: 1100px;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+    padding: 35px 10px;
+    border-bottom: 3px solid var(--morado);
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    font-size: 35px;
+    text-shadow: 4px 4px var(--morado),
+                 0 0 20px var(--azul);
+}
+
+header p {
+    color: var(--rosa);
+    font-size: 22px;
+    margin-top: 18px;
+}
+
+h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 17px;
+    color: var(--celeste);
+    text-align: center;
+    margin: 25px 0;
+    line-height: 1.8;
+}
+
+h3 {
+    color: var(--rosa);
+    margin-bottom: 12px;
+}
+
+p {
+    font-size: 19px;
+    line-height: 1.5;
+}
+
+section {
+    max-width: 1050px;
+    margin: 25px auto;
+    padding: 25px;
+    background: rgba(8, 7, 35, .95);
+    border: 2px solid var(--morado);
+    border-radius: 8px;
+    box-shadow: 0 0 18px rgba(113,60,255,.3);
+}
+
+#vista-publicaciones,
+#vista-crear,
+#vista-editar,
+#vista-personajes,
+#vista-mundos,
+#vista-habilidades {
+    display: none;
+}
+
+.navegacion {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+button {
+    background: var(--morado);
+    color: white;
+    border: 2px solid #a78aff;
+    padding: 12px 17px;
+    margin: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+button:hover {
+    background: var(--rosa);
+    box-shadow: 0 0 15px var(--rosa);
+    transform: scale(1.05);
+}
+
+.btn-secundario {
+    background: var(--azul);
+}
+
+.btn-peligro {
+    background: #c62850;
+}
+
+.banner {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(130deg,#17105a,#341079,#071c50);
+    border: 2px solid var(--celeste);
+    margin-bottom: 25px;
+}
+
+.banner h2 {
+    color: white;
+    text-shadow: 0 0 12px var(--celeste);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 18px;
+}
+
+.tarjeta {
+    background: #100d36;
+    border: 2px solid var(--morado);
+    padding: 17px;
+    border-radius: 7px;
+    transition: .3s;
+    overflow-wrap: anywhere;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    border-color: var(--rosa);
+    box-shadow: 0 0 15px var(--morado);
+}
+
+.tarjeta img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border: 2px solid var(--azul);
+    margin-bottom: 12px;
+}
+
+.tarjeta h3 {
+    color: var(--rosa);
+}
+
+.tarjeta p {
+    color: #d8d4ff;
+}
+
+.mundo {
+    text-align: center;
+    padding: 22px;
+    background: #11103d;
+    border: 2px solid var(--azul);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0 18px;
+    background: #080820;
+    color: white;
+    border: 2px solid var(--morado);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+}
+
+textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+label {
+    color: var(--celeste);
+    font-size: 18px;
+}
+
+#muro {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 18px;
+}
+
+.tarjeta-post {
+    background: #100d36;
+    border: 2px solid var(--morado);
+    padding: 18px;
+    overflow-wrap: anywhere;
+}
+
+.t-post {
+    color: var(--rosa);
+}
+
+.img-post {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    border: 2px solid var(--azul);
+    margin: 12px 0;
+}
+
+.p-post {
+    margin-bottom: 12px;
+}
+
+.caja-botones {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    border-top: 2px solid var(--morado);
+    margin-top: 30px;
+    color: #b7aaff;
+}
+
+@media(max-width:600px) {
+    header h1 {
+        font-size: 23px;
+    }
+
+    section {
+        padding: 15px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+<!-- ================= ENCABEZADO ================= -->
+
+<header>
+    <h1>DELTARUNE</h1>
+    <p>♥ UN BLOG DEL CORAZÓN ♥</p>
+</header>
+
+<!-- ================= INICIO ================= -->
+
+<section id="vista-inicio">
+
+<div class="banner">
+    <h2>BIENVENIDO A DELTARUNE</h2>
+    <p>
+    Un mundo donde la determinación,
+    la amistad y la aventura pueden cambiarlo todo.
+    </p>
+</div>
+
+<h2>EXPLORA EL MUNDO DE DELTARUNE</h2>
+
+<div class="navegacion">
+
+<button onclick="cambiarVista('vista-personajes')">
+PERSONAJES
+</button>
+
+<button onclick="cambiarVista('vista-mundos')">
+MUNDOS
+</button>
+
+<button onclick="cambiarVista('vista-habilidades')">
+HABILIDADES
+</button>
+
+<button onclick="cambiarVista('vista-publicaciones'); mostrarPosts()">
+PUBLICACIONES
+</button>
+
+<button onclick="cambiarVista('vista-crear')">
+CREAR POST
+</button>
+
+</div>
+
+</section>
+
+<!-- ================= PERSONAJES ================= -->
+
+<section id="vista-personajes">
+
+<h2>PERSONAJES PRINCIPALES</h2>
+
+<div class="grid">
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/17105a/ffffff?text=KRIS" alt="Kris">
+<h3>KRIS</h3>
+<p><b>Descripción:</b> Humano protagonista de la aventura.</p>
+<p><b>Habilidades:</b> Espada, defensa, ACT y magia de equipo.</p>
+</div>
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/341079/ffffff?text=SUSIE" alt="Susie">
+<h3>SUSIE</h3>
+<p><b>Descripción:</b> Compañera fuerte y rebelde.</p>
+<p><b>Habilidades:</b> Hacha, Rude Buster y ataques físicos.</p>
+</div>
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/17105a/ffffff?text=RALSEI" alt="Ralsei">
+<h3>RALSEI</h3>
+<p><b>Descripción:</b> Príncipe amable del Reino Oscuro.</p>
+<p><b>Habilidades:</b> Pacify, Heal Prayer y magia de apoyo.</p>
+</div>
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/17105a/ffffff?text=NOELLE" alt="Noelle">
+<h3>NOELLE HOLIDAY</h3>
+<p><b>Descripción:</b> Compañera de Kris en el Mundo Cibernético.</p>
+<p><b>Habilidades:</b> IceShock, Heal Prayer y magia de hielo.</p>
+</div>
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/17105a/ffffff?text=BERDLY" alt="Berdly">
+<h3>BERDLY</h3>
+<p><b>Descripción:</b> Estudiante inteligente y competitivo.</p>
+<p><b>Habilidades:</b> Ataques eléctricos y técnicas con lanza.</p>
+</div>
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/17105a/ffffff?text=LANCER" alt="Lancer">
+<h3>LANCER</h3>
+<p><b>Descripción:</b> Joven príncipe del Card Kingdom.</p>
+<p><b>Habilidades:</b> Trucos, ataques con bicicleta y cartas.</p>
+</div>
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/17105a/ffffff?text=QUEEN" alt="Queen">
+<h3>QUEEN</h3>
+<p><b>Descripción:</b> Reina del Mundo Cibernético.</p>
+<p><b>Habilidades:</b> Tecnología, control de robots y ataques digitales.</p>
+</div>
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/17105a/ffffff?text=JEVIL" alt="Jevil">
+<h3>JEVIL</h3>
+<p><b>Descripción:</b> Bufón caótico del Card Kingdom.</p>
+<p><b>Habilidades:</b> Chaos Bomb, ataques de cartas y Devilsknife.</p>
+</div>
+
+<div class="tarjeta">
+<img src="https://placehold.co/400x300/17105a/ffffff?text=SPAMTON" alt="Spamton">
+<h3>SPAMTON</h3>
+<p><b>Descripción:</b> Vendedor misterioso del Mundo Cibernético.</p>
+<p><b>Habilidades:</b> NEO, ataques de cadenas y proyectiles.</p>
+</div>
+
+</div>
+
+<center>
+<button class="btn-secundario" onclick="cambiarVista('vista-inicio')">
+VOLVER AL INICIO
+</button>
+</center>
+
+</section>
+
+<!-- ================= MUNDOS ================= -->
+
+<section id="vista-mundos">
+
+<h2>LOS MUNDOS DE DELTARUNE</h2>
+
+<div class="grid">
+
+<div class="mundo">
+<h3>CARD KINGDOM</h3>
+<p>El primer Mundo Oscuro. Está gobernado por el Rey y es el hogar de Lancer.</p>
+</div>
+
+<div class="mundo">
+<h3>CASTLE TOWN</h3>
+<p>Un lugar donde los personajes pueden reunirse y construir una comunidad.</p>
+</div>
+
+<div class="mundo">
+<h3>CYBER WORLD</h3>
+<p>Un mundo digital lleno de tecnología, videojuegos y enemigos.</p>
+</div>
+
+<div class="mundo">
+<h3>EL BOSQUE</h3>
+<p>Una zona misteriosa que conecta diferentes lugares del Mundo Oscuro.</p>
+</div>
+
+</div>
+
+<center>
+<button class="btn-secundario" onclick="cambiarVista('vista-inicio')">
+VOLVER AL INICIO
+</button>
+</center>
+
+</section>
+
+<!-- ================= HABILIDADES ================= -->
+
+<section id="vista-habilidades">
+
+<h2>HABILIDADES Y ATAQUES</h2>
+
+<div class="grid">
+
+<div class="tarjeta">
+<h3>ACT</h3>
+<p>Permite interactuar con los enemigos para encontrar formas de resolver los encuentros sin luchar.</p>
+</div>
+
+<div class="tarjeta">
+<h3>SPARE</h3>
+<p>Permite perdonar a los enemigos cuando se cumplen las condiciones necesarias.</p>
+</div>
+
+<div class="tarjeta">
+<h3>RUDE BUSTER</h3>
+<p>Un poderoso ataque mágico de Susie que utiliza TP.</p>
+</div>
+
+<div class="tarjeta">
+<h3>PACIFY</h3>
+<p>Magia de Ralsei que puede dormir a enemigos cansados.</p>
+</div>
+
+<div class="tarjeta">
+<h3>HEAL PRAYER</h3>
+<p>Habilidad de curación utilizada por Noelle y Ralsei.</p>
+</div>
+
+<div class="tarjeta">
+<h3>ICESHOCK</h3>
+<p>Un poderoso ataque mágico de hielo de Noelle.</p>
+</div>
+
+<div class="tarjeta">
+<h3>DEVILSKNIFE</h3>
+<p>Arma especial relacionada con Jevil.</p>
+</div>
+
+<div class="tarjeta">
+<h3>SPAMTON NEO</h3>
+<p>Forma especial de Spamton con ataques de proyectiles y cadenas.</p>
+</div>
+
+</div>
+
+<center>
+<button class="btn-secundario" onclick="cambiarVista('vista-inicio')">
+VOLVER AL INICIO
+</button>
+</center>
+
+</section>
+
+<!-- ================= PUBLICACIONES ================= -->
+
+<section id="vista-publicaciones">
+
+<h2>MURO DE PUBLICACIONES</h2>
+
+<center>
+<button onclick="cambiarVista('vista-crear')">
++ NUEVA PUBLICACIÓN
+</button>
+
+<button class="btn-secundario" onclick="cambiarVista('vista-inicio')">
+VOLVER
+</button>
+</center>
+
+<div id="muro"></div>
+
+</section>
+
+<!-- ================= CREAR ================= -->
+
+<section id="vista-crear">
+
+<h2>CREAR PUBLICACIÓN</h2>
+
+<label>Título:</label>
+<input type="text" id="tit" placeholder="Ej: La aventura de Kris">
+
+<label>Texto:</label>
+<textarea id="txt" placeholder="Escribe tu noticia o teoría..."></textarea>
+
+<label>Imagen desde tu computador:</label>
+<input type="file" id="imgArchivo" accept="image/*">
+
+<label>O URL de imagen:</label>
+<input type="text" id="imgUrl" placeholder="Pega aquí el enlace">
+
+<center>
+<button onclick="crearPost()">PUBLICAR</button>
+
+<button class="btn-secundario" onclick="cambiarVista('vista-inicio')">
+CANCELAR
+</button>
+</center>
+
+</section>
+
+<!-- ================= EDITAR ================= -->
+
+<section id="vista-editar">
+
+<h2>EDITAR PUBLICACIÓN</h2>
+
+<label>Título:</label>
+<input type="text" id="edit-tit">
+
+<label>Texto:</label>
+<textarea id="edit-txt"></textarea>
+
+<label>Nueva imagen:</label>
+<input type="file" id="edit-imgArchivo" accept="image/*">
+
+<label>O URL:</label>
+<input type="text" id="edit-imgUrl">
+
+<input type="hidden" id="edit-imgActual">
+
+<center>
+<button onclick="guardarEdicion()">GUARDAR CAMBIOS</button>
+
+<button class="btn-secundario" onclick="cambiarVista('vista-publicaciones')">
+CANCELAR
+</button>
+</center>
+
+</section>
+
+<footer>
+<h3>DELTARUNE</h3>
+<p>♥ UN BLOG HECHO CON DETERMINACIÓN ♥</p>
+<p>Proyecto de blog personal - 8° Básico</p>
+</footer>
+
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+let miListaDePublicaciones = [];
+
+let posicionEnLaLista = null;
+
+// NAVEGACIÓN
+
+function cambiarVista(pantallaDestino) {
+
+    let pantallas = [
+        'vista-inicio',
+        'vista-publicaciones',
+        'vista-crear',
+        'vista-editar',
+        'vista-personajes',
+        'vista-mundos',
+        'vista-habilidades'
+    ];
+
+    pantallas.forEach(function(pantalla) {
+        document.getElementById(pantalla).style.display = 'none';
+    });
+
+    document.getElementById(pantallaDestino).style.display = 'block';
+}
+
+// PROCESAR IMAGEN
+
+function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+
+    let archivoDePC = document.getElementById(cajaArchivo).files[0];
+
+    let linkDeInternet = document.getElementById(cajaLink).value.trim();
+
+    if (archivoDePC) {
+        return URL.createObjectURL(archivoDePC);
+    } else if (linkDeInternet !== "") {
+        return linkDeInternet;
+    } else if (cajaFotoVieja) {
+        return document.getElementById(cajaFotoVieja).value;
+    }
+
+    return "";
+}
+
+// MOSTRAR PUBLICACIONES
+
+function mostrarPosts() {
+
+    let cajaMuro = document.getElementById("muro");
+
+    cajaMuro.innerHTML = "";
+
+    for (let i = 0; i < miListaDePublicaciones.length; i++) {
+
+        let postActual = miListaDePublicaciones[i];
+
+        cajaMuro.innerHTML += `
+            <div class="tarjeta-post">
+
+                <h3 class="t-post">${postActual.titulo}</h3>
+
+                ${postActual.imagen ?
+                `<img src="${postActual.imagen}" class="img-post">`
+                : ""}
+
+                <p class="p-post">${postActual.texto}</p>
+
+                <div class="caja-botones">
+
+                    <button class="btn-secundario"
+                    onclick="abrirEditar(${i})">
+                    Editar
+                    </button>
+
+                    <button class="btn-peligro"
+                    onclick="borrarPost(${i})">
+                    Eliminar
+                    </button>
+
+                </div>
+            </div>
+        `;
+    }
+}
+
+// CREAR PUBLICACIÓN
+
+function crearPost() {
+
+    let tituloEscrito = document.getElementById("tit").value.trim();
+
+    let textoEscrito = document.getElementById("txt").value.trim();
+
+    let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+    if (tituloEscrito === "" && textoEscrito === "") {
+        alert("¡Debes escribir un título o un texto!");
+        return;
+    }
+
+    miListaDePublicaciones.push({
+        titulo: tituloEscrito,
+        imagen: imagenFinal,
+        texto: textoEscrito
+    });
+
+    document.getElementById("tit").value = "";
+    document.getElementById("txt").value = "";
+    document.getElementById("imgUrl").value = "";
+    document.getElementById("imgArchivo").value = "";
+
+    mostrarPosts();
+
+    cambiarVista('vista-publicaciones');
+}
+
+// ELIMINAR PUBLICACIÓN
+
+function borrarPost(numeroEnLaFila) {
+
+    let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+
+    if (confirmacion === true) {
+
+        miListaDePublicaciones.splice(numeroEnLaFila, 1);
+
+        mostrarPosts();
+    }
+}
+
+// ABRIR EDICIÓN
+
+function abrirEditar(numeroEnLaFila) {
+
+    posicionEnLaLista = numeroEnLaFila;
+
+    let postParaCorregir = miListaDePublicaciones[numeroEnLaFila];
+
+    document.getElementById("edit-tit").value = postParaCorregir.titulo;
+
+    document.getElementById("edit-txt").value = postParaCorregir.texto;
+
+    document.getElementById("edit-imgActual").value = postParaCorregir.imagen;
+
+    document.getElementById("edit-imgArchivo").value = "";
+
+    document.getElementById("edit-imgUrl").value = "";
+
+    cambiarVista('vista-editar');
+}
+
+// GUARDAR EDICIÓN
+
+function guardarEdicion() {
+
+    let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+
+    let nuevoTexto = document.getElementById("edit-txt").value.trim();
+
+    let nuevaImagen = obtenerImagen(
+        "edit-imgArchivo",
+        "edit-imgUrl",
+        "edit-imgActual"
+    );
+
+    miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+
+    miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+
+    miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+
+    mostrarPosts();
+
+    cambiarVista('vista-publicaciones');
+}
+
+</script>
+
+</body>
+</html>

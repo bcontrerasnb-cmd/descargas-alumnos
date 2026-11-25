@@ -1,0 +1,1242 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dreamy Douyin | Beauty Blog</title>
+
+<style>
+
+/* =================================
+   1. PALETA Y DISEÑO GENERAL
+================================= */
+
+:root {
+    --pink: #e9a8bc;
+    --light-pink: #fff0f5;
+    --soft-pink: #f8dce6;
+    --white: #fffdfd;
+    --wine: #9b536d;
+    --text: #60434e;
+    --gold: #d9b77e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--white);
+    color: var(--text);
+    font-family: Georgia, serif;
+    line-height: 1.7;
+}
+
+button, input, textarea {
+    font-family: inherit;
+}
+
+/* =================================
+   2. ENCABEZADO
+================================= */
+
+header {
+    background: linear-gradient(
+        135deg,
+        #f9dce7,
+        #fff5f8,
+        #edc3d2
+    );
+    text-align: center;
+    padding: 65px 20px;
+}
+
+header h1 {
+    font-size: clamp(35px, 7vw, 65px);
+    color: var(--wine);
+    letter-spacing: 5px;
+}
+
+header p {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: #a66c81;
+    margin-top: 12px;
+}
+
+/* =================================
+   3. MENÚ DE NAVEGACIÓN
+================================= */
+
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 23px;
+    padding: 20px;
+    background: white;
+    border-bottom: 1px solid var(--soft-pink);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--wine);
+    font-size: 14px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: var(--pink);
+}
+
+/* =================================
+   4. PANTALLAS
+================================= */
+
+#vista-publicaciones,
+#vista-crear,
+#vista-editar {
+    display: none;
+}
+
+section {
+    padding: 55px 9%;
+    scroll-margin-top: 70px;
+}
+
+.section-title {
+    text-align: center;
+    color: var(--wine);
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.section-description {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 35px;
+}
+
+/* =================================
+   5. PORTADA
+================================= */
+
+.hero {
+    background: var(--light-pink);
+    text-align: center;
+    padding: 75px 20px;
+}
+
+.hero h2 {
+    color: var(--wine);
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: auto;
+}
+
+.hero button {
+    margin-top: 25px;
+}
+
+/* =================================
+   6. BOTONES
+================================= */
+
+.btn {
+    border: none;
+    padding: 12px 23px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s;
+    font-size: 14px;
+}
+
+.btn-principal {
+    background: var(--wine);
+    color: white;
+}
+
+.btn-principal:hover {
+    background: var(--pink);
+    transform: translateY(-2px);
+}
+
+.btn-secundario {
+    background: var(--soft-pink);
+    color: var(--wine);
+}
+
+.btn-peligro {
+    background: #f4d5d5;
+    color: #a33c52;
+}
+
+.btn-volver {
+    background: #fff0f5;
+    color: var(--wine);
+    margin-bottom: 25px;
+}
+
+/* =================================
+   7. TARJETAS
+================================= */
+
+.card-container {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #f1d5df;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 20px #e9a8bc20;
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+.card h3 {
+    color: var(--wine);
+    margin-bottom: 12px;
+}
+
+/* =================================
+   8. TÉCNICAS
+================================= */
+
+.techniques {
+    background: #fff7fa;
+}
+
+.technique-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #f1d5df;
+}
+
+.technique-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.technique-card .content {
+    padding: 20px;
+}
+
+.technique-card h3 {
+    color: var(--wine);
+    margin-bottom: 8px;
+}
+
+/* =================================
+   9. MAQUILLISTAS E ÍDOLOS
+================================= */
+
+.artist-card,
+.idol-card {
+    text-align: center;
+    background: #fff7fa;
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.artist-card h3,
+.idol-card h3 {
+    color: var(--wine);
+}
+
+/* =================================
+   10. GALERÍA
+================================= */
+
+.gallery {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.gallery img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: .3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.03);
+}
+
+/* =================================
+   11. FORMULARIOS
+================================= */
+
+.formulario {
+    max-width: 650px;
+    margin: 25px auto;
+    background: #fff7fa;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--soft-pink);
+}
+
+.formulario label {
+    display: block;
+    color: var(--wine);
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+.formulario input,
+.formulario textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #eac6d4;
+    border-radius: 10px;
+    outline: none;
+    background: white;
+    color: var(--text);
+}
+
+.formulario input:focus,
+.formulario textarea:focus {
+    border-color: var(--pink);
+}
+
+.formulario textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.formulario button {
+    margin-top: 20px;
+}
+
+/* =================================
+   12. MURO DE PUBLICACIONES
+================================= */
+
+#muro {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.tarjeta-post {
+    background: white;
+    border: 1px solid #f1d5df;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 5px 20px #e9a8bc20;
+    overflow-wrap: anywhere;
+}
+
+.t-post {
+    color: var(--wine);
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.img-post {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.p-post {
+    white-space: pre-wrap;
+    margin-bottom: 15px;
+}
+
+.caja-botones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.caja-botones button {
+    flex: 1;
+}
+
+/* =================================
+   13. FRASE DESTACADA
+================================= */
+
+.quote {
+    background: linear-gradient(
+        120deg,
+        #f8dce6,
+        #fff2f6
+    );
+    padding: 45px;
+    text-align: center;
+    font-style: italic;
+    font-size: 21px;
+    color: var(--wine);
+}
+
+/* =================================
+   14. PIE DE PÁGINA
+================================= */
+
+footer {
+    background: #f5dce5;
+    text-align: center;
+    padding: 30px;
+    color: var(--wine);
+    font-size: 13px;
+}
+
+/* =================================
+   15. DISEÑO PARA CELULARES
+================================= */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 45px 15px;
+    }
+
+    nav {
+        gap: 13px;
+    }
+
+    section {
+        padding: 40px 6%;
+    }
+
+    .section-title {
+        font-size: 26px;
+    }
+
+    .quote {
+        padding: 25px;
+    }
+
+    .formulario {
+        padding: 20px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =================================
+     ENCABEZADO
+================================= -->
+
+<header>
+    <h1>♡ DREAMY DOUYIN ♡</h1>
+    <p>THE ART OF ASIAN BEAUTY</p>
+    <p>Makeup · Inspiration · Beauty</p>
+</header>
+
+<!-- =================================
+     MENÚ
+================================= -->
+
+<nav>
+    <a onclick="cambiarVista('vista-inicio')">Inicio</a>
+    <a onclick="cambiarVista('vista-inicio'); irA('tecnicas')">Técnicas</a>
+    <a onclick="cambiarVista('vista-inicio'); irA('maquillistas')">Maquillistas</a>
+    <a onclick="cambiarVista('vista-inicio'); irA('idolos')">Ídolos</a>
+    <a onclick="cambiarVista('vista-inicio'); irA('galeria')">Galería</a>
+    <a onclick="cambiarVista('vista-publicaciones')">Publicaciones</a>
+    <a onclick="cambiarVista('vista-crear')">Crear post +</a>
+</nav>
+
+
+<!-- =================================
+     PANTALLA DE INICIO
+================================= -->
+
+<main id="vista-inicio">
+
+    <div class="hero">
+        <h2>Welcome to Dreamy Douyin ♡</h2>
+
+        <p>
+            Descubre el maravilloso universo del maquillaje
+            Douyin, sus técnicas, tendencias, maquillistas
+            e inspiraciones de belleza asiática.
+            Un espacio para aprender, experimentar y crear.
+        </p>
+
+        <button class="btn btn-principal"
+        onclick="cambiarVista('vista-crear')">
+            Crear una publicación ✧
+        </button>
+    </div>
+
+
+    <!-- SOBRE DOUYIN -->
+
+    <section>
+        <h2 class="section-title">¿Qué es el Douyin Makeup?</h2>
+
+        <p class="section-description">
+            El Douyin Makeup es una tendencia de maquillaje
+            originada y popularizada en China a través de
+            la plataforma Douyin. Se caracteriza por una
+            apariencia delicada, luminosa y romántica,
+            con ojos expresivos, brillos y labios difuminados.
+        </p>
+
+        <div class="card-container">
+
+            <div class="card">
+                <h3>♡ Piel luminosa</h3>
+                <p>
+                    Una base de apariencia fresca y luminosa,
+                    con un acabado suave y natural.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>♡ Ojos protagonistas</h3>
+                <p>
+                    Sombras delicadas, pestañas definidas,
+                    delineados y pequeños destellos.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>♡ Labios degradados</h3>
+                <p>
+                    Colores concentrados en el centro
+                    y bordes suavemente difuminados.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- TÉCNICAS -->
+
+    <section class="techniques" id="tecnicas">
+
+        <h2 class="section-title">Técnicas de maquillaje</h2>
+
+        <p class="section-description">
+            Los detalles que hacen especial al estilo Douyin.
+        </p>
+
+        <div class="card-container">
+
+            <div class="technique-card">
+                <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600"
+                alt="Maquillaje de ojos">
+
+                <div class="content">
+                    <h3>Aegyo-sal</h3>
+                    <p>
+                        Se destaca la pequeña zona debajo
+                        de los ojos utilizando iluminación
+                        y sombras suaves.
+                    </p>
+                </div>
+            </div>
+
+            <div class="technique-card">
+                <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600"
+                alt="Maquillaje de pestañas">
+
+                <div class="content">
+                    <h3>Manhua Lashes</h3>
+                    <p>
+                        Pestañas separadas y definidas
+                        que recuerdan a las ilustraciones
+                        de manga.
+                    </p>
+                </div>
+            </div>
+
+            <div class="technique-card">
+                <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600"
+                alt="Maquillaje rosado">
+
+                <div class="content">
+                    <h3>Blush Rosado</h3>
+                    <p>
+                        Rubor en tonos rosa, durazno
+                        o frambuesa para aportar frescura.
+                    </p>
+                </div>
+            </div>
+
+            <div class="technique-card">
+                <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=600"
+                alt="Productos de maquillaje">
+
+                <div class="content">
+                    <h3>Gradient Lips</h3>
+                    <p>
+                        Labios con color en el centro
+                        y bordes difuminados.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- MAQUILLISTAS -->
+
+    <section id="maquillistas">
+
+        <h2 class="section-title">Maquillistas y creadores</h2>
+
+        <p class="section-description">
+            Referentes y creadores de contenido para
+            investigar sus técnicas y estilos.
+        </p>
+
+        <div class="card-container">
+
+            <div class="artist-card">
+                <h3>Jianqiao Lu</h3>
+                <p>
+                    Maquillista relacionado con la difusión
+                    de técnicas de belleza asiática.
+                </p>
+            </div>
+
+            <div class="artist-card">
+                <h3>Airin Lee</h3>
+                <p>
+                    Referente para explorar técnicas
+                    y tendencias de maquillaje.
+                </p>
+            </div>
+
+            <div class="artist-card">
+                <h3>Jessica Vu</h3>
+                <p>
+                    Creadora de contenido de belleza
+                    y tutoriales de maquillaje.
+                </p>
+            </div>
+
+            <div class="artist-card">
+                <h3>Lewis Chia</h3>
+                <p>
+                    Creador de contenido conocido
+                    por sus propuestas de maquillaje.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ÍDOLOS -->
+
+    <section id="idolos" class="techniques">
+
+        <h2 class="section-title">Ídolos e inspiración</h2>
+
+        <p class="section-description">
+            Artistas que pueden servir como inspiración
+            para diferentes estilos de belleza.
+        </p>
+
+        <div class="card-container">
+
+            <div class="idol-card">
+                <h3>Jang Wonyoung</h3>
+                <p>
+                    Inspiración para looks delicados,
+                    luminosos y estilo doll.
+                </p>
+            </div>
+
+            <div class="idol-card">
+                <h3>Esther Yu</h3>
+                <p>
+                    Inspiración de belleza china,
+                    con looks dulces y románticos.
+                </p>
+            </div>
+
+            <div class="idol-card">
+                <h3>Nana Ou-Yang</h3>
+                <p>
+                    Inspiración para looks elegantes
+                    y maquillaje suave.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- GALERÍA -->
+
+    <section id="galeria">
+
+        <h2 class="section-title">Beauty Inspiration ♡</h2>
+
+        <p class="section-description">
+            Una colección visual de inspiración
+            para tus próximos looks.
+        </p>
+
+        <div class="gallery">
+
+            <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600"
+            alt="Inspiración de maquillaje">
+
+            <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600"
+            alt="Inspiración de belleza">
+
+            <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600"
+            alt="Productos de belleza">
+
+            <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=600"
+            alt="Maquillaje">
+
+        </div>
+    </section>
+
+
+    <!-- FRASE -->
+
+    <div class="quote">
+        "Beauty is an art, and your face is the canvas." ♡
+    </div>
+
+</main>
+
+
+<!-- =================================
+     PANTALLA DE PUBLICACIONES
+================================= -->
+
+<section id="vista-publicaciones">
+
+    <h2 class="section-title">♡ Beauty Blog Posts</h2>
+
+    <p class="section-description">
+        Aquí aparecen todas tus publicaciones.
+    </p>
+
+    <button class="btn btn-volver"
+    onclick="cambiarVista('vista-inicio')">
+        ← Volver al inicio
+    </button>
+
+    <button class="btn btn-principal"
+    onclick="cambiarVista('vista-crear')">
+        + Crear publicación
+    </button>
+
+    <div id="muro"></div>
+
+</section>
+
+
+<!-- =================================
+     PANTALLA PARA CREAR
+================================= -->
+
+<section id="vista-crear">
+
+    <h2 class="section-title">Crear publicación ♡</h2>
+
+    <p class="section-description">
+        Comparte tus ideas, looks y descubrimientos
+        de maquillaje.
+    </p>
+
+    <div class="formulario">
+
+        <label for="tit">Título de tu publicación</label>
+
+        <input type="text"
+        id="tit"
+        placeholder="Ej: Mi rutina Douyin favorita">
+
+        <label for="txt">Contenido</label>
+
+        <textarea id="txt"
+        placeholder="Escribe aquí tu publicación..."></textarea>
+
+        <label for="imgArchivo">Subir una fotografía</label>
+
+        <input type="file"
+        id="imgArchivo"
+        accept="image/*">
+
+        <label for="imgUrl">O agregar enlace de imagen</label>
+
+        <input type="url"
+        id="imgUrl"
+        placeholder="https://ejemplo.com/imagen.jpg">
+
+        <button class="btn btn-principal"
+        onclick="crearPost()">
+            Publicar ♡
+        </button>
+
+        <button class="btn btn-volver"
+        onclick="cambiarVista('vista-inicio')">
+            Cancelar
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     PANTALLA PARA EDITAR
+================================= -->
+
+<section id="vista-editar">
+
+    <h2 class="section-title">Editar publicación ✧</h2>
+
+    <div class="formulario">
+
+        <label for="edit-tit">Nuevo título</label>
+
+        <input type="text" id="edit-tit">
+
+        <label for="edit-txt">Nuevo contenido</label>
+
+        <textarea id="edit-txt"></textarea>
+
+        <input type="hidden" id="edit-imgActual">
+
+        <label for="edit-imgArchivo">Cambiar fotografía</label>
+
+        <input type="file"
+        id="edit-imgArchivo"
+        accept="image/*">
+
+        <label for="edit-imgUrl">O colocar otro enlace</label>
+
+        <input type="url"
+        id="edit-imgUrl"
+        placeholder="https://ejemplo.com/imagen.jpg">
+
+        <button class="btn btn-principal"
+        onclick="guardarEdicion()">
+            Guardar cambios ♡
+        </button>
+
+        <button class="btn btn-volver"
+        onclick="cambiarVista('vista-publicaciones')">
+            Cancelar
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =================================
+     PIE DE PÁGINA
+================================= -->
+
+<footer>
+    <p>♡ DREAMY DOUYIN ♡</p>
+    <p>Beauty, creativity and inspiration.</p>
+    <p>Blog personal · 2026</p>
+</footer>
+
+
+<!-- =================================
+     JAVASCRIPT: CEREBRO DEL BLOG
+================================= -->
+
+<script>
+
+// ==========================================
+// 1. LISTA DE PUBLICACIONES
+// ==========================================
+
+let miListaDePublicaciones = [];
+
+let posicionEnLaLista = null;
+
+// Cargar publicaciones guardadas
+try {
+    miListaDePublicaciones =
+        JSON.parse(localStorage.getItem("dreamyPosts")) || [];
+} catch (error) {
+    miListaDePublicaciones = [];
+}
+
+// Guardar publicaciones
+function guardarEnMemoria() {
+    try {
+        localStorage.setItem(
+            "dreamyPosts",
+            JSON.stringify(miListaDePublicaciones)
+        );
+    } catch (error) {
+        alert("No se pudo guardar. La imagen podría ser demasiado grande.");
+    }
+}
+
+
+// ==========================================
+// 2. SEGURIDAD Y AYUDANTES
+// ==========================================
+
+function escaparHTML(texto) {
+    return String(texto).replace(/[&<>"']/g, caracter => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[caracter]);
+}
+
+function imagenSegura(imagen) {
+    if (!imagen) return "";
+
+    if (/^https?:\/\//i.test(imagen) ||
+        /^data:image\/(png|jpeg|jpg|gif|webp);base64,/i.test(imagen)) {
+        return imagen;
+    }
+
+    return "";
+}
+
+
+// ==========================================
+// 3. CAMBIAR DE PANTALLA
+// ==========================================
+
+function cambiarVista(pantallaDestino) {
+
+    let pantallas = [
+        "vista-inicio",
+        "vista-publicaciones",
+        "vista-crear",
+        "vista-editar"
+    ];
+
+    pantallas.forEach(id => {
+        document.getElementById(id).style.display = "none";
+    });
+
+    document.getElementById(pantallaDestino).style.display = "block";
+
+    if (pantallaDestino === "vista-publicaciones") {
+        mostrarPosts();
+    }
+
+    window.scrollTo(0, 0);
+}
+
+function irA(seccion) {
+    setTimeout(() => {
+        document.getElementById(seccion).scrollIntoView({
+            behavior: "smooth"
+        });
+    }, 100);
+}
+
+
+// ==========================================
+// 4. PROCESAR IMÁGENES
+// ==========================================
+
+function obtenerImagen(cajaArchivo, cajaLink, cajaFotoVieja = null) {
+
+    return new Promise((resolve, reject) => {
+
+        let archivo = document.getElementById(cajaArchivo).files[0];
+
+        let enlace = document.getElementById(cajaLink).value.trim();
+
+        if (archivo) {
+
+            if (!archivo.type.startsWith("image/")) {
+                reject(new Error("Selecciona un archivo de imagen."));
+                return;
+            }
+
+            if (archivo.size > 2 * 1024 * 1024) {
+                reject(new Error("La imagen debe pesar menos de 2 MB."));
+                return;
+            }
+
+            let lector = new FileReader();
+
+            lector.onload = () => resolve(lector.result);
+            lector.onerror = () => reject(new Error("No se pudo leer la imagen."));
+
+            lector.readAsDataURL(archivo);
+
+        } else if (enlace !== "") {
+
+            if (!/^https?:\/\//i.test(enlace)) {
+                reject(new Error("El enlace debe comenzar con http:// o https://"));
+                return;
+            }
+
+            resolve(enlace);
+
+        } else if (cajaFotoVieja) {
+
+            resolve(document.getElementById(cajaFotoVieja).value);
+
+        } else {
+
+            resolve("");
+        }
+    });
+}
+
+
+// ==========================================
+// 5. MOSTRAR PUBLICACIONES
+// ==========================================
+
+function mostrarPosts() {
+
+    let cajaMuro = document.getElementById("muro");
+
+    cajaMuro.innerHTML = "";
+
+    if (miListaDePublicaciones.length === 0) {
+
+        cajaMuro.innerHTML = `
+            <div class="card">
+                <h3>♡ Todavía no hay publicaciones</h3>
+                <p>¡Crea tu primera publicación de belleza!</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    for (let i = 0; i < miListaDePublicaciones.length; i++) {
+
+        let post = miListaDePublicaciones[i];
+
+        let titulo = escaparHTML(post.titulo);
+        let texto = escaparHTML(post.texto);
+        let imagen = imagenSegura(post.imagen);
+
+        cajaMuro.innerHTML += `
+
+            <div class="tarjeta-post">
+
+                <h3 class="t-post">${titulo}</h3>
+
+                ${imagen ? `
+                    <img src="${imagen}"
+                    class="img-post"
+                    alt="Imagen de la publicación">
+                ` : ""}
+
+                <p class="p-post">${texto}</p>
+
+                <div class="caja-botones">
+
+                    <button class="btn btn-secundario"
+                    onclick="abrirEditar(${i})">
+                        Editar
+                    </button>
+
+                    <button class="btn btn-peligro"
+                    onclick="borrarPost(${i})">
+                        Eliminar
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+    }
+}
+
+
+// ==========================================
+// 6. CREAR PUBLICACIÓN
+// ==========================================
+
+async function crearPost() {
+
+    let titulo = document.getElementById("tit").value.trim();
+
+    let texto = document.getElementById("txt").value.trim();
+
+    if (titulo === "" && texto === "") {
+        alert("¡Escribe un título o un texto antes de publicar!");
+        return;
+    }
+
+    try {
+
+        let imagen = await obtenerImagen("imgArchivo", "imgUrl");
+
+        miListaDePublicaciones.push({
+            titulo: titulo,
+            imagen: imagen,
+            texto: texto
+        });
+
+        guardarEnMemoria();
+
+        document.getElementById("tit").value = "";
+        document.getElementById("txt").value = "";
+        document.getElementById("imgUrl").value = "";
+        document.getElementById("imgArchivo").value = "";
+
+        mostrarPosts();
+
+        cambiarVista("vista-publicaciones");
+
+    } catch (error) {
+
+        alert(error.message);
+    }
+}
+
+
+// ==========================================
+// 7. ELIMINAR PUBLICACIÓN
+// ==========================================
+
+function borrarPost(numeroEnLaFila) {
+
+    let confirmacion = confirm(
+        "¿Seguro que quieres eliminar esta publicación?"
+    );
+
+    if (confirmacion === true) {
+
+        miListaDePublicaciones.splice(numeroEnLaFila, 1);
+
+        guardarEnMemoria();
+
+        mostrarPosts();
+    }
+}
+
+
+// ==========================================
+// 8. ABRIR EDICIÓN
+// ==========================================
+
+function abrirEditar(numeroEnLaFila) {
+
+    posicionEnLaLista = numeroEnLaFila;
+
+    let post = miListaDePublicaciones[numeroEnLaFila];
+
+    document.getElementById("edit-tit").value = post.titulo;
+
+    document.getElementById("edit-txt").value = post.texto;
+
+    document.getElementById("edit-imgActual").value = post.imagen;
+
+    document.getElementById("edit-imgArchivo").value = "";
+
+    document.getElementById("edit-imgUrl").value = "";
+
+    cambiarVista("vista-editar");
+}
+
+
+// ==========================================
+// 9. GUARDAR EDICIÓN
+// ==========================================
+
+async function guardarEdicion() {
+
+    if (posicionEnLaLista === null ||
+        !miListaDePublicaciones[posicionEnLaLista]) {
+        alert("No se encontró la publicación.");
+        return;
+    }
+
+    let nuevoTitulo = document.getElementById("edit-tit").value.trim();
+
+    let nuevoTexto = document.getElementById("edit-txt").value.trim();
+
+    if (nuevoTitulo === "" && nuevoTexto === "") {
+        alert("Escribe un título o un texto.");
+        return;
+    }
+
+    try {
+
+        let nuevaImagen = await obtenerImagen(
+            "edit-imgArchivo",
+            "edit-imgUrl",
+            "edit-imgActual"
+        );
+
+        miListaDePublicaciones[posicionEnLaLista].titulo = nuevoTitulo;
+
+        miListaDePublicaciones[posicionEnLaLista].texto = nuevoTexto;
+
+        miListaDePublicaciones[posicionEnLaLista].imagen = nuevaImagen;
+
+        guardarEnMemoria();
+
+        mostrarPosts();
+
+        cambiarVista("vista-publicaciones");
+
+        posicionEnLaLista = null;
+
+    } catch (error) {
+
+        alert(error.message);
+    }
+}
+
+
+// ==========================================
+// 10. INICIAR BLOG
+// ==========================================
+
+mostrarPosts();
+
+cambiarVista("vista-inicio");
+
+</script>
+
+</body>
+</html>
