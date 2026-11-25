@@ -3,7 +3,7 @@ Write-Host "  ACTUALIZANDO PORTAL DE DESCARGAS DE ALUMNOS" -ForegroundColor Cyan
 Write-Host "===================================================" -ForegroundColor Cyan
 
 Write-Host "`n[1/3] Escaneando carpetas de cursos..." -ForegroundColor Yellow
-$cursos = @('7A', '7B', '8A', '8B')
+$cursos = @('5B','7A', '7B', '8A', '8B')
 $resultado = @{}
 
 foreach ($c in $cursos) {

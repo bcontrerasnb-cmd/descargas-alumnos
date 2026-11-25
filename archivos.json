@@ -1,5 +1,41 @@
 ﻿{
     "cursos":  {
+                   "5B":  [
+                              "5 Básico B_Agustina_Garrido_Excel_Forma_F_Agustina_Garrido_xlsx.xlsx",
+                              "5 Básico B_agustina_hidalgo_exel_forma_e_agustina_hidalgo.xlsx",
+                              "5 Básico B_Agustina_Zurita_excel_forma_f_Aguistina_Zurita.xlsx",
+                              "5 Básico B_Agustin_leiton_excel_forma_X_agustín_leiton.xlsx",
+                              "5 Básico B_Alonso_Bels_Excel_Forma_D_Alonso_Bels.xlsx",
+                              "5 Básico B_Alonso_Diaz_Alonso Diaz.xlsx",
+                              "5 Básico B_alonso_espindola_exel-forma-d-alonso-espindola.xlsx",
+                              "5 Básico B_anabela_reveco_excel_forma_c_anabela_reveco.xlsx",
+                              "5 Básico B_Analia_belen_toro_avila_EXCEL_FORMA_E_ANALIA_TORO.xlsx",
+                              "5 Básico B_ariel_rivera_Excel_Forma_C_Ariel_Rivera.xlsx",
+                              "5 Básico B_Camila_de_la_fuente_Ecxel _Forma _c_camila _de la fuente.xlsx",
+                              "5 Básico B_Catalina_González_jara_Excel_Forma_B_Catalina_González.xlsx",
+                              "5 Básico B_DOMINGA_DE_LA_PAZ_RETAMAL_OLAVE_EXCEL_FORMA_B_DOMINGA_RETAMAL.XLSX",
+                              "5 Básico B_GUSTAVO_ALVEAR_curso 5°B GUSTAVO ALVEAR.xlsx",
+                              "5 Básico B_Henríquez_pedro_Ecxel_forma_f_pedro_henriquez.xlsx",
+                              "5 Básico B_Ignacia_Muñoz_excel_forma_D_Ignacia_Muñoz.xlsx",
+                              "5 Básico B_Joaquin_Villarroel_Excel_Forma_F_Joaquin_Villarroel_xlxs.xlsx",
+                              "5 Básico B_Josefina_Arancibia_josefina_Arancibia.xlsx",
+                              "5 Básico B_juan_jose_arrieta_juan jose arrieta.xlsx",
+                              "5 Básico B_julieta_baeza_excel_forma_a_julieta_apellido.xlsx",
+                              "5 Básico B_julieta_porra_Excel_forma_B_JULIETA_PORRA.xlsx",
+                              "5 Básico B_leonor_fuentes_excel_forma_e_leonor_fuentes.xlsx",
+                              "5 Básico B_María_Jesús_Lillo_Bastias_Excel_forma_C_María_Lillo.xlsx",
+                              "5 Básico B_mateo_barros_excel_forma_a_mateo_barros.xlsx",
+                              "5 Básico B_mateo_quezada_encuentro deportivo Mateo Quezada 5B.xlsx",
+                              "5 Básico B_pablo_abel_retamal_espinoza_pablo.r.xlsx",
+                              "5 Básico B_renato_fuentes_Excel Forma S Apellido.xlsx",
+                              "5 Básico B_Santiago_Corvalan_Excel_Forma_F_Santiago-Corvalan.xlsx",
+                              "5 Básico B_Santiago_Toledo_Excel_Forma_C_Santiago_Toledo.xlsx",
+                              "5 Básico B_sebastian_pinochet_excel_sebastian_pinochet.xlsx",
+                              "5 Básico B_sofia_carreño_Excel_Forma_E_Sofia_Carreño.xlsx",
+                              "5 Básico B_sofia_prieto_excel_sofia_prieto_5B.xlsx",
+                              "5 Básico B_Trinidad_Antonella_Nuñez_Gutierrez_Exel_Forma_D_Trinidad_ Nuñez.xlsx",
+                              "5 Básico B_Valentín_Suazo_excel_forma_a_valentin_suazo.xlsx"
+                          ],
                    "8A":  [
                               "8 Básico A_adela_guerrero_adela8a.txt",
                               "8 Básico A_agustin_moya_agustin moya rayo mcqueen.txt",
@@ -105,5 +141,5 @@
                               "Material_Blog8°.txt"
                           ]
                },
-    "actualizado":  "25/11/2026 10:36"
+    "actualizado":  "25/11/2026 10:41"
 }
