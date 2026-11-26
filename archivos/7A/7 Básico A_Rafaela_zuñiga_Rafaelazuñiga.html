@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)file:///E:/Rafaelazc.html# -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow Beauty - Mi Blog de Maquillaje</title>
+
+    <style>
+        /* =================================
+           ESTILOS GENERALES
+        ================================= */
+
+        :root {
+            --rosa: #d98b9c;
+            --rosa-claro: #fce8ec;
+            --rosa-oscuro: #b85f76;
+            --nude: #f8eee8;
+            --dorado: #c6a36b;
+            --texto: #49383b;
+            --blanco: #ffffff;
+            --sombra: 0 5px 20px rgba(130, 75, 90, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: var(--nude);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        /* =================================
+           BARRA DE NAVEGACIÓN
+        ================================= */
+
+        .navbar {
+            background: var(--blanco);
+            box-shadow: var(--sombra);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--rosa-claro);
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 18px;
+        }
+
+        .nav-item {
+            margin: 0 25px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--texto);
+            font-weight: bold;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--rosa-oscuro);
+        }
+
+        /* =================================
+           CONTENEDOR PRINCIPAL
+        ================================= */
+
+        .contenedor-principal {
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.5s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =================================
+           PÁGINA DE INICIO
+        ================================= */
+
+        #vista-inicio {
+            text-align: center;
+            background: var(--blanco);
+            padding: 55px 30px;
+            border-radius: 18px;
+            box-shadow: var(--sombra);
+            border-top: 5px solid var(--rosa);
+        }
+
+        .titulo-principal {
+            color: var(--rosa-oscuro);
+            font-family: Georgia, serif;
+            font-size: 42px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .subtitulo-inicio {
+            color: var(--dorado);
+            font-family: Georgia, serif;
+            font-style: italic;
+            font-size: 19px;
+            margin-bottom: 25px;
+        }
+
+        .foto-perfil {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--rosa-claro);
+            margin-bottom: 20px;
+            box-shadow: var(--sombra);
+        }
+
+        .texto-bienvenida {
+            font-size: 16px;
+            color: #746165;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .decoracion {
+            color: var(--dorado);
+            font-size: 23px;
+            margin: 20px 0;
+            letter-spacing: 8px;
+        }
+
+        /* =================================
+           FORMULARIOS
+        ================================= */
+
+        .tarjeta-formulario {
+            background: var(--blanco);
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: var(--sombra);
+            border-top: 5px solid var(--rosa);
+        }
+
+        .subtitulo {
+            color: var(--rosa-oscuro);
+            font-family: Georgia, serif;
+            font-size: 27px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--rosa-claro);
+            padding-bottom: 12px;
+        }
+
+        .etiqueta-pequena {
+            color: var(--rosa-oscuro);
+            font-weight: bold;
+            margin: 12px 0 7px;
+            font-size: 14px;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 15px;
+            border: 1px solid #ead1d8;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #fffafa;
+            color: var(--texto);
+            transition: 0.3s;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: var(--rosa);
+            box-shadow: 0 0 7px rgba(217, 139, 156, 0.3);
+        }
+
+        .textarea-formulario {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        /* =================================
+           BOTONES
+        ================================= */
+
+        .btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--sombra);
+        }
+
+        .btn-primario {
+            background: var(--rosa);
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primario:hover {
+            background: var(--rosa-oscuro);
+        }
+
+        .btn-secundario {
+            background: var(--dorado);
+            color: white;
+            margin-right: 8px;
+        }
+
+        .btn-secundario:hover {
+            background: #aa8955;
+        }
+
+        .btn-peligro {
+            background: #bd6877;
+            color: white;
+        }
+
+        .btn-peligro:hover {
+            background: #9e4e60;
+        }
+
+        .btn-exito {
+            background: #a77d89;
+            color: white;
+            margin-right: 8px;
+            margin-top: 10px;
+        }
+
+        /* =================================
+           PUBLICACIONES
+        ================================= */
+
+        .contenedor-muro {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .tarjeta-post {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: 0.3s;
+            border: 1px solid #f4dfe5;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(130, 75, 90, 0.2);
+        }
+
+        .t-post {
+            padding: 20px 20px 10px;
+            color: var(--rosa-oscuro);
+            font-family: Georgia, serif;
+            font-size: 22px;
+        }
+
+        .img-post {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .img-post[src=""],
+        .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 18px 20px;
+            color: #746165;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+
+        .caja-botones {
+            padding: 15px 20px;
+            border-top: 1px solid var(--rosa-claro);
+            background: #fffafa;
+        }
+
+        /* =================================
+           PIE DE PÁGINA
+        ================================= */
+
+        footer {
+            text-align: center;
+            background: white;
+            padding: 25px;
+            margin-top: 60px;
+            color: var(--rosa-oscuro);
+            border-top: 2px solid var(--rosa-claro);
+            font-size: 14px;
+        }
+
+        /* =================================
+           DISEÑO RESPONSIVE
+        ================================= */
+
+        @media (max-width: 650px) {
+
+            .nav-lista {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .contenedor-muro {
+                grid-template-columns: 1fr;
+            }
+
+            .titulo-principal {
+                font-size: 30px;
+            }
+
+            #vista-inicio {
+                padding: 35px 20px;
+            }
+
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secundario,
+            .btn-peligro,
+            .btn-exito {
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item">
+                <a href="file:///E:/Rafaelazc.html#" class="nav-link" onclick="cambiarVista('vista-inicio')">INICIO</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="file:///E:/Rafaelazc.html#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">PUBLICACIONES</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="contenedor-principal">
+
+        <!-- PÁGINA DE INICIO -->
+
+        <section id="vista-inicio" class="vista-seccion" style="display: none;">
+
+            <h1 class="titulo-principal">¡Bienvenido a mi blog!</h1>
+
+            <p class="subtitulo-inicio">
+                Blog de Rafaela
+            </p>
+
+            <div class="decoracion">✧ ♡ ✧</div>
+
+            <img src="./Rafaelazuñiga_files/photo-1522335789203-aabd1fc54bc9" class="foto-perfil" alt="Productos de maquillaje">
+
+            <p class="texto-bienvenida">
+                ¡Bienvenidos a mi blog de maquillaje ! 💗
+
+                Mi nombre es Rafaela, soy estudiante del 7mo básico A del colegio concepción linares, 
+                este es un espacio dedicado al mundo de belleza y maquillaje, dos cosas que me agradan
+              
+
+                Mi objetivo es compartir mi pasión por el maquillaje
+                y demostrar que cada persona puede expresar su creatividad
+                a través de los colores y estilos.
+            </p>
+
+            <div class="decoracion">✧ ♡ ✧</div>
+
+        </section>
+
+        <!-- PUBLICACIONES -->
+
+        <section id="vista-publicaciones" class="vista-seccion" style="display: block;">
+
+            <h2 class="subtitulo">Mis publicaciones 💄</h2>
+
+            <button class="btn btn-primario" onclick="cambiarVista('vista-crear')" style="margin-bottom:20px;">
+                + Crear nueva publicación
+            </button>
+
+            <div id="muro" class="contenedor-muro"><div class="tarjeta-post"><h3 class="t-post">Maquillaje</h3><img class="img-post" alt="Imagen de la publicación" src="./Rafaelazuñiga_files/imgres"><p class="p-post">El maquillaje es mucho más que utilizar productos para el rostro; es una forma de expresar nuestra personalidad, creatividad y estilo. A través de los colores, las sombras y los diferentes productos podemos crear looks únicos y probar cosas nuevas.
+
+Existen muchos estilos de maquillaje, desde los más naturales y sencillos hasta los más llamativos y elegantes. Cada uno tiene algo especial y podemos elegir el que más nos guste dependiendo de la ocasión o simplemente de cómo nos sintamos ese día.
+
+En este blog quiero compartir mi pasión por el maquillaje, mostrar diferentes técnicas, recomendar productos, descubrir tendencias y entregar algunos consejos que pueden servir para quienes están comenzando en este mundo.
+
+La idea es aprender, experimentar y, sobre todo, disfrutar de cada proceso. Porque no necesitamos ser expertos para divertirnos maquillándonos.
+
+¡Anímate a descubrir tu propio estilo y deja que tu creatividad brille! ♡</p><div class="caja-botones"><button class="btn btn-secundario">Editar</button><button class="btn btn-peligro">Eliminar</button></div></div></div>
+
+        </section>
+
+        <!-- CREAR PUBLICACIÓN -->
+
+        <section id="vista-crear" class="vista-seccion" style="display: none;">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">Nueva publicación ✨</h2>
+
+                <input type="text" id="tit" class="input-formulario" placeholder="Título de tu publicación" maxlength="50">
+
+                <p class="etiqueta-pequena">
+                    Agrega una imagen de maquillaje:
+                </p>
+
+                <input type="file" id="imgArchivo" class="input-formulario" accept="image/*">
+
+                <input type="text" id="imgUrl" class="input-formulario" placeholder="O pega el enlace de una imagen">
+
+                <textarea id="txt" class="textarea-formulario" placeholder="Escribe tus consejos, recomendaciones o ideas de maquillaje..."></textarea>
+
+                <button class="btn btn-primario" onclick="crearPost()">
+                    Publicar ✧
+                </button>
+
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top:10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- EDITAR PUBLICACIÓN -->
+
+        <section id="vista-editar" class="vista-seccion" style="display: none;">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">Editar publicación ✨</h2>
+
+                <input type="text" id="edit-tit" class="input-formulario" maxlength="50">
+
+                <p class="etiqueta-pequena">
+                    Cambiar imagen:
+                </p>
+
+                <input type="file" id="edit-imgArchivo" class="input-formulario" accept="image/*">
+
+                <input type="text" id="edit-imgUrl" class="input-formulario" placeholder="Nueva URL de imagen">
+
+                <input type="hidden" id="edit-imgActual" value="https://www.google.com/imgres?q=dibujo%20imagenes%20de%20belleza&amp;imgurl=https%3A%2F%2Fwww.shutterstock.com%2Fimage-vector%2Fbeauty-sketch-background-hand-drawn-600w-556805518.jpg&amp;imgrefurl=https%3A%2F%2Fwww.shutterstock.com%2Fes%2Fimage-vector%2Fbeauty-sketch-background-hand-drawn-doodle-556805518&amp;docid=DyUWHMrIS7CZQM&amp;tbnid=A5mA3nKdaouaUM&amp;vet=12ahUKEwjUyvCvrZSYAxXzppUCHTv_N9YQnPAOegUI1wEQAA..i&amp;w=600&amp;h=620&amp;hcb=2&amp;ved=2ahUKEwjUyvCvrZSYAxXzppUCHTv_N9YQnPAOegUI1wEQAA">
+
+                <textarea id="edit-txt" class="textarea-formulario"></textarea>
+
+                <button class="btn btn-exito" onclick="guardarEdicion()">
+                    Guardar cambios
+                </button>
+
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+
+    <footer>
+        <p>♡ GLOW BEAUTY ♡</p>
+        <p>La belleza comienza cuando decides expresarte.</p>
+        <p>Blog de maquillaje | 2026</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // CAMBIAR ENTRE VISTAS
+
+        function cambiarVista(idVistaDestino) {
+
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+        // OBTENER IMAGEN
+
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+            let archivo = document.getElementById(idArchivo).files[0];
+            let url = document.getElementById(idUrl).value;
+
+            if (archivo) {
+                return URL.createObjectURL(archivo);
+            }
+            else if (url !== "") {
+                return url;
+            }
+            else if (idActual) {
+                return document.getElementById(idActual).value;
+            }
+
+            return "";
+        }
+
+        // CREAR PUBLICACIÓN
+
+        function crearPost() {
+
+            let titulo = document.getElementById("tit").value;
+            let texto = document.getElementById("txt").value;
+
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (titulo.trim() === "" && texto.trim() === "") {
+                alert("¡Debes escribir un título o texto antes de publicar!");
+                return;
+            }
+
+            let tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-post";
+
+            let tituloPost = document.createElement("h3");
+            tituloPost.className = "t-post";
+            tituloPost.textContent = titulo;
+
+            let imagenPost = document.createElement("img");
+            imagenPost.className = "img-post";
+            imagenPost.alt = "Imagen de la publicación";
+
+            if (imagenFinal !== "") {
+                imagenPost.src = imagenFinal;
+            }
+
+            let textoPost = document.createElement("p");
+            textoPost.className = "p-post";
+            textoPost.textContent = texto;
+
+            let botones = document.createElement("div");
+            botones.className = "caja-botones";
+
+            let editar = document.createElement("button");
+            editar.className = "btn btn-secundario";
+            editar.textContent = "Editar";
+            editar.onclick = function() {
+                abrirEditar(editar);
+            };
+
+            let eliminar = document.createElement("button");
+            eliminar.className = "btn btn-peligro";
+            eliminar.textContent = "Eliminar";
+            eliminar.onclick = function() {
+                borrarPost(eliminar);
+            };
+
+            botones.appendChild(editar);
+            botones.appendChild(eliminar);
+
+            tarjeta.appendChild(tituloPost);
+
+            if (imagenFinal !== "") {
+                tarjeta.appendChild(imagenPost);
+            }
+
+            tarjeta.appendChild(textoPost);
+            tarjeta.appendChild(botones);
+
+            document.getElementById("muro").appendChild(tarjeta);
+
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+        }
+
+        // ELIMINAR PUBLICACIÓN
+
+        function borrarPost(botonApretado) {
+
+            let confirmacion = confirm(
+                "¿Seguro que quieres eliminar esta publicación?"
+            );
+
+            if (confirmacion === true) {
+                botonApretado.parentElement.parentElement.remove();
+            }
+        }
+
+        // PREPARAR EDICIÓN
+
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+
+            postAEditar = botonApretado.parentElement.parentElement;
+
+            document.getElementById("edit-tit").value =
+                postAEditar.querySelector('.t-post').innerText;
+
+            document.getElementById("edit-txt").value =
+                postAEditar.querySelector('.p-post').innerText;
+
+            let imagen = postAEditar.querySelector('.img-post');
+
+            document.getElementById("edit-imgActual").value =
+                imagen ? imagen.src : "";
+
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+        }
+
+        // GUARDAR EDICIÓN
+
+        function guardarEdicion() {
+
+            let nuevoTit = document.getElementById("edit-tit").value;
+            let nuevoTxt = document.getElementById("edit-txt").value;
+
+            let nuevaImg = obtenerImagen(
+                "edit-imgArchivo",
+                "edit-imgUrl",
+                "edit-imgActual"
+            );
+
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+
+            let imagen = postAEditar.querySelector('.img-post');
+
+            if (nuevaImg !== "") {
+
+                if (imagen) {
+                    imagen.src = nuevaImg;
+                }
+                else {
+                    imagen = document.createElement("img");
+                    imagen.className = "img-post";
+                    imagen.alt = "Imagen de la publicación";
+                    imagen.src = nuevaImg;
+
+                    postAEditar.insertBefore(
+                        imagen,
+                        postAEditar.querySelector('.p-post')
+                    );
+                }
+
+            }
+
+            cambiarVista('vista-publicaciones');
+        }
+
+    </script>
+
+
+
+</body></html>

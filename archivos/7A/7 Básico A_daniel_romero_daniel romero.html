@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Blog Marvel</title>
+
+    <!-- CSS -->
+    <style>
+        :root {
+            --color-fondo: #101116;
+            --color-texto: #f5f5f5;
+            --color-primario: #e62429;
+            --color-primario-hover: #b91c22;
+            --color-secundario: #f5c518;
+            --color-peligro: #e62429;
+            --color-exito: #218838;
+            --blanco: #ffffff;
+            --borde-suave: 14px;
+            --sombra: 0 8px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top, rgba(230, 36, 41, 0.18), transparent 38%),
+                linear-gradient(135deg, #101116, #1b1c23 55%, #111);
+            color: var(--color-texto);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        #vista-publicaciones, #vista-crear, #vista-editar {
+            display: none;
+        }
+
+        /* BARRA DE NAVEGACIÓN */
+
+        .navbar {
+            background: rgba(12, 12, 16, 0.96);
+            border-bottom: 3px solid var(--color-primario);
+            box-shadow: 0 4px 20px rgba(230, 36, 41, 0.22);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 16px 12px;
+            gap: 12px;
+        }
+
+        .nav-item {
+            margin: 0 10px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #f5f5f5;
+            font-weight: 800;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-secundario);
+            background: rgba(230, 36, 41, 0.16);
+            transform: translateY(-2px);
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+
+        .contenedor-principal {
+            max-width: 900px;
+            margin: 42px auto;
+            padding: 0 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.45s ease-in-out;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* INICIO */
+
+        #vista-inicio {
+            text-align: center;
+            background: linear-gradient(145deg, #202128, #15161b);
+            padding: 45px 30px;
+            border-radius: var(--borde-suave);
+            border: 1px solid rgba(245, 197, 24, 0.28);
+            box-shadow: var(--sombra);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #vista-inicio::before {
+            content: "MARVEL";
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            color: rgba(230, 36, 41, 0.12);
+            font-weight: 1000;
+            font-size: clamp(2rem, 8vw, 5rem);
+            letter-spacing: 5px;
+            pointer-events: none;
+        }
+
+        .titulo-principal {
+            color: var(--color-secundario);
+            margin-bottom: 20px;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 3px 3px 0 #9e151a;
+        }
+
+        .foto-perfil {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--color-primario);
+            margin-bottom: 20px;
+            box-shadow: 0 0 22px rgba(230, 36, 41, 0.4);
+        }
+
+        .texto-bienvenida {
+            font-size: 1.15rem;
+            color: #d7d7d7;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* FORMULARIOS */
+
+        .tarjeta-formulario {
+            background: linear-gradient(145deg, #22232a, #17181d);
+            padding: 30px;
+            border-radius: var(--borde-suave);
+            border: 1px solid rgba(245, 197, 24, 0.22);
+            box-shadow: var(--sombra);
+            margin-bottom: 40px;
+        }
+
+        .subtitulo {
+            margin-bottom: 20px;
+            color: var(--color-secundario);
+            border-bottom: 2px solid var(--color-primario);
+            padding-bottom: 12px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.9rem;
+            color: #c7c7c7;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 13px 14px;
+            margin-bottom: 15px;
+            border: 1px solid #44454d;
+            border-radius: 9px;
+            background: #101116;
+            color: #f5f5f5;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: var(--color-secundario);
+            box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.15);
+        }
+
+        .input-formulario::placeholder,
+        .textarea-formulario::placeholder {
+            color: #999;
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        /* BOTONES */
+
+        .btn {
+            padding: 11px 20px;
+            border: none;
+            border-radius: 9px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--blanco);
+            cursor: pointer;
+            transition: background-color 0.25s, transform 0.15s, box-shadow 0.25s;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primario {
+            background: var(--color-primario);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primario:hover {
+            background: var(--color-primario-hover);
+        }
+
+        .btn-secundario {
+            background: var(--color-secundario);
+            color: #171717;
+            margin-right: 10px;
+        }
+
+        .btn-secundario:hover {
+            background: #d6a900;
+        }
+
+        .btn-peligro {
+            background: #8f171c;
+        }
+
+        .btn-peligro:hover {
+            background: #c91e24;
+        }
+
+        .btn-exito {
+            background: var(--color-exito);
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-exito:hover {
+            background: #176b2c;
+        }
+
+        /* PUBLICACIONES */
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .tarjeta-post {
+            background: linear-gradient(145deg, #22232a, #17181d);
+            border-radius: var(--borde-suave);
+            border: 1px solid rgba(230, 36, 41, 0.35);
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-secundario);
+        }
+
+        .t-post {
+            padding: 22px 22px 12px;
+            color: var(--color-secundario);
+            font-size: 1.45rem;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+            border-top: 3px solid var(--color-primario);
+            border-bottom: 3px solid var(--color-primario);
+        }
+
+        .img-post[src=""],
+        .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 18px 22px;
+            color: #e3e3e3;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .caja-botones {
+            padding: 16px 22px 22px;
+            border-top: 1px solid #383940;
+            background: rgba(10, 10, 12, 0.45);
+        }
+
+        /* DISEÑO PARA CELULARES */
+
+        @media (max-width: 600px) {
+            .nav-lista {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .nav-item {
+                margin: 4px;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+
+            .contenedor-principal {
+                margin: 25px auto;
+                padding: 0 14px;
+            }
+
+            #vista-inicio {
+                padding: 32px 18px;
+            }
+
+            .tarjeta-formulario {
+                padding: 22px 16px;
+            }
+
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secundario,
+            .btn-peligro,
+            .btn-exito {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">
+                    Inicio
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">
+                    Publicaciones
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="contenedor-principal">
+
+        <!-- VISTA INICIO -->
+
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+
+            <h1 class="titulo-principal">
+                Bienvenido a mi Blog
+            </h1>
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+                class="foto-perfil"
+                alt="Mi Foto"
+            >
+
+            <p class="texto-bienvenida">
+                ¡Hola! Soy estudiante de 7° Básico del Colegio Concepción
+                y este es mi espacio donde compartiré mis ideas y proyectos.
+            </p>
+
+        </section>
+
+        <!-- VISTA PUBLICACIONES -->
+
+        <section id="vista-publicaciones" class="vista-seccion">
+
+            <button
+                class="btn btn-primario"
+                onclick="cambiarVista('vista-crear')"
+                style="margin-bottom: 20px;"
+            >
+                + Crear Nueva Publicación
+            </button>
+
+            <div id="muro" class="contenedor-muro"></div>
+
+        </section>
+
+        <!-- VISTA CREAR -->
+
+        <section id="vista-crear" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">
+                    Nueva Publicación
+                </h2>
+
+                <input
+                    type="text"
+                    id="tit"
+                    class="input-formulario"
+                    placeholder="Título (máx 50 caracteres)"
+                    maxlength="50"
+                >
+
+                <p class="etiqueta-pequena">
+                    Imagen (Sube un archivo o pega un link):
+                </p>
+
+                <input
+                    type="file"
+                    id="imgArchivo"
+                    class="input-formulario"
+                    accept="image/*"
+                >
+
+                <input
+                    type="text"
+                    id="imgUrl"
+                    class="input-formulario"
+                    placeholder="O pega la URL aquí"
+                >
+
+                <textarea
+                    id="txt"
+                    class="textarea-formulario"
+                    placeholder="¿Qué estás pensando?"
+                ></textarea>
+
+                <button class="btn btn-primario" onclick="crearPost()">
+                    Publicar
+                </button>
+
+                <button
+                    class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- VISTA EDITAR -->
+
+        <section id="vista-editar" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">
+                    Editar Publicación
+                </h2>
+
+                <input
+                    type="text"
+                    id="edit-tit"
+                    class="input-formulario"
+                    maxlength="50"
+                >
+
+                <p class="etiqueta-pequena">
+                    Cambiar imagen (déjalo en blanco para mantener la actual):
+                </p>
+
+                <input
+                    type="file"
+                    id="edit-imgArchivo"
+                    class="input-formulario"
+                    accept="image/*"
+                >
+
+                <input
+                    type="text"
+                    id="edit-imgUrl"
+                    class="input-formulario"
+                    placeholder="O nueva URL de imagen"
+                >
+
+                <input
+                    type="hidden"
+                    id="edit-imgActual"
+                >
+
+                <textarea
+                    id="edit-txt"
+                    class="textarea-formulario"
+                ></textarea>
+
+                <button
+                    class="btn btn-exito"
+                    onclick="guardarEdicion()"
+                >
+                    Guardar Cambios
+                </button>
+
+                <button
+                    class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // CAMBIAR ENTRE VISTAS
+
+        function cambiarVista(idVistaDestino) {
+
+            document.getElementById('vista-inicio').style.display = 'none';
+
+            document.getElementById('vista-publicaciones').style.display = 'none';
+
+            document.getElementById('vista-crear').style.display = 'none';
+
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+
+        }
+
+        // OBTENER IMAGEN
+
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+            let archivo = document.getElementById(idArchivo).files[0];
+
+            let url = document.getElementById(idUrl).value;
+
+            if (archivo) {
+
+                return URL.createObjectURL(archivo);
+
+            } else if (url !== "") {
+
+                return url;
+
+            } else if (idActual) {
+
+                return document.getElementById(idActual).value;
+
+            }
+
+            return "";
+
+        }
+
+        // CREAR PUBLICACIÓN
+
+        function crearPost() {
+
+            let titulo = document.getElementById("tit").value;
+
+            let texto = document.getElementById("txt").value;
+
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (titulo === "" && texto === "") {
+
+                alert("¡Debes escribir un título o texto antes de publicar!");
+
+                return;
+
+            }
+
+            document.getElementById("muro").innerHTML += `
+
+                <div class="tarjeta-post">
+
+                    <h3 class="t-post">${titulo}</h3>
+
+                    <img src="${imagenFinal}" class="img-post">
+
+                    <p class="p-post">${texto}</p>
+
+                    <div class="caja-botones">
+
+                        <button
+                            class="btn btn-secundario"
+                            onclick="abrirEditar(this)"
+                        >
+                            Editar
+                        </button>
+
+                        <button
+                            class="btn btn-peligro"
+                            onclick="borrarPost(this)"
+                        >
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            document.getElementById("tit").value = "";
+
+            document.getElementById("txt").value = "";
+
+            document.getElementById("imgUrl").value = "";
+
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+
+        }
+
+        // ELIMINAR PUBLICACIÓN
+
+        function borrarPost(botonApretado) {
+
+            let confirmacion = confirm(
+                "¿Seguro que quieres eliminar esta publicación?"
+            );
+
+            if (confirmacion === true) {
+
+                botonApretado.parentElement.parentElement.remove();
+
+            }
+
+        }
+
+        // PREPARAR EDICIÓN
+
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+
+            postAEditar = botonApretado.parentElement.parentElement;
+
+            document.getElementById("edit-tit").value =
+                postAEditar.querySelector('.t-post').innerText;
+
+            document.getElementById("edit-txt").value =
+                postAEditar.querySelector('.p-post').innerText;
+
+            document.getElementById("edit-imgActual").value =
+                postAEditar.querySelector('.img-post').src;
+
+            document.getElementById("edit-imgArchivo").value = "";
+
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+
+        }
+
+        // GUARDAR EDICIÓN
+
+        function guardarEdicion() {
+
+            let nuevoTit = document.getElementById("edit-tit").value;
+
+            let nuevoTxt = document.getElementById("edit-txt").value;
+
+            let nuevaImg = obtenerImagen(
+                "edit-imgArchivo",
+                "edit-imgUrl",
+                "edit-imgActual"
+            );
+
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+
+            postAEditar.querySelector('.img-post').src = nuevaImg;
+
+            cambiarVista('vista-publicaciones');
+
+        }
+
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Blog Marvel</title>
+
+    <!-- CSS -->
+    <style>
+        :root {
+            --color-fondo: #101116;
+            --color-texto: #f5f5f5;
+            --color-primario: #e62429;
+            --color-primario-hover: #b91c22;
+            --color-secundario: #f5c518;
+            --color-peligro: #e62429;
+            --color-exito: #218838;
+            --blanco: #ffffff;
+            --borde-suave: 14px;
+            --sombra: 0 8px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top, rgba(230, 36, 41, 0.18), transparent 38%),
+                linear-gradient(135deg, #101116, #1b1c23 55%, #111);
+            color: var(--color-texto);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        #vista-publicaciones, #vista-crear, #vista-editar {
+            display: none;
+        }
+
+        /* BARRA DE NAVEGACIÓN */
+
+        .navbar {
+            background: rgba(12, 12, 16, 0.96);
+            border-bottom: 3px solid var(--color-primario);
+            box-shadow: 0 4px 20px rgba(230, 36, 41, 0.22);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 16px 12px;
+            gap: 12px;
+        }
+
+        .nav-item {
+            margin: 0 10px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #f5f5f5;
+            font-weight: 800;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-secundario);
+            background: rgba(230, 36, 41, 0.16);
+            transform: translateY(-2px);
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+
+        .contenedor-principal {
+            max-width: 900px;
+            margin: 42px auto;
+            padding: 0 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.45s ease-in-out;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* INICIO */
+
+        #vista-inicio {
+            text-align: center;
+            background: linear-gradient(145deg, #202128, #15161b);
+            padding: 45px 30px;
+            border-radius: var(--borde-suave);
+            border: 1px solid rgba(245, 197, 24, 0.28);
+            box-shadow: var(--sombra);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #vista-inicio::before {
+            content: "MARVEL";
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            color: rgba(230, 36, 41, 0.12);
+            font-weight: 1000;
+            font-size: clamp(2rem, 8vw, 5rem);
+            letter-spacing: 5px;
+            pointer-events: none;
+        }
+
+        .titulo-principal {
+            color: var(--color-secundario);
+            margin-bottom: 20px;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 3px 3px 0 #9e151a;
+        }
+
+        .foto-perfil {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--color-primario);
+            margin-bottom: 20px;
+            box-shadow: 0 0 22px rgba(230, 36, 41, 0.4);
+        }
+
+        .texto-bienvenida {
+            font-size: 1.15rem;
+            color: #d7d7d7;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* FORMULARIOS */
+
+        .tarjeta-formulario {
+            background: linear-gradient(145deg, #22232a, #17181d);
+            padding: 30px;
+            border-radius: var(--borde-suave);
+            border: 1px solid rgba(245, 197, 24, 0.22);
+            box-shadow: var(--sombra);
+            margin-bottom: 40px;
+        }
+
+        .subtitulo {
+            margin-bottom: 20px;
+            color: var(--color-secundario);
+            border-bottom: 2px solid var(--color-primario);
+            padding-bottom: 12px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.9rem;
+            color: #c7c7c7;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 13px 14px;
+            margin-bottom: 15px;
+            border: 1px solid #44454d;
+            border-radius: 9px;
+            background: #101116;
+            color: #f5f5f5;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: var(--color-secundario);
+            box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.15);
+        }
+
+        .input-formulario::placeholder,
+        .textarea-formulario::placeholder {
+            color: #999;
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        /* BOTONES */
+
+        .btn {
+            padding: 11px 20px;
+            border: none;
+            border-radius: 9px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--blanco);
+            cursor: pointer;
+            transition: background-color 0.25s, transform 0.15s, box-shadow 0.25s;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primario {
+            background: var(--color-primario);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primario:hover {
+            background: var(--color-primario-hover);
+        }
+
+        .btn-secundario {
+            background: var(--color-secundario);
+            color: #171717;
+            margin-right: 10px;
+        }
+
+        .btn-secundario:hover {
+            background: #d6a900;
+        }
+
+        .btn-peligro {
+            background: #8f171c;
+        }
+
+        .btn-peligro:hover {
+            background: #c91e24;
+        }
+
+        .btn-exito {
+            background: var(--color-exito);
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-exito:hover {
+            background: #176b2c;
+        }
+
+        /* PUBLICACIONES */
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .tarjeta-post {
+            background: linear-gradient(145deg, #22232a, #17181d);
+            border-radius: var(--borde-suave);
+            border: 1px solid rgba(230, 36, 41, 0.35);
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-secundario);
+        }
+
+        .t-post {
+            padding: 22px 22px 12px;
+            color: var(--color-secundario);
+            font-size: 1.45rem;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+            border-top: 3px solid var(--color-primario);
+            border-bottom: 3px solid var(--color-primario);
+        }
+
+        .img-post[src=""],
+        .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 18px 22px;
+            color: #e3e3e3;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .caja-botones {
+            padding: 16px 22px 22px;
+            border-top: 1px solid #383940;
+            background: rgba(10, 10, 12, 0.45);
+        }
+
+        /* DISEÑO PARA CELULARES */
+
+        @media (max-width: 600px) {
+            .nav-lista {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .nav-item {
+                margin: 4px;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+
+            .contenedor-principal {
+                margin: 25px auto;
+                padding: 0 14px;
+            }
+
+            #vista-inicio {
+                padding: 32px 18px;
+            }
+
+            .tarjeta-formulario {
+                padding: 22px 16px;
+            }
+
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secundario,
+            .btn-peligro,
+            .btn-exito {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">
+                    Inicio
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">
+                    Publicaciones
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="contenedor-principal">
+
+        <!-- VISTA INICIO -->
+
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+
+            <h1 class="titulo-principal">
+                Bienvenido a mi Blog
+            </h1>
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+                class="foto-perfil"
+                alt="Mi Foto"
+            >
+
+            <p class="texto-bienvenida">
+                ¡Hola! Soy estudiante de 7° Básico del Colegio Concepción
+                y este es mi espacio donde compartiré mis ideas y proyectos.
+            </p>
+
+        </section>
+
+        <!-- VISTA PUBLICACIONES -->
+
+        <section id="vista-publicaciones" class="vista-seccion">
+
+            <button
+                class="btn btn-primario"
+                onclick="cambiarVista('vista-crear')"
+                style="margin-bottom: 20px;"
+            >
+                + Crear Nueva Publicación
+            </button>
+
+            <div id="muro" class="contenedor-muro"></div>
+
+        </section>
+
+        <!-- VISTA CREAR -->
+
+        <section id="vista-crear" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">
+                    Nueva Publicación
+                </h2>
+
+                <input
+                    type="text"
+                    id="tit"
+                    class="input-formulario"
+                    placeholder="Título (máx 50 caracteres)"
+                    maxlength="50"
+                >
+
+                <p class="etiqueta-pequena">
+                    Imagen (Sube un archivo o pega un link):
+                </p>
+
+                <input
+                    type="file"
+                    id="imgArchivo"
+                    class="input-formulario"
+                    accept="image/*"
+                >
+
+                <input
+                    type="text"
+                    id="imgUrl"
+                    class="input-formulario"
+                    placeholder="O pega la URL aquí"
+                >
+
+                <textarea
+                    id="txt"
+                    class="textarea-formulario"
+                    placeholder="¿Qué estás pensando?"
+                ></textarea>
+
+                <button class="btn btn-primario" onclick="crearPost()">
+                    Publicar
+                </button>
+
+                <button
+                    class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- VISTA EDITAR -->
+
+        <section id="vista-editar" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">
+                    Editar Publicación
+                </h2>
+
+                <input
+                    type="text"
+                    id="edit-tit"
+                    class="input-formulario"
+                    maxlength="50"
+                >
+
+                <p class="etiqueta-pequena">
+                    Cambiar imagen (déjalo en blanco para mantener la actual):
+                </p>
+
+                <input
+                    type="file"
+                    id="edit-imgArchivo"
+                    class="input-formulario"
+                    accept="image/*"
+                >
+
+                <input
+                    type="text"
+                    id="edit-imgUrl"
+                    class="input-formulario"
+                    placeholder="O nueva URL de imagen"
+                >
+
+                <input
+                    type="hidden"
+                    id="edit-imgActual"
+                >
+
+                <textarea
+                    id="edit-txt"
+                    class="textarea-formulario"
+                ></textarea>
+
+                <button
+                    class="btn btn-exito"
+                    onclick="guardarEdicion()"
+                >
+                    Guardar Cambios
+                </button>
+
+                <button
+                    class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // CAMBIAR ENTRE VISTAS
+
+        function cambiarVista(idVistaDestino) {
+
+            document.getElementById('vista-inicio').style.display = 'none';
+
+            document.getElementById('vista-publicaciones').style.display = 'none';
+
+            document.getElementById('vista-crear').style.display = 'none';
+
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+
+        }
+
+        // OBTENER IMAGEN
+
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+            let archivo = document.getElementById(idArchivo).files[0];
+
+            let url = document.getElementById(idUrl).value;
+
+            if (archivo) {
+
+                return URL.createObjectURL(archivo);
+
+            } else if (url !== "") {
+
+                return url;
+
+            } else if (idActual) {
+
+                return document.getElementById(idActual).value;
+
+            }
+
+            return "";
+
+        }
+
+        // CREAR PUBLICACIÓN
+
+        function crearPost() {
+
+            let titulo = document.getElementById("tit").value;
+
+            let texto = document.getElementById("txt").value;
+
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (titulo === "" && texto === "") {
+
+                alert("¡Debes escribir un título o texto antes de publicar!");
+
+                return;
+
+            }
+
+            document.getElementById("muro").innerHTML += `
+
+                <div class="tarjeta-post">
+
+                    <h3 class="t-post">${titulo}</h3>
+
+                    <img src="${imagenFinal}" class="img-post">
+
+                    <p class="p-post">${texto}</p>
+
+                    <div class="caja-botones">
+
+                        <button
+                            class="btn btn-secundario"
+                            onclick="abrirEditar(this)"
+                        >
+                            Editar
+                        </button>
+
+                        <button
+                            class="btn btn-peligro"
+                            onclick="borrarPost(this)"
+                        >
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            document.getElementById("tit").value = "";
+
+            document.getElementById("txt").value = "";
+
+            document.getElementById("imgUrl").value = "";
+
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+
+        }
+
+        // ELIMINAR PUBLICACIÓN
+
+        function borrarPost(botonApretado) {
+
+            let confirmacion = confirm(
+                "¿Seguro que quieres eliminar esta publicación?"
+            );
+
+            if (confirmacion === true) {
+
+                botonApretado.parentElement.parentElement.remove();
+
+            }
+
+        }
+
+        // PREPARAR EDICIÓN
+
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+
+            postAEditar = botonApretado.parentElement.parentElement;
+
+            document.getElementById("edit-tit").value =
+                postAEditar.querySelector('.t-post').innerText;
+
+            document.getElementById("edit-txt").value =
+                postAEditar.querySelector('.p-post').innerText;
+
+            document.getElementById("edit-imgActual").value =
+                postAEditar.querySelector('.img-post').src;
+
+            document.getElementById("edit-imgArchivo").value = "";
+
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+
+        }
+
+        // GUARDAR EDICIÓN
+
+        function guardarEdicion() {
+
+            let nuevoTit = document.getElementById("edit-tit").value;
+
+            let nuevoTxt = document.getElementById("edit-txt").value;
+
+            let nuevaImg = obtenerImagen(
+                "edit-imgArchivo",
+                "edit-imgUrl",
+                "edit-imgActual"
+            );
+
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+
+            postAEditar.querySelector('.img-post').src = nuevaImg;
+
+            cambiarVista('vista-publicaciones');
+
+        }
+
+    </script>
+
+</body>
+</html>

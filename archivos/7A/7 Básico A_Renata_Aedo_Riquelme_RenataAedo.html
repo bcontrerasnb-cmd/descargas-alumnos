@@ -1,0 +1,743 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog Personal - Vóleibol</title>
+
+    <style>
+        /* =====================================
+           ESTILOS GENERALES
+        ===================================== */
+
+        :root {
+            --azul: #102b50;
+            --azul-claro: #1976d2;
+            --celeste: #55c4e8;
+            --naranjo: #ff9d32;
+            --blanco: #ffffff;
+            --fondo: #edf5fa;
+            --texto: #243447;
+            --sombra: 0 5px 18px rgba(16,43,80,0.13);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e7f5fc, #f5f9ff);
+            color: var(--texto);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* =====================================
+           BARRA DE NAVEGACIÓN
+        ===================================== */
+
+        .navbar {
+            background: var(--azul);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 4px solid var(--naranjo);
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 18px;
+            gap: 45px;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 17px;
+            transition: 0.3s;
+            padding: 10px 16px;
+            border-radius: 20px;
+        }
+
+        .nav-link:hover {
+            background: var(--celeste);
+            color: var(--azul);
+        }
+
+        /* =====================================
+           CONTENEDOR PRINCIPAL
+        ===================================== */
+
+        .contenedor-principal {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.5s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================
+           PORTADA PRINCIPAL
+        ===================================== */
+
+        #vista-inicio {
+            text-align: center;
+            background: white;
+            padding: 50px 35px;
+            border-radius: 22px;
+            box-shadow: var(--sombra);
+            border-top: 7px solid var(--celeste);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #vista-inicio::before {
+            content: "🏐";
+            position: absolute;
+            font-size: 130px;
+            opacity: 0.07;
+            right: -15px;
+            bottom: -35px;
+            transform: rotate(-20deg);
+        }
+
+        .titulo-principal {
+            color: var(--azul);
+            margin-bottom: 20px;
+            font-size: 2.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .titulo-principal::after {
+            content: "";
+            display: block;
+            width: 90px;
+            height: 5px;
+            background: var(--naranjo);
+            margin: 12px auto;
+            border-radius: 10px;
+        }
+
+        .foto-perfil {
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--celeste);
+            margin: 20px 0;
+            box-shadow: var(--sombra);
+        }
+
+        .texto-bienvenida {
+            font-size: 1.15rem;
+            color: #52677d;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* =====================================
+           FORMULARIOS
+        ===================================== */
+
+        .tarjeta-formulario {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: var(--sombra);
+            margin-bottom: 40px;
+            border-top: 6px solid var(--celeste);
+        }
+
+        .subtitulo {
+            margin-bottom: 25px;
+            color: var(--azul);
+            font-size: 1.7rem;
+            border-bottom: 2px solid #dcecf6;
+            padding-bottom: 12px;
+        }
+
+        .subtitulo::before {
+            content: "🏐 ";
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.95rem;
+            color: #536a80;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 2px solid #d9e8f2;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #f8fcff;
+            transition: 0.3s;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: var(--azul-claro);
+            box-shadow: 0 0 8px rgba(25,118,210,0.2);
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        /* =====================================
+           BOTONES
+        ===================================== */
+
+        .btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.18);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primario {
+            background: var(--azul-claro);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primario:hover {
+            background: var(--azul);
+        }
+
+        .btn-secundario {
+            background: var(--naranjo);
+            color: #26384a;
+            margin-right: 10px;
+        }
+
+        .btn-secundario:hover {
+            background: #ed8720;
+        }
+
+        .btn-peligro {
+            background: #e74c3c;
+        }
+
+        .btn-peligro:hover {
+            background: #c0392b;
+        }
+
+        .btn-exito {
+            background: #20a66b;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-exito:hover {
+            background: #168553;
+        }
+
+        /* =====================================
+           MURO DE PUBLICACIONES
+        ===================================== */
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .tarjeta-post {
+            background: white;
+            border-radius: 18px;
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            border-left: 6px solid var(--celeste);
+            transition: 0.3s;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(16,43,80,0.18);
+        }
+
+        .t-post {
+            padding: 22px 22px 12px;
+            color: var(--azul);
+            font-size: 1.5rem;
+        }
+
+        .t-post::before {
+            content: "🏐 ";
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .img-post[src=""],
+        .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 20px 22px;
+            color: #44576b;
+            white-space: pre-wrap;
+            font-size: 1.05rem;
+        }
+
+        .caja-botones {
+            padding: 18px 22px;
+            border-top: 1px solid #e5edf3;
+            background: #f6fbff;
+        }
+
+        /* =====================================
+           BOTÓN CREAR PUBLICACIÓN
+        ===================================== */
+
+        #vista-publicaciones > .btn {
+            margin-bottom: 25px;
+            padding: 15px;
+            font-size: 1.05rem;
+            background: var(--azul);
+            border-bottom: 4px solid var(--naranjo);
+        }
+
+        #vista-publicaciones > .btn:hover {
+            background: var(--azul-claro);
+        }
+
+        /* =====================================
+           PIE DE PÁGINA
+        ===================================== */
+
+        footer {
+            background: var(--azul);
+            color: white;
+            text-align: center;
+            padding: 22px;
+            margin-top: 60px;
+            border-top: 4px solid var(--naranjo);
+        }
+
+        footer p {
+            font-size: 0.95rem;
+        }
+
+        /* =====================================
+           DISEÑO RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 600px) {
+
+            .nav-lista {
+                gap: 10px;
+                padding: 15px 5px;
+            }
+
+            .nav-link {
+                font-size: 15px;
+                padding: 8px 12px;
+            }
+
+            .contenedor-principal {
+                margin: 25px auto;
+                padding: 0 12px;
+            }
+
+            #vista-inicio {
+                padding: 35px 18px;
+            }
+
+            .titulo-principal {
+                font-size: 1.9rem;
+            }
+
+            .foto-perfil {
+                width: 135px;
+                height: 135px;
+            }
+
+            .tarjeta-formulario {
+                padding: 22px;
+            }
+
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secundario,
+            .btn-peligro,
+            .btn-exito {
+                width: 100%;
+                margin: 0;
+            }
+
+            .t-post {
+                font-size: 1.2rem;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">🏠 Inicio</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">🏐 Publicaciones</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="contenedor-principal">
+
+        <!-- INICIO -->
+
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+
+            <h1 class="titulo-principal">Bienvenido a mi blog sobre el vóleibol</h1>
+
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+            class="foto-perfil" alt="Mi Foto">
+
+            <p class="texto-bienvenida">
+         Hola,mi nombre es Renata Aedo del curso 7mo A y este es mi blog sobre el deporte "voleibol"
+            </p>
+
+        </section>
+
+        <!-- PUBLICACIONES -->
+
+        <section id="vista-publicaciones" class="vista-seccion">
+
+            <button class="btn btn-primario"
+            onclick="cambiarVista('vista-crear')">
+                + Crear Nueva Publicación 🏐
+            </button>
+
+            <div id="muro" class="contenedor-muro"></div>
+
+        </section>
+
+        <!-- CREAR PUBLICACIÓN -->
+
+        <section id="vista-crear" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">Nueva Publicación</h2>
+
+                <input type="text" id="tit"
+                class="input-formulario"
+                placeholder="Título (máx. 50 caracteres)"
+                maxlength="50">
+
+                <p class="etiqueta-pequena">
+                    Imagen (sube un archivo o pega un link):
+                </p>
+
+                <input type="file" id="imgArchivo"
+                class="input-formulario" accept="image/*">
+
+                <input type="text" id="imgUrl"
+                class="input-formulario"
+                placeholder="O pega la URL aquí">
+
+                <textarea id="txt"
+                class="textarea-formulario"
+                placeholder="¿Qué quieres compartir sobre el vóleibol?"></textarea>
+
+                <button class="btn btn-primario" onclick="crearPost()">
+                    Publicar
+                </button>
+
+                <button class="btn btn-peligro"
+                onclick="cambiarVista('vista-publicaciones')"
+                style="margin-top: 10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- EDITAR PUBLICACIÓN -->
+
+        <section id="vista-editar" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">Editar Publicación</h2>
+
+                <input type="text" id="edit-tit"
+                class="input-formulario" maxlength="50">
+
+                <p class="etiqueta-pequena">
+                    Cambiar imagen:
+                </p>
+
+                <input type="file" id="edit-imgArchivo"
+                class="input-formulario" accept="image/*">
+
+                <input type="text" id="edit-imgUrl"
+                class="input-formulario"
+                placeholder="O nueva URL de imagen">
+
+                <input type="hidden" id="edit-imgActual">
+
+                <textarea id="edit-txt"
+                class="textarea-formulario"></textarea>
+
+                <button class="btn btn-exito" onclick="guardarEdicion()">
+                    Guardar Cambios
+                </button>
+
+                <button class="btn btn-peligro"
+                onclick="cambiarVista('vista-publicaciones')"
+                style="margin-top: 10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+
+    <footer>
+        <p>🏐 Mi Blog de Vóleibol | Pasión por el deporte 🏐</p>
+        <p>¡Entrena, juega y nunca dejes de aprender!</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // CAMBIAR ENTRE VISTAS
+
+        function cambiarVista(idVistaDestino) {
+
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+        // OBTENER IMAGEN
+
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+            let archivo = document.getElementById(idArchivo).files[0];
+            let url = document.getElementById(idUrl).value;
+
+            if (archivo) {
+                return URL.createObjectURL(archivo);
+            }
+            else if (url !== "") {
+                return url;
+            }
+            else if (idActual) {
+                return document.getElementById(idActual).value;
+            }
+
+            return "";
+        }
+
+        // CREAR PUBLICACIÓN
+
+        function crearPost() {
+
+            let titulo = document.getElementById("tit").value;
+            let texto = document.getElementById("txt").value;
+
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (titulo.trim() === "" && texto.trim() === "") {
+                alert("¡Debes escribir un título o texto antes de publicar!");
+                return;
+            }
+
+            let tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-post";
+
+            let encabezado = document.createElement("h3");
+            encabezado.className = "t-post";
+            encabezado.textContent = titulo;
+
+            let imagen = document.createElement("img");
+            imagen.className = "img-post";
+            imagen.alt = "Imagen de la publicación";
+            if (imagenFinal !== "") {
+                imagen.src = imagenFinal;
+            }
+
+            let parrafo = document.createElement("p");
+            parrafo.className = "p-post";
+            parrafo.textContent = texto;
+
+            let cajaBotones = document.createElement("div");
+            cajaBotones.className = "caja-botones";
+
+            let editar = document.createElement("button");
+            editar.className = "btn btn-secundario";
+            editar.textContent = "Editar";
+            editar.onclick = function() {
+                abrirEditar(editar);
+            };
+
+            let eliminar = document.createElement("button");
+            eliminar.className = "btn btn-peligro";
+            eliminar.textContent = "Eliminar";
+            eliminar.onclick = function() {
+                borrarPost(eliminar);
+            };
+
+            cajaBotones.appendChild(editar);
+            cajaBotones.appendChild(eliminar);
+
+            tarjeta.appendChild(encabezado);
+            tarjeta.appendChild(imagen);
+            tarjeta.appendChild(parrafo);
+            tarjeta.appendChild(cajaBotones);
+
+            document.getElementById("muro").appendChild(tarjeta);
+
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+        }
+
+        // ELIMINAR PUBLICACIÓN
+
+        function borrarPost(botonApretado) {
+
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+
+            if (confirmacion === true) {
+                botonApretado.parentElement.parentElement.remove();
+            }
+        }
+
+        // EDITAR PUBLICACIÓN
+
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+
+            postAEditar = botonApretado.parentElement.parentElement;
+
+            document.getElementById("edit-tit").value =
+                postAEditar.querySelector('.t-post').innerText;
+
+            document.getElementById("edit-txt").value =
+                postAEditar.querySelector('.p-post').innerText;
+
+            document.getElementById("edit-imgActual").value =
+                postAEditar.querySelector('.img-post').getAttribute('src') || "";
+
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+        }
+
+        // GUARDAR EDICIÓN
+
+        function guardarEdicion() {
+
+            let nuevoTit = document.getElementById("edit-tit").value;
+            let nuevoTxt = document.getElementById("edit-txt").value;
+
+            let nuevaImg = obtenerImagen(
+                "edit-imgArchivo",
+                "edit-imgUrl",
+                "edit-imgActual"
+            );
+
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+
+            let imagen = postAEditar.querySelector('.img-post');
+
+            if (nuevaImg !== "") {
+                imagen.src = nuevaImg;
+            } else {
+                imagen.removeAttribute('src');
+            }
+
+            cambiarVista('vista-publicaciones');
+        }
+
+    </script>
+
+</body>
+</html>

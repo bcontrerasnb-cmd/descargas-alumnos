@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vice Blog — GTA VI & 7° Básico</title>
+    <!-- BLOQUE CSS (DISEÑO INSPIRADO EN GTA VI / VICE CITY) -->
+    <style id="estilos-ia">
+        /* =========================================
+           VARIABLES Y RESET GLOBAL (ESTILO LEONIDA / VICE)
+           ========================================= */
+        :root {
+            --fondo-oscuro: #0d0b1a;
+            --fondo-tarjeta: #17132b;
+            --fondo-input: #221c3f;
+            --texto-principal: #f8f7ff;
+            --texto-suave: #b8b2d8;
+
+            /* Paleta inspirada en el atardecer y neones de GTA VI */
+            --neon-rosa: #ff2a85;
+            --neon-rosa-hover: #ff529c;
+            --neon-cian: #00f0ff;
+            --atardecer-naranja: #ff8a00;
+            --atardecer-morado: #7a1cac;
+
+            /* Botones y estados */
+            --btn-secundario: #ff8a00;
+            --btn-secundario-hover: #e07600;
+            --btn-peligro: #ff2e4c;
+            --btn-peligro-hover: #d91b36;
+            --btn-exito: #00e6a8;
+            --btn-exito-hover: #00c28e;
+
+            --borde-suave: 12px;
+            --borde-neon: 1px solid rgba(255, 42, 133, 0.35);
+            --sombra-tarjeta: 0 10px 30px rgba(0, 0, 0, 0.55);
+            --glow-rosa: 0 0 16px rgba(255, 42, 133, 0.45);
+            --glow-cian: 0 0 16px rgba(0, 240, 255, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--fondo-oscuro);
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(255, 42, 133, 0.2), transparent 42%),
+                radial-gradient(circle at 85% 15%, rgba(0, 240, 255, 0.16), transparent 42%),
+                linear-gradient(180deg, #0d0b1a 0%, #170e2e 55%, #2a123b 100%);
+            background-attachment: fixed;
+            color: var(--texto-principal);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           FONDO DE PALMERAS ESTILO GTA VI / VICE
+           ========================================= */
+        #fondo-palmeras-gta6 {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Resplandor de atardecer en el horizonte inferior */
+        #fondo-palmeras-gta6::after {
+            content: "";
+            position: absolute;
+            bottom: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130vw;
+            height: 340px;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 138, 0, 0.24) 0%,
+                rgba(255, 42, 133, 0.18) 45%,
+                transparent 75%
+            );
+            filter: blur(18px);
+        }
+
+        .svg-palmeras {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 46vh;
+            min-height: 240px;
+            max-height: 460px;
+            opacity: 0.42;
+            filter: drop-shadow(0 -4px 18px rgba(255, 42, 133, 0.22));
+        }
+
+        /* Aseguramos que la barra y el contenido queden por encima del fondo */
+        .navbar,
+        .contenedor-principal {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ocultamos las vistas secundarias por defecto */
+        #vista-publicaciones, #vista-crear, #vista-editar {
+            display: none;
+        }
+
+        /* =========================================
+           BARRA DE NAVEGACIÓN (NAVBAR NEÓN)
+           ========================================= */
+        .navbar {
+            background: rgba(18, 14, 36, 0.88);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, var(--neon-rosa), var(--atardecer-naranja), var(--neon-cian)) 1;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 16px 0;
+        }
+
+        .nav-item {
+            margin: 0 24px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--texto-principal);
+            font-weight: 800;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--neon-cian);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+            background: rgba(0, 240, 255, 0.08);
+        }
+
+        /* =========================================
+           CONTENEDOR PRINCIPAL Y VISTA INICIO
+           ========================================= */
+        .contenedor-principal {
+            max-width: 820px;
+            margin: 40px auto;
+            padding: 0 20px 60px 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.45s ease-out;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #vista-inicio {
+            text-align: center;
+            background: rgba(23, 19, 43, 0.9);
+            backdrop-filter: blur(6px);
+            padding: 45px 35px;
+            border-radius: var(--borde-suave);
+            border: var(--borde-neon);
+            box-shadow: var(--sombra-tarjeta), var(--glow-rosa);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Franja superior estilo atardecer de Vice City */
+        #vista-inicio::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--neon-rosa), var(--atardecer-naranja), var(--neon-cian));
+        }
+
+        .titulo-principal {
+            font-size: 2.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            background: linear-gradient(90deg, var(--neon-rosa), var(--atardecer-naranja), var(--neon-cian));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 2px 12px rgba(255, 42, 133, 0.35));
+        }
+
+        .foto-perfil {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--neon-cian);
+            margin-bottom: 22px;
+            box-shadow: 0 0 0 4px rgba(255, 42, 133, 0.45), var(--glow-cian);
+            transition: transform 0.3s ease;
+        }
+
+        .foto-perfil:hover {
+            transform: scale(1.04) rotate(2deg);
+        }
+
+        .texto-bienvenida {
+            font-size: 1.15rem;
+            color: var(--texto-suave);
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* =========================================
+           FORMULARIOS (TARJETAS DE CREAR/EDITAR)
+           ========================================= */
+        .tarjeta-formulario {
+            background: rgba(23, 19, 43, 0.92);
+            backdrop-filter: blur(6px);
+            padding: 32px;
+            border-radius: var(--borde-suave);
+            border: var(--borde-neon);
+            box-shadow: var(--sombra-tarjeta);
+            margin-bottom: 40px;
+        }
+
+        .subtitulo {
+            margin-bottom: 22px;
+            color: var(--neon-cian);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid rgba(255, 42, 133, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.9rem;
+            color: var(--texto-suave);
+            margin-top: 14px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            background-color: var(--fondo-input);
+            color: var(--texto-principal);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .input-formulario::placeholder,
+        .textarea-formulario::placeholder {
+            color: #8c85b5;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: var(--neon-rosa);
+            box-shadow: 0 0 12px rgba(255, 42, 133, 0.35);
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        /* =========================================
+           BOTONES
+           ========================================= */
+        .btn {
+            padding: 11px 22px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.98rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primario {
+            background: linear-gradient(90deg, var(--neon-rosa), #d91b72);
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 16px rgba(255, 42, 133, 0.4);
+        }
+
+        .btn-primario:hover {
+            background: linear-gradient(90deg, var(--neon-rosa-hover), var(--neon-rosa));
+            box-shadow: 0 6px 22px rgba(255, 42, 133, 0.65);
+        }
+
+        .btn-secundario {
+            background-color: var(--btn-secundario);
+            color: #120e24;
+            margin-right: 10px;
+        }
+
+        .btn-secundario:hover {
+            background-color: var(--btn-secundario-hover);
+            box-shadow: 0 4px 14px rgba(255, 138, 0, 0.45);
+        }
+
+        .btn-peligro {
+            background-color: var(--btn-peligro);
+        }
+
+        .btn-peligro:hover {
+            background-color: var(--btn-peligro-hover);
+            box-shadow: 0 4px 14px rgba(255, 46, 76, 0.45);
+        }
+
+        .btn-exito {
+            background-color: var(--btn-exito);
+            color: #0b1915;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-exito:hover {
+            background-color: var(--btn-exito-hover);
+            box-shadow: 0 4px 14px rgba(0, 230, 168, 0.45);
+        }
+
+        /* =========================================
+           MURO Y PUBLICACIONES (POSTS)
+           ========================================= */
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .tarjeta-post {
+            background: rgba(23, 19, 43, 0.92);
+            backdrop-filter: blur(6px);
+            border-radius: var(--borde-suave);
+            border: 1px solid rgba(0, 240, 255, 0.22);
+            box-shadow: var(--sombra-tarjeta);
+            overflow: hidden;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-rosa);
+            box-shadow: var(--sombra-tarjeta), var(--glow-rosa);
+        }
+
+        .t-post {
+            padding: 22px 24px 12px 24px;
+            color: var(--neon-cian);
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .img-post[src=""], .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 18px 24px;
+            color: var(--texto-principal);
+            white-space: pre-wrap;
+            font-size: 1.02rem;
+        }
+
+        .caja-botones {
+            padding: 16px 24px 20px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background-color: rgba(13, 11, 26, 0.55);
+        }
+
+        /* =========================================
+           RESPONSIVE (PARA CELULARES)
+           ========================================= */
+        @media (max-width: 600px) {
+            .svg-palmeras {
+                height: 30vh;
+                opacity: 0.32;
+            }
+            .titulo-principal {
+                font-size: 1.9rem;
+            }
+            .nav-lista {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+            .nav-item {
+                margin: 8px 0;
+            }
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn-secundario, .btn-peligro {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FONDO DE PALMERAS ESTILO VICE / GTA VI -->
+    <div id="fondo-palmeras-gta6" aria-hidden="true">
+        <svg class="svg-palmeras" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice">
+            <defs>
+                <linearGradient id="grad-palmera-izq" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ff2a85" />
+                    <stop offset="65%" stop-color="#ff8a00" />
+                    <stop offset="100%" stop-color="#1b0e2e" />
+                </linearGradient>
+                <linearGradient id="grad-palmera-der" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#00f0ff" />
+                    <stop offset="55%" stop-color="#ff2a85" />
+                    <stop offset="100%" stop-color="#1b0e2e" />
+                </linearGradient>
+            </defs>
+
+            <!-- Palmera izquierda principal -->
+            <path d="M 110 420 Q 128 285 155 150 L 169 152 Q 145 285 130 420 Z" fill="url(#grad-palmera-izq)" />
+            <g fill="url(#grad-palmera-izq)" transform="translate(162, 150)">
+                <path d="M 0 0 Q -55 -42 -115 -18 Q -58 -24 0 0 Z" />
+                <path d="M 0 0 Q -65 -12 -110 32 Q -56 4 0 0 Z" />
+                <path d="M 0 0 Q -25 -62 -72 -78 Q -32 -42 0 0 Z" />
+                <path d="M 0 0 Q 28 -62 78 -74 Q 34 -38 0 0 Z" />
+                <path d="M 0 0 Q 65 -32 118 -8 Q 60 -14 0 0 Z" />
+                <path d="M 0 0 Q 62 10 105 52 Q 52 20 0 0 Z" />
+            </g>
+
+            <!-- Palmera izquierda secundaria -->
+            <path d="M 255 420 Q 245 335 235 245 L 245 245 Q 257 335 269 420 Z" fill="url(#grad-palmera-izq)" opacity="0.8" />
+            <g fill="url(#grad-palmera-izq)" opacity="0.8" transform="translate(240, 245) scale(0.75)">
+                <path d="M 0 0 Q -55 -42 -115 -18 Q -58 -24 0 0 Z" />
+                <path d="M 0 0 Q -65 -12 -110 32 Q -56 4 0 0 Z" />
+                <path d="M 0 0 Q -25 -62 -72 -78 Q -32 -42 0 0 Z" />
+                <path d="M 0 0 Q 28 -62 78 -74 Q 34 -38 0 0 Z" />
+                <path d="M 0 0 Q 65 -32 118 -8 Q 60 -14 0 0 Z" />
+                <path d="M 0 0 Q 62 10 105 52 Q 52 20 0 0 Z" />
+            </g>
+
+            <!-- Palmera derecha principal -->
+            <path d="M 1310 420 Q 1292 275 1265 135 L 1279 133 Q 1308 275 1330 420 Z" fill="url(#grad-palmera-der)" />
+            <g fill="url(#grad-palmera-der)" transform="translate(1272, 134)">
+                <path d="M 0 0 Q -58 -40 -118 -16 Q -60 -22 0 0 Z" />
+                <path d="M 0 0 Q -64 -10 -108 34 Q -54 6 0 0 Z" />
+                <path d="M 0 0 Q -22 -64 -70 -80 Q -30 -44 0 0 Z" />
+                <path d="M 0 0 Q 30 -60 80 -72 Q 36 -36 0 0 Z" />
+                <path d="M 0 0 Q 66 -30 120 -6 Q 62 -12 0 0 Z" />
+                <path d="M 0 0 Q 60 12 102 54 Q 50 22 0 0 Z" />
+            </g>
+
+            <!-- Palmera derecha secundaria -->
+            <path d="M 1180 420 Q 1190 330 1200 240 L 1210 240 Q 1200 330 1194 420 Z" fill="url(#grad-palmera-der)" opacity="0.8" />
+            <g fill="url(#grad-palmera-der)" opacity="0.8" transform="translate(1205, 240) scale(0.75)">
+                <path d="M 0 0 Q -55 -42 -115 -18 Q -58 -24 0 0 Z" />
+                <path d="M 0 0 Q -65 -12 -110 32 Q -56 4 0 0 Z" />
+                <path d="M 0 0 Q -25 -62 -72 -78 Q -32 -42 0 0 Z" />
+                <path d="M 0 0 Q 28 -62 78 -74 Q 34 -38 0 0 Z" />
+                <path d="M 0 0 Q 65 -32 118 -8 Q 60 -14 0 0 Z" />
+                <path d="M 0 0 Q 62 10 105 52 Q 52 20 0 0 Z" />
+            </g>
+        </svg>
+    </div>
+
+    <!-- BLOQUE HTML (ESTRUCTURA Y VISTAS) -->
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">Inicio</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">Publicaciones</a></li>
+        </ul>
+    </nav>
+
+    <main class="contenedor-principal">
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+            <h1 class="titulo-principal">Bienvenido a mi Blog</h1>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png" class="foto-perfil" alt="Mi Foto">
+            <p class="texto-bienvenida">¡Hola! Soy estudiante de 7° Básico del Colegio Concepción y este es mi espacio donde compartiré mis ideas y proyectos.</p>
+        </section>
+
+        <section id="vista-publicaciones" class="vista-seccion">
+            <button class="btn btn-primario" onclick="cambiarVista('vista-crear')" style="margin-bottom: 20px;">+ Crear Nueva Publicación</button>
+            <div id="muro" class="contenedor-muro"></div>
+        </section>
+
+        <section id="vista-crear" class="vista-seccion">
+            <div class="tarjeta-formulario">
+                <h2 class="subtitulo">Nueva Publicación</h2>
+                <input type="text" id="tit" class="input-formulario" placeholder="Título (máx 50 caracteres)" maxlength="50">
+                <p class="etiqueta-pequena">Imagen (Sube un archivo o pega un link):</p>
+                <input type="file" id="imgArchivo" class="input-formulario" accept="image/*">
+                <input type="text" id="imgUrl" class="input-formulario" placeholder="O pega la URL aquí">
+                <textarea id="txt" class="textarea-formulario" placeholder="¿Qué estás pensando?"></textarea>
+                <button class="btn btn-primario" onclick="crearPost()">Publicar</button>
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+            </div>
+        </section>
+
+        <section id="vista-editar" class="vista-seccion">
+            <div class="tarjeta-formulario">
+                <h2 class="subtitulo">Editar Publicación</h2>
+                <input type="text" id="edit-tit" class="input-formulario" maxlength="50">
+                <p class="etiqueta-pequena">Cambiar imagen (déjalo en blanco para mantener la actual):</p>
+                <input type="file" id="edit-imgArchivo" class="input-formulario" accept="image/*">
+                <input type="text" id="edit-imgUrl" class="input-formulario" placeholder="O nueva URL de imagen">
+                <input type="hidden" id="edit-imgActual">
+                <textarea id="edit-txt" class="textarea-formulario"></textarea>
+                <button class="btn btn-exito" onclick="guardarEdicion()">Guardar Cambios</button>
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- BLOQUE JAVASCRIPT (LÓGICA Y CRUD 7° Básico) -->
+    <script>
+        function cambiarVista(idVistaDestino) {
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+            let archivo = document.getElementById(idArchivo).files[0];
+            let url = document.getElementById(idUrl).value;
+
+            if (archivo) {
+                return URL.createObjectURL(archivo);
+            } else if (url !== "") {
+                return url;
+            } else if (idActual) {
+                return document.getElementById(idActual).value;
+            }
+            return "";
+        }
+
+        function crearPost() {
+            let titulo = document.getElementById("tit").value;
+            let texto = document.getElementById("txt").value;
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (titulo === "" && texto === "") {
+                alert("¡Debes escribir un título o texto antes de publicar!");
+                return;
+            }
+
+            document.getElementById("muro").innerHTML += `
+                <div class="tarjeta-post">
+                    <h3 class="t-post">${titulo}</h3>
+                    <img src="${imagenFinal}" class="img-post">
+                    <p class="p-post">${texto}</p>
+                    <div class="caja-botones">
+                        <button class="btn btn-secundario" onclick="abrirEditar(this)">Editar</button>
+                        <button class="btn btn-peligro" onclick="borrarPost(this)">Eliminar</button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+        }
+
+        function borrarPost(botonApretado) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            if (confirmacion === true) {
+                botonApretado.parentElement.parentElement.remove();
+            }
+        }
+
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+            postAEditar = botonApretado.parentElement.parentElement;
+            document.getElementById("edit-tit").value = postAEditar.querySelector('.t-post').innerText;
+            document.getElementById("edit-txt").value = postAEditar.querySelector('.p-post').innerText;
+            document.getElementById("edit-imgActual").value = postAEditar.querySelector('.img-post').src;
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            cambiarVista('vista-editar');
+        }
+
+        function guardarEdicion() {
+            let nuevoTit = document.getElementById("edit-tit").value;
+            let nuevoTxt = document.getElementById("edit-txt").value;
+            let nuevaImg = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+            postAEditar.querySelector('.img-post').src = nuevaImg;
+
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+</body>
+</html>

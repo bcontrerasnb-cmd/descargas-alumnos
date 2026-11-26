@@ -1,0 +1,786 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog Personal - Hello Kitty</title>
+
+    <style>
+        /* =====================================
+           DISEÑO HELLO KITTY 🎀
+           ===================================== */
+
+        :root {
+            --color-fondo: #fff0f5;
+            --color-texto: #75495b;
+            --color-primario: #f48fb1;
+            --color-primario-hover: #ec6f9c;
+            --color-secundario: #ffb6c9;
+            --color-peligro: #e57391;
+            --color-exito: #ef9aaf;
+            --blanco: #ffffff;
+            --borde-suave: 20px;
+            --sombra: 0 5px 18px rgba(230, 120, 160, 0.20);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            background-image:
+                radial-gradient(#ffc1d5 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
+            color: var(--color-texto);
+            line-height: 1.7;
+        }
+
+        /* OCULTAR VISTAS */
+
+        #vista-publicaciones,
+        #vista-crear,
+        #vista-editar {
+            display: none;
+        }
+
+        /* =====================================
+           BARRA DE NAVEGACIÓN
+           ===================================== */
+
+        .navbar {
+            background: linear-gradient(90deg, #ffb6cb, #ffe1eb, #ffb6cb);
+            box-shadow: var(--sombra);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 4px solid white;
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 18px 0;
+        }
+
+        .nav-item {
+            margin: 0 25px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #9b4767;
+            font-weight: bold;
+            font-size: 1.15rem;
+            padding: 10px 22px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: white;
+            color: #ed6f9c;
+            box-shadow: var(--sombra);
+        }
+
+        /* =====================================
+           CONTENEDOR PRINCIPAL
+           ===================================== */
+
+        .contenedor-principal {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.5s ease-in-out;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================
+           PÁGINA DE INICIO
+           ===================================== */
+
+        #vista-inicio {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 50px 35px;
+            border-radius: 30px;
+            box-shadow: var(--sombra);
+            border: 4px solid #ffc3d6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #vista-inicio::before {
+            content: "🎀";
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 35px;
+        }
+
+        #vista-inicio::after {
+            content: "♡";
+            position: absolute;
+            bottom: 10px;
+            right: 25px;
+            font-size: 55px;
+            color: #ffb6cb;
+        }
+
+        .titulo-principal {
+            color: #e66f9b;
+            margin-bottom: 25px;
+            font-size: 2.7rem;
+            text-shadow: 2px 2px #ffe0e9;
+        }
+
+        .titulo-principal::after {
+            content: " 🎀";
+        }
+
+        .foto-perfil {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 7px solid #ffb6cb;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(230, 100, 150, 0.25);
+            background-color: #ffe4ed;
+        }
+
+        .texto-bienvenida {
+            font-size: 1.2rem;
+            color: #86576b;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        /* =====================================
+           FORMULARIOS
+           ===================================== */
+
+        .tarjeta-formulario {
+            background: white;
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: var(--sombra);
+            margin-bottom: 40px;
+            border: 3px solid #ffc3d6;
+        }
+
+        .subtitulo {
+            margin-bottom: 25px;
+            color: #e66f9b;
+            border-bottom: 3px dashed #ffc0d4;
+            padding-bottom: 12px;
+            font-size: 1.7rem;
+        }
+
+        .subtitulo::before {
+            content: "♡ ";
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.95rem;
+            color: #a36b81;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 2px solid #ffd0df;
+            border-radius: 15px;
+            font-size: 1rem;
+            color: #75495b;
+            background: #fff8fb;
+            transition: all 0.3s ease;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: #ef8eaf;
+            background: white;
+            box-shadow: 0 0 8px rgba(244, 143, 177, 0.3);
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        /* =====================================
+           BOTONES
+           ===================================== */
+
+        .btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(200, 100, 140, 0.15);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.04);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primario {
+            background: linear-gradient(135deg, #f48fb1, #ec6f9c);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primario:hover {
+            background: #e66f9b;
+        }
+
+        .btn-secundario {
+            background-color: #ffb6cb;
+            margin-right: 10px;
+            color: #80475e;
+        }
+
+        .btn-secundario:hover {
+            background-color: #ff9fbd;
+        }
+
+        .btn-peligro {
+            background-color: #e88ba5;
+        }
+
+        .btn-peligro:hover {
+            background-color: #dc6f90;
+        }
+
+        .btn-exito {
+            background-color: #ed9ab5;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-exito:hover {
+            background-color: #df7e9f;
+        }
+
+        /* =====================================
+           PUBLICACIONES
+           ===================================== */
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .tarjeta-post {
+            background: white;
+            border-radius: 25px;
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 3px solid #ffc4d7;
+            position: relative;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .t-post {
+            padding: 22px 22px 12px 22px;
+            color: #df7199;
+            font-size: 1.6rem;
+        }
+
+        .t-post::before {
+            content: "🎀 ";
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+            border-top: 2px solid #ffe0e9;
+            border-bottom: 2px solid #ffe0e9;
+        }
+
+        .img-post[src=""],
+        .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 20px 22px;
+            color: #765263;
+            white-space: pre-wrap;
+            font-size: 1.05rem;
+        }
+
+        .caja-botones {
+            padding: 18px 22px 22px;
+            border-top: 2px dashed #ffd0df;
+            background-color: #fff5f9;
+        }
+
+        /* =====================================
+           DECORACIÓN
+           ===================================== */
+
+        ::selection {
+            background: #ffb6cb;
+            color: white;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #c18a9f;
+        }
+
+        /* =====================================
+           DISEÑO RESPONSIVE
+           ===================================== */
+
+        @media (max-width: 600px) {
+
+            .nav-lista {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-item {
+                margin: 5px 0;
+            }
+
+            .contenedor-principal {
+                margin: 25px auto;
+                padding: 0 12px;
+            }
+
+            #vista-inicio {
+                padding: 45px 20px;
+            }
+
+            .titulo-principal {
+                font-size: 2rem;
+            }
+
+            .foto-perfil {
+                width: 140px;
+                height: 140px;
+            }
+
+            .tarjeta-formulario {
+                padding: 22px;
+            }
+
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secundario,
+            .btn-peligro,
+            .btn-exito {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">🏠 Inicio</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">💗 Publicaciones</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="contenedor-principal">
+
+        <!-- INICIO -->
+
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+
+            <h1 class="titulo-principal">Bienvenido a mi Blog SOBRE HELLO KITTY</h1>
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+                class="foto-perfil"
+                alt="Mi Foto">
+
+            <p class="texto-bienvenida">
+                ¡Hola! Soy estudiante de 7° Básico del Colegio Concepción
+                y este es mi espacio donde compartiré mis ideas y proyectos.
+                ¡Espero que disfrutes este pequeño mundo de Hello Kitty! 🎀
+            </p>
+
+        </section>
+
+        <!-- PUBLICACIONES -->
+
+        <section id="vista-publicaciones" class="vista-seccion">
+
+            <button class="btn btn-primario"
+                onclick="cambiarVista('vista-crear')"
+                style="margin-bottom: 20px;">
+                + Crear Nueva Publicación 🎀
+            </button>
+
+            <div id="muro" class="contenedor-muro"></div>
+
+        </section>
+
+        <!-- CREAR PUBLICACIÓN -->
+
+        <section id="vista-crear" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">Nueva Publicación</h2>
+
+                <input
+                    type="text"
+                    id="tit"
+                    class="input-formulario"
+                    placeholder="Título (máx 50 caracteres)"
+                    maxlength="50">
+
+                <p class="etiqueta-pequena">
+                    Imagen (Sube un archivo o pega un link):
+                </p>
+
+                <input
+                    type="file"
+                    id="imgArchivo"
+                    class="input-formulario"
+                    accept="image/*">
+
+                <input
+                    type="text"
+                    id="imgUrl"
+                    class="input-formulario"
+                    placeholder="O pega la URL aquí">
+
+                <textarea
+                    id="txt"
+                    class="textarea-formulario"
+                    placeholder="¿Qué estás pensando? 💕"></textarea>
+
+                <button class="btn btn-primario" onclick="crearPost()">
+                    Publicar 💗
+                </button>
+
+                <button class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- EDITAR PUBLICACIÓN -->
+
+        <section id="vista-editar" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">Editar Publicación</h2>
+
+                <input
+                    type="text"
+                    id="edit-tit"
+                    class="input-formulario"
+                    maxlength="50">
+
+                <p class="etiqueta-pequena">
+                    Cambiar imagen (déjalo en blanco para mantener la actual):
+                </p>
+
+                <input
+                    type="file"
+                    id="edit-imgArchivo"
+                    class="input-formulario"
+                    accept="image/*">
+
+                <input
+                    type="text"
+                    id="edit-imgUrl"
+                    class="input-formulario"
+                    placeholder="O nueva URL de imagen">
+
+                <input type="hidden" id="edit-imgActual">
+
+                <textarea
+                    id="edit-txt"
+                    class="textarea-formulario"></textarea>
+
+                <button class="btn btn-exito" onclick="guardarEdicion()">
+                    Guardar Cambios 💗
+                </button>
+
+                <button class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =====================================
+         JAVASCRIPT: FUNCIONES DEL BLOG
+         ===================================== -->
+
+    <script>
+
+        // CAMBIAR ENTRE LAS DIFERENTES VISTAS
+
+        function cambiarVista(idVistaDestino) {
+
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+
+        // OBTENER IMAGEN
+
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+            let archivo = document.getElementById(idArchivo).files[0];
+            let url = document.getElementById(idUrl).value;
+
+            if (archivo) {
+
+                return URL.createObjectURL(archivo);
+
+            } else if (url !== "") {
+
+                return url;
+
+            } else if (idActual) {
+
+                return document.getElementById(idActual).value;
+            }
+
+            return "";
+        }
+
+
+        // CREAR PUBLICACIÓN
+
+        function crearPost() {
+
+            let titulo = document.getElementById("tit").value;
+            let texto = document.getElementById("txt").value;
+
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (titulo.trim() === "" && texto.trim() === "") {
+
+                alert("¡Debes escribir un título o texto antes de publicar!");
+                return;
+            }
+
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-post";
+
+            const encabezado = document.createElement("h3");
+            encabezado.className = "t-post";
+            encabezado.textContent = titulo;
+
+            const imagen = document.createElement("img");
+            imagen.className = "img-post";
+            imagen.alt = "Imagen de la publicación";
+
+            if (imagenFinal !== "") {
+                imagen.src = imagenFinal;
+            }
+
+            const parrafo = document.createElement("p");
+            parrafo.className = "p-post";
+            parrafo.textContent = texto;
+
+            const cajaBotones = document.createElement("div");
+            cajaBotones.className = "caja-botones";
+
+            const botonEditar = document.createElement("button");
+            botonEditar.className = "btn btn-secundario";
+            botonEditar.textContent = "Editar";
+            botonEditar.onclick = function() {
+                abrirEditar(botonEditar);
+            };
+
+            const botonEliminar = document.createElement("button");
+            botonEliminar.className = "btn btn-peligro";
+            botonEliminar.textContent = "Eliminar";
+            botonEliminar.onclick = function() {
+                borrarPost(botonEliminar);
+            };
+
+            cajaBotones.appendChild(botonEditar);
+            cajaBotones.appendChild(botonEliminar);
+
+            tarjeta.appendChild(encabezado);
+
+            if (imagenFinal !== "") {
+                tarjeta.appendChild(imagen);
+            }
+
+            tarjeta.appendChild(parrafo);
+            tarjeta.appendChild(cajaBotones);
+
+            document.getElementById("muro").appendChild(tarjeta);
+
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+        }
+
+
+        // ELIMINAR PUBLICACIÓN
+
+        function borrarPost(botonApretado) {
+
+            let confirmacion = confirm(
+                "¿Seguro que quieres eliminar esta publicación?"
+            );
+
+            if (confirmacion === true) {
+
+                botonApretado.parentElement.parentElement.remove();
+            }
+        }
+
+
+        // PREPARAR EDICIÓN
+
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+
+            postAEditar = botonApretado.parentElement.parentElement;
+
+            document.getElementById("edit-tit").value =
+                postAEditar.querySelector('.t-post').innerText;
+
+            document.getElementById("edit-txt").value =
+                postAEditar.querySelector('.p-post').innerText;
+
+            const imagenActual = postAEditar.querySelector('.img-post');
+
+            document.getElementById("edit-imgActual").value =
+                imagenActual ? imagenActual.src : "";
+
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+        }
+
+
+        // GUARDAR CAMBIOS
+
+        function guardarEdicion() {
+
+            let nuevoTit = document.getElementById("edit-tit").value;
+            let nuevoTxt = document.getElementById("edit-txt").value;
+
+            let nuevaImg = obtenerImagen(
+                "edit-imgArchivo",
+                "edit-imgUrl",
+                "edit-imgActual"
+            );
+
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+
+            let imagen = postAEditar.querySelector('.img-post');
+
+            if (nuevaImg !== "") {
+
+                if (!imagen) {
+                    imagen = document.createElement("img");
+                    imagen.className = "img-post";
+                    imagen.alt = "Imagen de la publicación";
+
+                    postAEditar.insertBefore(
+                        imagen,
+                        postAEditar.querySelector('.p-post')
+                    );
+                }
+
+                imagen.src = nuevaImg;
+
+            } else if (imagen) {
+
+                imagen.remove();
+            }
+
+            cambiarVista('vista-publicaciones');
+        }
+
+    </script>
+
+</body>
+</html>

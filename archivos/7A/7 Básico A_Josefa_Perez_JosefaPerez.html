@@ -1,0 +1,765 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Blog - Maquillaje y Belleza</title>
+
+    <style>
+        /* =====================================
+           ESTILO GENERAL Y COLORES
+        ===================================== */
+
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --rosa: #d98298;
+            --rosa-oscuro: #b95d78;
+            --rosa-claro: #fce8ed;
+            --rosa-fondo: #fff5f7;
+            --dorado: #c6a36b;
+            --blanco: #ffffff;
+            --texto: #57444a;
+            --sombra: 0 8px 25px rgba(185, 93, 120, 0.12);
+            --borde: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff5f7, #fce8ed);
+            color: var(--texto);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* =====================================
+           BARRA DE NAVEGACIÓN
+        ===================================== */
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 3px 15px rgba(185, 93, 120, 0.12);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 2px solid #f8dce4;
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 18px 0;
+            gap: 35px;
+        }
+
+        .nav-item {
+            margin: 0 10px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--texto);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            padding: 10px 18px;
+            border-radius: 30px;
+        }
+
+        .nav-link:hover {
+            color: var(--blanco);
+            background: var(--rosa);
+        }
+
+        /* =====================================
+           CONTENEDOR PRINCIPAL
+        ===================================== */
+
+        .contenedor-principal {
+            max-width: 950px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.5s ease-in-out;
+        }
+
+        #vista-publicaciones,
+        #vista-crear,
+        #vista-editar {
+            display: none;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================
+           PÁGINA DE INICIO
+        ===================================== */
+
+        #vista-inicio {
+            text-align: center;
+            background: var(--blanco);
+            padding: 65px 40px;
+            border-radius: 25px;
+            box-shadow: var(--sombra);
+            border: 1px solid #f8dce4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #vista-inicio::before {
+            content: "✿";
+            position: absolute;
+            top: 10px;
+            left: 25px;
+            color: #f1c4d0;
+            font-size: 45px;
+        }
+
+        #vista-inicio::after {
+            content: "♡";
+            position: absolute;
+            bottom: 10px;
+            right: 25px;
+            color: #e9b5c4;
+            font-size: 50px;
+        }
+
+        .titulo-principal {
+            color: var(--rosa-oscuro);
+            margin-bottom: 15px;
+            font-size: 2.8rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .foto-perfil {
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #f5cbd7;
+            padding: 5px;
+            margin: 20px 0;
+            box-shadow: var(--sombra);
+            background: #fff5f7;
+        }
+
+        .texto-bienvenida {
+            font-size: 1.05rem;
+            color: #806b72;
+            max-width: 650px;
+            margin: 15px auto;
+        }
+
+        /* =====================================
+           FORMULARIOS
+        ===================================== */
+
+        .tarjeta-formulario {
+            background: var(--blanco);
+            padding: 35px;
+            border-radius: 22px;
+            box-shadow: var(--sombra);
+            margin-bottom: 40px;
+            border: 1px solid #f6dce3;
+        }
+
+        .subtitulo {
+            margin-bottom: 25px;
+            color: var(--rosa-oscuro);
+            border-bottom: 2px solid var(--rosa-claro);
+            padding-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.9rem;
+            color: #967b83;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 15px;
+            border: 1px solid #edcbd5;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--texto);
+            background: #fffafb;
+            transition: all 0.3s ease;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: var(--rosa);
+            box-shadow: 0 0 0 4px rgba(217, 130, 152, 0.13);
+            background: white;
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .input-formulario::placeholder,
+        .textarea-formulario::placeholder {
+            color: #c1a5ad;
+        }
+
+        /* =====================================
+           BOTONES
+        ===================================== */
+
+        .btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--blanco);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(185, 93, 120, 0.2);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primario {
+            background: linear-gradient(135deg, #e69aaf, #c96f8a);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primario:hover {
+            background: linear-gradient(135deg, #d98298, #b95d78);
+        }
+
+        .btn-secundario {
+            background: var(--dorado);
+            margin-right: 10px;
+        }
+
+        .btn-secundario:hover {
+            background: #ad8b55;
+        }
+
+        .btn-peligro {
+            background: #d87987;
+        }
+
+        .btn-peligro:hover {
+            background: #bf596b;
+        }
+
+        .btn-exito {
+            background: #9dba9c;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-exito:hover {
+            background: #7d9e7c;
+        }
+
+        /* =====================================
+           PUBLICACIONES DEL BLOG
+        ===================================== */
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .tarjeta-post {
+            background: var(--blanco);
+            border-radius: 20px;
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            border: 1px solid #f5dce3;
+            transition: all 0.3s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(185, 93, 120, 0.18);
+        }
+
+        .t-post {
+            padding: 22px 25px 15px;
+            color: var(--rosa-oscuro);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            display: block;
+            background: #fff5f7;
+        }
+
+        .img-post[src=""],
+        .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 22px 25px;
+            color: #715d64;
+            white-space: pre-wrap;
+            font-size: 0.97rem;
+        }
+
+        .caja-botones {
+            padding: 18px 25px;
+            border-top: 1px solid #f5e5e9;
+            background: #fffafb;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* =====================================
+           DETALLES DECORATIVOS
+        ===================================== */
+
+        .subtitulo::after {
+            content: " ♡";
+            color: var(--dorado);
+        }
+
+        ::selection {
+            background: #f4c4d1;
+            color: #743c50;
+        }
+
+        /* =====================================
+           RESPONSIVE PARA CELULARES
+        ===================================== */
+
+        @media (max-width: 600px) {
+
+            .nav-lista {
+                flex-direction: row;
+                gap: 10px;
+                padding: 15px 5px;
+            }
+
+            .nav-item {
+                margin: 5px;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+
+            .contenedor-principal {
+                margin: 25px auto;
+                padding: 0 15px;
+            }
+
+            #vista-inicio {
+                padding: 45px 20px;
+            }
+
+            .titulo-principal {
+                font-size: 2rem;
+            }
+
+            .foto-perfil {
+                width: 140px;
+                height: 140px;
+            }
+
+            .tarjeta-formulario {
+                padding: 22px;
+            }
+
+            .subtitulo {
+                font-size: 1.5rem;
+            }
+
+            .t-post {
+                font-size: 1.3rem;
+            }
+
+            .caja-botones {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secundario,
+            .btn-peligro,
+            .btn-exito {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">♡ Inicio</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">✿ Publicaciones</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="contenedor-principal">
+
+        <!-- PÁGINA DE INICIO -->
+
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+
+            <h1 class="titulo-principal">blog de maquillaje ♡</h1>
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+                class="foto-perfil"
+                alt="Foto de perfil"
+            >
+
+            <p class="texto-bienvenida">Hola soy Josefa Perez del 7mo basico A y mi blog es sobre demaquillaje</p>
+
+        </section>
+
+        <!-- PÁGINA DE PUBLICACIONES -->
+
+        <section id="vista-publicaciones" class="vista-seccion">
+
+            <button class="btn btn-primario"
+                onclick="cambiarVista('vista-crear')"
+                style="margin-bottom: 20px;">
+                + Crear nueva publicación ♡
+            </button>
+
+            <div id="muro" class="contenedor-muro"></div>
+
+        </section>
+
+        <!-- FORMULARIO PARA CREAR PUBLICACIONES -->
+
+        <section id="vista-crear" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">Nueva publicación ✿</h2>
+
+                <input
+                    type="text"
+                    id="tit"
+                    class="input-formulario"
+                    placeholder="Título de tu publicación..."
+                    maxlength="50"
+                >
+
+                <p class="etiqueta-pequena">
+                    Imagen de maquillaje (sube un archivo o pega un enlace):
+                </p>
+
+                <input
+                    type="file"
+                    id="imgArchivo"
+                    class="input-formulario"
+                    accept="image/*"
+                >
+
+                <input
+                    type="text"
+                    id="imgUrl"
+                    class="input-formulario"
+                    placeholder="O pega la URL de una imagen aquí..."
+                >
+
+                <textarea
+                    id="txt"
+                    class="textarea-formulario"
+                    placeholder="Escribe tus consejos, recomendaciones o ideas de belleza..."
+                ></textarea>
+
+                <button class="btn btn-primario" onclick="crearPost()">
+                    Publicar ♡
+                </button>
+
+                <button class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- FORMULARIO PARA EDITAR PUBLICACIONES -->
+
+        <section id="vista-editar" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">Editar publicación ✿</h2>
+
+                <input
+                    type="text"
+                    id="edit-tit"
+                    class="input-formulario"
+                    maxlength="50"
+                    placeholder="Nuevo título..."
+                >
+
+                <p class="etiqueta-pequena">
+                    Cambiar imagen (déjalo en blanco para mantener la actual):
+                </p>
+
+                <input
+                    type="file"
+                    id="edit-imgArchivo"
+                    class="input-formulario"
+                    accept="image/*"
+                >
+
+                <input
+                    type="text"
+                    id="edit-imgUrl"
+                    class="input-formulario"
+                    placeholder="O nueva URL de imagen..."
+                >
+
+                <input type="hidden" id="edit-imgActual">
+
+                <textarea
+                    id="edit-txt"
+                    class="textarea-formulario"
+                    placeholder="Edita el contenido de tu publicación..."
+                ></textarea>
+
+                <button class="btn btn-exito" onclick="guardarEdicion()">
+                    Guardar cambios ♡
+                </button>
+
+                <button class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT: FUNCIONES DEL BLOG -->
+
+    <script>
+
+        // CAMBIAR ENTRE LAS DIFERENTES VISTAS
+
+        function cambiarVista(idVistaDestino) {
+
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+
+        // OBTENER LA IMAGEN SELECCIONADA
+
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+            let archivo = document.getElementById(idArchivo).files[0];
+            let url = document.getElementById(idUrl).value;
+
+            if (archivo) {
+
+                return URL.createObjectURL(archivo);
+
+            } else if (url !== "") {
+
+                return url;
+
+            } else if (idActual) {
+
+                return document.getElementById(idActual).value;
+            }
+
+            return "";
+        }
+
+
+        // CREAR UNA NUEVA PUBLICACIÓN
+
+        function crearPost() {
+
+            let titulo = document.getElementById("tit").value;
+            let texto = document.getElementById("txt").value;
+
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (titulo.trim() === "" && texto.trim() === "") {
+
+                alert("¡Debes escribir un título o texto antes de publicar!");
+
+                return;
+            }
+
+            document.getElementById("muro").innerHTML += `
+
+                <div class="tarjeta-post">
+
+                    <h3 class="t-post">${titulo}</h3>
+
+                    <img src="${imagenFinal}" class="img-post" alt="Imagen de publicación">
+
+                    <p class="p-post">${texto}</p>
+
+                    <div class="caja-botones">
+
+                        <button class="btn btn-secundario"
+                            onclick="abrirEditar(this)">
+                            Editar
+                        </button>
+
+                        <button class="btn btn-peligro"
+                            onclick="borrarPost(this)">
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+        }
+
+
+        // ELIMINAR UNA PUBLICACIÓN
+
+        function borrarPost(botonApretado) {
+
+            let confirmacion = confirm(
+                "¿Seguro que quieres eliminar esta publicación?"
+            );
+
+            if (confirmacion === true) {
+
+                botonApretado.parentElement.parentElement.remove();
+
+            }
+        }
+
+
+        // PREPARAR LA EDICIÓN DE UNA PUBLICACIÓN
+
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+
+            postAEditar = botonApretado.parentElement.parentElement;
+
+            document.getElementById("edit-tit").value =
+                postAEditar.querySelector('.t-post').innerText;
+
+            document.getElementById("edit-txt").value =
+                postAEditar.querySelector('.p-post').innerText;
+
+            document.getElementById("edit-imgActual").value =
+                postAEditar.querySelector('.img-post').getAttribute('src') || "";
+
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+        }
+
+
+        // GUARDAR LOS CAMBIOS DE EDICIÓN
+
+        function guardarEdicion() {
+
+            if (!postAEditar) {
+                return;
+            }
+
+            let nuevoTit = document.getElementById("edit-tit").value;
+            let nuevoTxt = document.getElementById("edit-txt").value;
+
+            let nuevaImg = obtenerImagen(
+                "edit-imgArchivo",
+                "edit-imgUrl",
+                "edit-imgActual"
+            );
+
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+
+            let imagenPost = postAEditar.querySelector('.img-post');
+
+            imagenPost.src = nuevaImg;
+
+            cambiarVista('vista-publicaciones');
+        }
+
+    </script>
+
+</body>
+</html>

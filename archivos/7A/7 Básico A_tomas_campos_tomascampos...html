@@ -1,0 +1,837 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fortnite Blog</title>
+
+<style>
+:root {
+    --azul: #00c8ff;
+    --morado: #773cff;
+    --oscuro: #080d20;
+    --tarjeta: #151d38;
+    --blanco: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: #080d20;
+    color: white;
+    line-height: 1.6;
+}
+
+/* NAVEGACIÓN */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5, 9, 28, .96);
+    border-bottom: 2px solid var(--azul);
+    box-shadow: 0 0 20px #00c8ff55;
+}
+
+.nav-lista {
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+    padding: 18px;
+    list-style: none;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: .3s;
+}
+
+.nav-link:hover {
+    color: var(--azul);
+    text-shadow: 0 0 12px var(--azul);
+}
+
+/* PORTADA PRINCIPAL */
+
+#vista-inicio {
+    display: block;
+}
+
+.portada {
+    min-height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 45px 20px;
+    position: relative;
+    background-image:
+        linear-gradient(rgba(4, 8, 28, .35), rgba(4, 8, 28, .88)),
+        url("https://image.api.playstation.com/vulcan/ap/rnd/202410/2918/b844210876549967c427aa39b3c217a1ad236bbabb410869.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-bottom: 3px solid var(--azul);
+}
+
+.portada-contenido {
+    max-width: 850px;
+    position: relative;
+}
+
+.etiqueta {
+    display: inline-block;
+    background: var(--morado);
+    padding: 7px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+}
+
+.titulo-portada {
+    font-size: clamp(48px, 9vw, 95px);
+    font-weight: 1000;
+    line-height: 1;
+    color: white;
+    text-shadow: 0 5px 5px #000, 0 0 25px var(--azul);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+}
+
+.subtitulo-portada {
+    font-size: 22px;
+    color: #dceeff;
+    margin-bottom: 30px;
+}
+
+.boton-portada {
+    display: inline-block;
+    background: linear-gradient(90deg, #008cff, #813bff);
+    color: white;
+    text-decoration: none;
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: .3s;
+    box-shadow: 0 0 20px #008cff88;
+}
+
+.boton-portada:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 30px var(--azul);
+}
+
+/* CONTENIDO */
+
+.contenedor-principal {
+    max-width: 1100px;
+    margin: 45px auto;
+    padding: 0 20px;
+}
+
+.presentacion {
+    background: linear-gradient(135deg, #172b59, #25144c);
+    padding: 40px;
+    border-radius: 18px;
+    text-align: center;
+    border: 1px solid #00c8ff66;
+    box-shadow: 0 0 25px #00c8ff22;
+    margin-bottom: 45px;
+}
+
+.presentacion h2 {
+    color: var(--azul);
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.presentacion p {
+    color: #d2d9f0;
+    font-size: 17px;
+}
+
+/* TITULOS DE SECCIÓN */
+
+.titulo-seccion {
+    text-align: center;
+    color: var(--azul);
+    font-size: 32px;
+    text-transform: uppercase;
+    margin: 35px 0;
+    text-shadow: 0 0 12px #00c8ff77;
+}
+
+/* TARJETAS DE PUBLICACIONES */
+
+.contenedor-muro {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.tarjeta-post {
+    background: linear-gradient(145deg, #18254b, #10172f);
+    border: 1px solid #344b83;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: .3s;
+    box-shadow: 0 5px 20px #0005;
+}
+
+.tarjeta-post:hover {
+    transform: translateY(-7px);
+    border-color: var(--azul);
+    box-shadow: 0 0 22px #00c8ff44;
+}
+
+.t-post {
+    padding: 20px 20px 12px;
+    color: var(--azul);
+    font-size: 21px;
+    text-transform: uppercase;
+}
+
+.img-post {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+}
+
+.img-post[src=""],
+.img-post:not([src]) {
+    display: none;
+}
+
+.p-post {
+    padding: 18px 20px;
+    color: #d1d8ed;
+    white-space: pre-wrap;
+}
+
+.caja-botones {
+    padding: 15px 20px;
+    border-top: 1px solid #34436c;
+    display: flex;
+    gap: 10px;
+}
+
+/* FORMULARIOS */
+
+#vista-publicaciones,
+#vista-crear,
+#vista-editar {
+    display: none;
+}
+
+.tarjeta-formulario {
+    background: linear-gradient(145deg, #192750, #17112f);
+    padding: 30px;
+    border-radius: 18px;
+    border: 1px solid var(--morado);
+    box-shadow: 0 0 25px #773cff33;
+}
+
+.subtitulo {
+    color: var(--azul);
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.etiqueta-pequena {
+    color: #c9d4ed;
+    margin-bottom: 8px;
+}
+
+.input-formulario,
+.textarea-formulario {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    background: #080f29;
+    border: 1px solid #46558c;
+    border-radius: 9px;
+    color: white;
+    font-size: 16px;
+}
+
+.input-formulario:focus,
+.textarea-formulario:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 10px #00c8ff55;
+}
+
+.textarea-formulario {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* BOTONES */
+
+.btn {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.2);
+}
+
+.btn-primario {
+    background: linear-gradient(90deg, #008cff, #773cff);
+    color: white;
+    width: 100%;
+    margin: 15px 0;
+    font-size: 16px;
+}
+
+.btn-secundario {
+    background: #ffb52e;
+    color: #151515;
+}
+
+.btn-peligro {
+    background: #e83b55;
+    color: white;
+}
+
+.btn-exito {
+    background: #00bd91;
+    color: white;
+}
+
+/* PIE DE PÁGINA */
+
+.footer {
+    margin-top: 65px;
+    padding: 30px 15px;
+    background: #05091a;
+    border-top: 2px solid var(--azul);
+    text-align: center;
+    color: #aebbd9;
+}
+
+.footer strong {
+    color: var(--azul);
+}
+
+/* SCROLL */
+
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--azul), var(--morado));
+    border-radius: 10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 700px) {
+    .contenedor-muro {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-lista {
+        gap: 20px;
+    }
+
+    .nav-link {
+        font-size: 13px;
+    }
+
+    .portada {
+        min-height: 420px;
+    }
+
+    .subtitulo-portada {
+        font-size: 17px;
+    }
+
+    .presentacion {
+        padding: 25px;
+    }
+
+    .caja-botones {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENÚ -->
+
+<nav class="navbar">
+    <ul class="nav-lista">
+        <li>
+            <a href="#" class="nav-link"
+            onclick="cambiarVista('vista-inicio')">Inicio</a>
+        </li>
+
+        <li>
+            <a href="#" class="nav-link"
+            onclick="cambiarVista('vista-publicaciones')">Publicaciones</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- PORTADA -->
+
+<section id="vista-inicio">
+
+    <div class="portada">
+
+        <div class="portada-contenido">
+
+            <span class="etiqueta">🔥 BATTLE ROYALE</span>
+
+            <h1 class="titulo-portada">bienvenido a mi blog de fornite
+            </h1>
+
+            <p class="subtitulo-portada">
+                ¡Entra a la isla, lucha por la victoria y descubre todo sobre Fortnite!
+            </p>
+
+            <a href="#" class="boton-portada"
+            onclick="cambiarVista('vista-publicaciones')">
+                EXPLORAR PUBLICACIONES
+            </a>
+
+        </div>
+
+    </div>
+
+    <main class="contenedor-principal">
+
+        <div class="presentacion">
+
+            <h2>🎮 BIENVENIDO A MI BLOG</h2>
+
+            <p>
+                ¡Hola! Bienvenido a mi blog dedicado a Fortnite.
+                Aquí encontrarás información sobre temporadas,
+                skins, armas, mapas, novedades y mucho más.
+                Si eres fanático de Fortnite, ¡este es tu lugar!
+            </p>
+
+        </div>
+
+        <h2 class="titulo-seccion">🔥 ÚLTIMAS PUBLICACIONES</h2>
+
+        <div class="contenedor-muro">
+
+            <!-- PUBLICACIÓN 1 -->
+
+            <article class="tarjeta-post">
+
+                <h3 class="t-post">1. El mundo de Fortnite</h3>
+
+                <img class="img-post"
+                src="https://image.api.playstation.com/vulcan/ap/rnd/202410/2918/b844210876549967c427aa39b3c217a1ad236bbabb410869.jpg"
+                alt="Paisaje de Fortnite">
+
+                <p class="p-post">
+Fortnite es un videojuego de acción y supervivencia donde los jugadores compiten para ser los últimos en quedar en pie. Su isla cambia constantemente y siempre hay nuevas aventuras.
+                </p>
+
+                <div class="caja-botones">
+                    <button class="btn btn-secundario"
+                    onclick="abrirEditar(this)">Editar</button>
+
+                    <button class="btn btn-peligro"
+                    onclick="borrarPost(this)">Eliminar</button>
+                </div>
+
+            </article>
+
+            <!-- PUBLICACIÓN 2 -->
+
+            <article class="tarjeta-post">
+
+                <h3 class="t-post">2. Las temporadas</h3>
+
+                <img class="img-post"
+                src="https://www.telstra.com.au/content/dam/tcom/library/tex-exchange/Fortnite-Chapter-5-Telstra-Exchange-7.jpg"
+                alt="Mapa de Fortnite">
+
+                <p class="p-post">
+Las temporadas de Fortnite traen nuevos mapas, desafíos, armas y eventos. Cada temporada tiene sorpresas que hacen que el juego sea diferente y emocionante.
+                </p>
+
+                <div class="caja-botones">
+                    <button class="btn btn-secundario"
+                    onclick="abrirEditar(this)">Editar</button>
+
+                    <button class="btn btn-peligro"
+                    onclick="borrarPost(this)">Eliminar</button>
+                </div>
+
+            </article>
+
+            <!-- PUBLICACIÓN 3 -->
+
+            <article class="tarjeta-post">
+
+                <h3 class="t-post">3. Skins y personajes</h3>
+
+                <img class="img-post"
+                src="https://wallpaperswide.com/download/fortnite_chapter_2_game-wallpaper-2560x1600.jpg"
+                alt="Personajes de Fortnite">
+
+                <p class="p-post">
+Las skins permiten personalizar a nuestro personaje. Existen diseños de todo tipo: futuristas, divertidos, deportivos y de muchas colaboraciones famosas.
+                </p>
+
+                <div class="caja-botones">
+                    <button class="btn btn-secundario"
+                    onclick="abrirEditar(this)">Editar</button>
+
+                    <button class="btn btn-peligro"
+                    onclick="borrarPost(this)">Eliminar</button>
+                </div>
+
+            </article>
+
+            <!-- PUBLICACIÓN 4 -->
+
+            <article class="tarjeta-post">
+
+                <h3 class="t-post">4. Armas y estrategias</h3>
+
+                <img class="img-post"
+                src="https://media.altchar.com/prod/images/gm_preview/d382fe2003d0-fortnite-wanted-skillet-quests.jpg"
+                alt="Escenario de Fortnite">
+
+                <p class="p-post">
+Para ganar en Fortnite es importante elegir buenas armas, conseguir materiales y saber cuándo atacar o defenderse. La estrategia puede marcar la diferencia.
+                </p>
+
+                <div class="caja-botones">
+                    <button class="btn btn-secundario"
+                    onclick="abrirEditar(this)">Editar</button>
+
+                    <button class="btn btn-peligro"
+                    onclick="borrarPost(this)">Eliminar</button>
+                </div>
+
+            </article>
+
+            <!-- PUBLICACIÓN 5 -->
+
+            <article class="tarjeta-post">
+
+                <h3 class="t-post">5. ¡La victoria magistral!</h3>
+
+                <img class="img-post"
+                src="https://image.api.playstation.com/vulcan/ap/rnd/202410/2918/b844210876549967c427aa39b3c217a1ad236bbabb410869.jpg"
+                alt="Aventura en Fortnite">
+
+                <p class="p-post">
+La victoria magistral es uno de los momentos más emocionantes del juego. Para conseguirla hay que sobrevivir, tener buenos reflejos y superar a los demás jugadores. ¡Que comience la batalla!
+                </p>
+
+                <div class="caja-botones">
+                    <button class="btn btn-secundario"
+                    onclick="abrirEditar(this)">Editar</button>
+
+                    <button class="btn btn-peligro"
+                    onclick="borrarPost(this)">Eliminar</button>
+                </div>
+
+            </article>
+
+        </div>
+
+    </main>
+
+</section>
+
+<!-- VISTA PUBLICACIONES -->
+
+<section id="vista-publicaciones" class="contenedor-principal">
+
+    <h2 class="titulo-seccion">🎮 MI MURO GAMER</h2>
+
+    <button class="btn btn-primario"
+    onclick="cambiarVista('vista-crear')">
+        + Crear nueva publicación
+    </button>
+
+    <div id="muro" class="contenedor-muro"></div>
+
+</section>
+
+<!-- CREAR PUBLICACIÓN -->
+
+<section id="vista-crear" class="contenedor-principal">
+
+    <div class="tarjeta-formulario">
+
+        <h2 class="subtitulo">⚡ Nueva publicación</h2>
+
+        <input type="text" id="tit"
+        class="input-formulario"
+        placeholder="Título de tu publicación"
+        maxlength="50">
+
+        <p class="etiqueta-pequena">Selecciona una imagen:</p>
+
+        <input type="file" id="imgArchivo"
+        class="input-formulario" accept="image/*">
+
+        <input type="text" id="imgUrl"
+        class="input-formulario"
+        placeholder="O pega el enlace de una imagen">
+
+        <textarea id="txt"
+        class="textarea-formulario"
+        placeholder="Escribe aquí sobre Fortnite..."></textarea>
+
+        <button class="btn btn-primario"
+        onclick="crearPost()">🚀 Publicar</button>
+
+        <button class="btn btn-peligro"
+        onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+
+    </div>
+
+</section>
+
+<!-- EDITAR PUBLICACIÓN -->
+
+<section id="vista-editar" class="contenedor-principal">
+
+    <div class="tarjeta-formulario">
+
+        <h2 class="subtitulo">✏️ Editar publicación</h2>
+
+        <input type="text" id="edit-tit"
+        class="input-formulario" maxlength="50">
+
+        <p class="etiqueta-pequena">Cambiar imagen:</p>
+
+        <input type="file" id="edit-imgArchivo"
+        class="input-formulario" accept="image/*">
+
+        <input type="text" id="edit-imgUrl"
+        class="input-formulario"
+        placeholder="Nueva URL de imagen">
+
+        <input type="hidden" id="edit-imgActual">
+
+        <textarea id="edit-txt"
+        class="textarea-formulario"></textarea>
+
+        <button class="btn btn-exito"
+        onclick="guardarEdicion()">Guardar cambios</button>
+
+        <button class="btn btn-peligro"
+        onclick="cambiarVista('vista-publicaciones')">Cancelar</button>
+
+    </div>
+
+</section>
+
+<!-- PIE DE PÁGINA -->
+
+<footer class="footer">
+    <p><strong>FORTNITE BLOG</strong> 🎮</p>
+    <p>Un espacio dedicado al mundo de Fortnite.</p>
+    <p>¡Gracias por visitar mi blog!</p>
+</footer>
+
+<script>
+
+// CAMBIAR VISTAS
+
+function cambiarVista(id) {
+
+    const vistas = [
+        'vista-inicio',
+        'vista-publicaciones',
+        'vista-crear',
+        'vista-editar'
+    ];
+
+    vistas.forEach(vista => {
+        document.getElementById(vista).style.display = 'none';
+    });
+
+    document.getElementById(id).style.display = 'block';
+
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// OBTENER IMAGEN
+
+function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+    let archivo = document.getElementById(idArchivo).files[0];
+
+    let url = document.getElementById(idUrl).value;
+
+    if (archivo) {
+        return URL.createObjectURL(archivo);
+    }
+
+    if (url !== "") {
+        return url;
+    }
+
+    if (idActual) {
+        return document.getElementById(idActual).value;
+    }
+
+    return "";
+}
+
+// CREAR PUBLICACIÓN
+
+function crearPost() {
+
+    let titulo = document.getElementById("tit").value;
+
+    let texto = document.getElementById("txt").value;
+
+    let imagen = obtenerImagen("imgArchivo", "imgUrl");
+
+    if (titulo.trim() === "" && texto.trim() === "") {
+        alert("Debes escribir un título o texto.");
+        return;
+    }
+
+    let tarjeta = document.createElement("article");
+    tarjeta.className = "tarjeta-post";
+
+    let h3 = document.createElement("h3");
+    h3.className = "t-post";
+    h3.textContent = titulo;
+
+    let img = document.createElement("img");
+    img.className = "img-post";
+    img.src = imagen;
+    img.alt = titulo || "Imagen de publicación";
+
+    let p = document.createElement("p");
+    p.className = "p-post";
+    p.textContent = texto;
+
+    let botones = document.createElement("div");
+    botones.className = "caja-botones";
+
+    let editar = document.createElement("button");
+    editar.className = "btn btn-secundario";
+    editar.textContent = "Editar";
+    editar.onclick = function() {
+        abrirEditar(this);
+    };
+
+    let eliminar = document.createElement("button");
+    eliminar.className = "btn btn-peligro";
+    eliminar.textContent = "Eliminar";
+    eliminar.onclick = function() {
+        borrarPost(this);
+    };
+
+    botones.append(editar, eliminar);
+    tarjeta.append(h3, img, p, botones);
+
+    document.getElementById("muro").appendChild(tarjeta);
+
+    document.getElementById("tit").value = "";
+    document.getElementById("txt").value = "";
+    document.getElementById("imgUrl").value = "";
+    document.getElementById("imgArchivo").value = "";
+
+    cambiarVista('vista-publicaciones');
+}
+
+// ELIMINAR PUBLICACIÓN
+
+function borrarPost(boton) {
+
+    if (confirm("¿Seguro que quieres eliminar esta publicación?")) {
+        boton.closest(".tarjeta-post").remove();
+    }
+}
+
+// EDITAR PUBLICACIÓN
+
+let postAEditar = null;
+
+function abrirEditar(boton) {
+
+    postAEditar = boton.closest(".tarjeta-post");
+
+    document.getElementById("edit-tit").value =
+        postAEditar.querySelector(".t-post").textContent;
+
+    document.getElementById("edit-txt").value =
+        postAEditar.querySelector(".p-post").textContent;
+
+    document.getElementById("edit-imgActual").value =
+        postAEditar.querySelector(".img-post").src;
+
+    document.getElementById("edit-imgArchivo").value = "";
+
+    document.getElementById("edit-imgUrl").value = "";
+
+    cambiarVista("vista-editar");
+}
+
+// GUARDAR EDICIÓN
+
+function guardarEdicion() {
+
+    let titulo = document.getElementById("edit-tit").value;
+
+    let texto = document.getElementById("edit-txt").value;
+
+    let imagen = obtenerImagen(
+        "edit-imgArchivo",
+        "edit-imgUrl",
+        "edit-imgActual"
+    );
+
+    postAEditar.querySelector(".t-post").textContent = titulo;
+
+    postAEditar.querySelector(".p-post").textContent = texto;
+
+    postAEditar.querySelector(".img-post").src = imagen;
+
+    cambiarVista("vista-publicaciones");
+}
+
+</script>
+
+</body>
+</html>

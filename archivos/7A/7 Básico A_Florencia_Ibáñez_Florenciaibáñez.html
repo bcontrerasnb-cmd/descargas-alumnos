@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Blog</title>
+
+<style>
+:root {
+    --fondo: #fff0f5;
+    --rosa: #e99ab8;
+    --rosa-oscuro: #ce7296;
+    --rosa-claro: #fce0eb;
+    --texto: #765366;
+    --blanco: #ffffff;
+    --sombra: 0 5px 20px rgba(200, 120, 155, 0.18);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #ffe5ef, #fff5f8, #fbd5e5);
+    color: var(--texto);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 15%;
+    left: 3%;
+    font-size: 65px;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    bottom: 5%;
+    right: 3%;
+    font-size: 75px;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+#vista-publicaciones,
+#vista-crear,
+#vista-editar {
+    display: none;
+}
+
+.navbar {
+    background: rgba(255,255,255,0.92);
+    box-shadow: var(--sombra);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.nav-lista {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 18px;
+}
+
+.nav-item {
+    margin: 0 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--rosa-oscuro);
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: #a94f77;
+}
+
+.contenedor-principal {
+    max-width: 800px;
+    margin: 45px auto;
+    padding: 0 20px;
+}
+
+.vista-seccion {
+    animation: aparecer 0.5s ease-in-out;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#vista-inicio {
+    text-align: center;
+    background: rgba(255,255,255,0.92);
+    padding: 45px 30px;
+    border-radius: 25px;
+    box-shadow: var(--sombra);
+    border: 2px solid var(--rosa-claro);
+}
+
+.titulo-principal {
+    color: var(--rosa-oscuro);
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+.titulo-principal::before {
+    content: " ";
+}
+
+.titulo-principal::after {
+    content: " ;
+
+
+.foto-perfil {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #f3b7ce;
+    margin-bottom: 20px;
+    box-shadow: var(--sombra);
+}
+
+.texto-bienvenida {
+    font-size: 1.2rem;
+    color: #806477;
+}
+
+.tarjeta-formulario {
+    background: white;
+    padding: 30px;
+    border-radius: 22px;
+    box-shadow: var(--sombra);
+    margin-bottom: 40px;
+    border: 2px solid var(--rosa-claro);
+}
+
+.subtitulo {
+    margin-bottom: 20px;
+    color: var(--rosa-oscuro);
+    border-bottom: 2px dashed #f3c4d6;
+    padding-bottom: 10px;
+}
+
+.subtitulo::before {
+    content: " ";
+}
+
+.etiqueta-pequena {
+    font-size: 0.9rem;
+    color: #997b8c;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.input-formulario,
+.textarea-formulario {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 15px;
+    border: 1px solid #f0c3d5;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #fff8fb;
+    color: var(--texto);
+    transition: 0.3s;
+}
+
+.input-formulario:focus,
+.textarea-formulario:focus {
+    outline: none;
+    border-color: var(--rosa);
+    box-shadow: 0 0 7px rgba(232,140,175,0.3);
+}
+
+.textarea-formulario {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.btn {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.96);
+}
+
+.btn-primario {
+    background: var(--rosa);
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-secundario {
+    background: #eeb4ca;
+    margin-right: 10px;
+}
+
+.btn-peligro {
+    background: #d97991;
+}
+
+.btn-exito {
+    background: #b98ca8;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.contenedor-muro {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.tarjeta-post {
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--sombra);
+    overflow: hidden;
+    border: 2px solid #f8dce8;
+    transition: 0.3s;
+}
+
+.tarjeta-post:hover {
+    transform: translateY(-4px);
+}
+
+.t-post {
+    padding: 20px 20px 10px;
+    color: var(--rosa-oscuro);
+}
+
+.t-post::before {
+    content: " ";
+}
+
+.img-post {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+.img-post[src=""],
+.img-post:not([src]) {
+    display: none;
+}
+
+.p-post {
+    padding: 15px 20px;
+    color: #806477;
+    white-space: pre-wrap;
+}
+
+.caja-botones {
+    padding: 15px 20px 20px;
+    border-top: 1px solid #f7dce8;
+    background: #fff7fa;
+}
+
+@media (max-width: 600px) {
+    .nav-lista {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-item {
+        margin: 8px 0;
+    }
+
+    .caja-botones {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-secundario,
+    .btn-peligro {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .titulo-principal {
+        font-size: 2rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <ul class="nav-lista">
+        <li class="nav-item">
+            <a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">🏠 Inicio</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">🐾 Publicaciones</a>
+        </li>
+    </ul>
+</nav>
+
+<main class="contenedor-principal">
+
+    <section id="vista-inicio" class="vista-seccion">
+        <h1 class="titulo-principal">Mi Blog Gatuno</h1>
+
+        <img
+        src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=500"
+        class="foto-perfil"
+        alt="Gatito">
+
+        <p class="texto-bienvenida">
+            Hola mi nombre es Florencia Ibañes soy estudiante del 7°A y este es mi blog
+        </p>
+
+        <p style="margin-top:20px; font-size:1.5rem;">
+            
+        </p>
+    </section>
+
+    <section id="vista-publicaciones" class="vista-seccion">
+        <button class="btn btn-primario"
+        onclick="cambiarVista('vista-crear')"
+        style="margin-bottom:20px;">
+            + Nueva Publicación
+        </button>
+
+        <div id="muro" class="contenedor-muro"></div>
+    </section>
+
+    <section id="vista-crear" class="vista-seccion">
+        <div class="tarjeta-formulario">
+            <h2 class="subtitulo">Nueva Publicación</h2>
+
+            <input type="text" id="tit"
+            class="input-formulario"
+            placeholder="Título de tu publicación"
+            maxlength="50">
+
+            <p class="etiqueta-pequena">
+                🐾 Agrega una imagen de tu gatito:
+            </p>
+
+            <input type="file" id="imgArchivo"
+            class="input-formulario" accept="image/*">
+
+            <input type="text" id="imgUrl"
+            class="input-formulario"
+            placeholder="O pega el enlace de una imagen">
+
+            <textarea id="txt"
+            class="textarea-formulario"
+            placeholder="¿Qué quieres compartir? 🐱"></textarea>
+
+            <button class="btn btn-primario"
+            onclick="crearPost()">Publicar 💗</button>
+
+            <button class="btn btn-peligro"
+            onclick="cambiarVista('vista-publicaciones')"
+            style="margin-top:10px;">Cancelar</button>
+        </div>
+    </section>
+
+    <section id="vista-editar" class="vista-seccion">
+        <div class="tarjeta-formulario">
+            <h2 class="subtitulo">Editar Publicación</h2>
+
+            <input type="text" id="edit-tit"
+            class="input-formulario" maxlength="50">
+
+            <p class="etiqueta-pequena">
+                Cambiar imagen:
+            </p>
+
+            <input type="file" id="edit-imgArchivo"
+            class="input-formulario" accept="image/*">
+
+            <input type="text" id="edit-imgUrl"
+            class="input-formulario"
+            placeholder="Nueva URL de imagen">
+
+            <input type="hidden" id="edit-imgActual">
+
+            <textarea id="edit-txt"
+            class="textarea-formulario"></textarea>
+
+            <button class="btn btn-exito"
+            onclick="guardarEdicion()">Guardar Cambios</button>
+
+            <button class="btn btn-peligro"
+            onclick="cambiarVista('vista-publicaciones')"
+            style="margin-top:10px;">Cancelar</button>
+        </div>
+    </section>
+
+</main>
+
+<script>
+function cambiarVista(idVistaDestino) {
+    document.getElementById('vista-inicio').style.display = 'none';
+    document.getElementById('vista-publicaciones').style.display = 'none';
+    document.getElementById('vista-crear').style.display = 'none';
+    document.getElementById('vista-editar').style.display = 'none';
+
+    document.getElementById(idVistaDestino).style.display = 'block';
+}
+
+function obtenerImagen(idArchivo, idUrl, idActual = null) {
+    let archivo = document.getElementById(idArchivo).files[0];
+    let url = document.getElementById(idUrl).value;
+
+    if (archivo) {
+        return URL.createObjectURL(archivo);
+    } else if (url !== "") {
+        return url;
+    } else if (idActual) {
+        return document.getElementById(idActual).value;
+    }
+
+    return "";
+}
+
+function crearPost() {
+    let titulo = document.getElementById("tit").value;
+    let texto = document.getElementById("txt").value;
+    let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+    if (titulo === "" && texto === "") {
+        alert("¡Debes escribir un título o texto antes de publicar!");
+        return;
+    }
+
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "tarjeta-post";
+
+    const tituloElemento = document.createElement("h3");
+    tituloElemento.className = "t-post";
+    tituloElemento.textContent = titulo;
+
+    const imagen = document.createElement("img");
+    imagen.className = "img-post";
+    imagen.src = imagenFinal;
+    imagen.alt = "Imagen de la publicación";
+
+    const parrafo = document.createElement("p");
+    parrafo.className = "p-post";
+    parrafo.textContent = texto;
+
+    const cajaBotones = document.createElement("div");
+    cajaBotones.className = "caja-botones";
+
+    const botonEditar = document.createElement("button");
+    botonEditar.className = "btn btn-secundario";
+    botonEditar.textContent = "Editar";
+    botonEditar.onclick = function() {
+        abrirEditar(this);
+    };
+
+    const botonEliminar = document.createElement("button");
+    botonEliminar.className = "btn btn-peligro";
+    botonEliminar.textContent = "Eliminar";
+    botonEliminar.onclick = function() {
+        borrarPost(this);
+    };
+
+    cajaBotones.append(botonEditar, botonEliminar);
+    tarjeta.append(tituloElemento, imagen, parrafo, cajaBotones);
+
+    document.getElementById("muro").appendChild(tarjeta);
+
+    document.getElementById("tit").value = "";
+    document.getElementById("txt").value = "";
+    document.getElementById("imgUrl").value = "";
+    document.getElementById("imgArchivo").value = "";
+
+    cambiarVista('vista-publicaciones');
+}
+
+function borrarPost(botonApretado) {
+    let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+
+    if (confirmacion) {
+        botonApretado.parentElement.parentElement.remove();
+    }
+}
+
+let postAEditar = null;
+
+function abrirEditar(botonApretado) {
+    postAEditar = botonApretado.parentElement.parentElement;
+
+    document.getElementById("edit-tit").value =
+        postAEditar.querySelector('.t-post').innerText;
+
+    document.getElementById("edit-txt").value =
+        postAEditar.querySelector('.p-post').innerText;
+
+    document.getElementById("edit-imgActual").value =
+        postAEditar.querySelector('.img-post').src;
+
+    document.getElementById("edit-imgArchivo").value = "";
+    document.getElementById("edit-imgUrl").value = "";
+
+    cambiarVista('vista-editar');
+}
+
+function guardarEdicion() {
+    let nuevoTit = document.getElementById("edit-tit").value;
+    let nuevoTxt = document.getElementById("edit-txt").value;
+
+    let nuevaImg = obtenerImagen(
+        "edit-imgArchivo",
+        "edit-imgUrl",
+        "edit-imgActual"
+    );
+
+    postAEditar.querySelector('.t-post').innerText = nuevoTit;
+    postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+    postAEditar.querySelector('.img-post').src = nuevaImg;
+
+    cambiarVista('vista-publicaciones');
+}
+</script>
+
+</body>
+</html>

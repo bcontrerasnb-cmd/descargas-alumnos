@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marvel Universe Blog</title>
+<style>
+:root{--red:#e62429;--yellow:#ffcc00;--black:#101010;--white:#fff;--muted:#c9c9c9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#111;color:#f5f5f5;line-height:1.6}
+header{background:linear-gradient(120deg,#e62429,#9c1015);padding:32px 20px;text-align:center;border-bottom:5px solid var(--yellow)}
+.logo{display:inline-block;background:var(--yellow);color:#111;font-weight:1000;font-size:clamp(2rem,6vw,4rem);letter-spacing:2px;padding:4px 18px;transform:skew(-5deg);border:3px solid #111}
+header p{margin-top:12px;font-size:1.1rem}
+nav{background:#000;position:sticky;top:0;z-index:5;border-bottom:2px solid var(--yellow)}
+nav ul{display:flex;justify-content:center;flex-wrap:wrap;list-style:none}
+nav a{display:block;color:white;text-decoration:none;padding:14px 20px;font-weight:bold}
+nav a:hover{background:var(--red);color:var(--yellow)}
+main{max-width:1100px;margin:30px auto;padding:0 16px}
+section{margin:28px 0}
+h2{color:var(--yellow);border-left:6px solid var(--red);padding-left:12px;margin-bottom:18px}
+.hero{background:linear-gradient(135deg,#222,#4a0808);border:2px solid var(--red);padding:30px;border-radius:12px;text-align:center}
+.hero h1{font-size:2.2rem;color:var(--yellow);margin-bottom:10px}
+.hero p{max-width:700px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:#202020;border:1px solid #444;border-radius:12px;overflow:hidden;transition:.2s}
+.card:hover{transform:translateY(-4px);border-color:var(--yellow)}
+.card img{width:100%;height:220px;object-fit:cover;background:#333}
+.card-content{padding:16px}
+.card h3{color:var(--yellow);margin-bottom:8px}
+.card p{color:#ddd}
+.tag{display:inline-block;background:var(--red);color:white;padding:3px 8px;border-radius:5px;font-size:.8rem;margin-bottom:8px}
+.btn{border:0;border-radius:8px;padding:11px 16px;background:var(--yellow);color:#111;font-weight:bold;cursor:pointer}
+.btn:hover{background:var(--red);color:white}
+.btn-danger{background:#c62828;color:white}
+form{background:#202020;border:1px solid #444;border-radius:12px;padding:20px}
+input,textarea{width:100%;padding:12px;border-radius:7px;border:1px solid #555;background:#101010;color:white;margin:8px 0 14px}
+textarea{min-height:120px}
+.post{background:#202020;border:1px solid #444;border-radius:12px;padding:18px;margin:15px 0}
+.post img{max-width:100%;max-height:360px;object-fit:cover;border-radius:8px;margin:10px 0}
+.post-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+footer{text-align:center;padding:25px;background:#000;border-top:3px solid var(--yellow);color:#bbb;margin-top:40px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MARVEL</div>
+  <p>¡Bienvenido al universo de héroes, películas y cómics!</p>
+</header>
+<nav>
+<ul>
+<li><a href="#inicio">Inicio</a></li><li><a href="#peliculas">Películas</a></li><li><a href="#comics">Cómics</a></li><li><a href="#muro">Mi blog</a></li>
+</ul>
+</nav>
+<main>
+<section id="inicio" class="hero">
+<h1>¡Un universo de aventuras!</h1>
+<p>Explora películas increíbles, conoce historias de los cómics y comparte tus personajes favoritos. ¿Cuál héroe salvaría tu día?</p>
+</section>
+<section id="peliculas">
+<h2>🎬 Películas Marvel</h2>
+<div class="grid">
+<article class="card"><img src="https://images.unsplash.com/photo-1531259683007-016a7b628fc1?auto=format&fit=crop&w=900&q=80" alt="Luces de cine"><div class="card-content"><span class="tag">Avengers</span><h3>Avengers: Endgame</h3><p>Los héroes se reúnen para intentar revertir las consecuencias de una gran batalla y salvar el universo.</p></div></article>
+<article class="card"><img src="https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=900&q=80" alt="Figura de superhéroe"><div class="card-content"><span class="tag">Héroe</span><h3>Spider-Man</h3><p>Un joven héroe aprende que sus poderes vienen acompañados de grandes responsabilidades.</p></div></article>
+<article class="card"><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80" alt="Espacio y estrellas"><div class="card-content"><span class="tag">Cosmos</span><h3>Guardianes de la Galaxia</h3><p>Un grupo de aventureros espaciales se une para proteger la galaxia con humor y valentía.</p></div></article>
+</div>
+</section>
+<section id="comics">
+<h2>📚 Cómics Marvel</h2>
+<div class="grid">
+<article class="card"><img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=900&q=80" alt="Ilustración de cómic"><div class="card-content"><span class="tag">Cómic</span><h3>Spider-Man</h3><p>Descubre aventuras, villanos y momentos que hacen único al trepamuros.</p></div></article>
+<article class="card"><img src="https://images.unsplash.com/photo-1601645191163-3fc0d5d64e1a?auto=format&fit=crop&w=900&q=80" alt="Arte de historieta"><div class="card-content"><span class="tag">Cómic</span><h3>Iron Man</h3><p>Conoce las historias de Tony Stark, su tecnología y sus desafíos.</p></div></article>
+<article class="card"><img src="https://images.unsplash.com/photo-1614583225154-5fc6b5f5b9c5?auto=format&fit=crop&w=900&q=80" alt="Universo ilustrado"><div class="card-content"><span class="tag">Cómic</span><h3>Avengers</h3><p>Los héroes más poderosos de la Tierra se unen en historias épicas.</p></div></article>
+</div>
+</section>
+<section id="muro">
+<h2>✍️ Mis publicaciones</h2>
+<form id="postForm">
+<label for="titulo">Título</label><input id="titulo" maxlength="60" required placeholder="Escribe un título">
+<label for="contenido">Contenido</label><textarea id="contenido" required placeholder="Comparte tu opinión sobre Marvel..."></textarea>
+<label for="imagen">URL de imagen (opcional)</label><input id="imagen" type="url" placeholder="https://...">
+<button class="btn" type="submit">Publicar</button>
+</form>
+<div id="posts"></div>
+</section>
+</main>
+<footer>Blog Marvel hecho con ❤️ para fans de los superhéroes.</footer>
+<script>
+const form=document.getElementById('postForm'),posts=document.getElementById('posts');
+form.addEventListener('submit',e=>{e.preventDefault();addPost(document.getElementById('titulo').value,document.getElementById('contenido').value,document.getElementById('imagen').value);form.reset()});
+function addPost(title,text,img){
+ const post=document.createElement('article');post.className='post';
+ const h=document.createElement('h3');h.textContent=title;h.style.color='#ffcc00';
+ const p=document.createElement('p');p.textContent=text;
+ post.append(h);
+ if(img){const i=document.createElement('img');i.src=img;i.alt='Imagen de la publicación';i.onerror=()=>i.remove();post.append(i)}
+ post.append(p);
+ const actions=document.createElement('div');actions.className='post-actions';
+ const edit=document.createElement('button');edit.className='btn';edit.textContent='Editar';
+ edit.onclick=()=>{const nt=prompt('Nuevo título:',h.textContent);if(nt===null)return;const nc=prompt('Nuevo texto:',p.textContent);if(nc===null)return;h.textContent=nt;p.textContent=nc};
+ const del=document.createElement('button');del.className='btn btn-danger';del.textContent='Eliminar';del.onclick=()=>{if(confirm('¿Eliminar esta publicación?'))post.remove()};
+ actions.append(edit,del);post.append(actions);posts.prepend(post);
+}
+</script>
+</body>
+</html>

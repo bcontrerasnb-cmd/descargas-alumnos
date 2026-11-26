@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog de Ajedrez - 7° Básico</title>
+    <!-- BLOQUE CSS (DISEÑO TEMÁTICO DE AJEDREZ) -->
+    <style id="estilos-ia">
+        :root {
+            --color-fondo: #f3efe6;
+            --color-tablero-oscuro: #2b2623;
+            --color-madera: #769656;
+            --color-madera-hover: #5f7d42;
+            --color-texto: #231f1d;
+            --color-texto-suave: #5a524c;
+            --color-oro: #c59b27;
+            --color-oro-hover: #a8821b;
+            --color-peligro: #c0392b;
+            --color-peligro-hover: #9e2d21;
+            --color-exito: #2e7d32;
+            --color-exito-hover: #236126;
+            --blanco: #fffdf9;
+            --borde-suave: 10px;
+            --sombra: 0 6px 16px rgba(43, 38, 35, 0.12);
+            --sombra-fuerte: 0 10px 24px rgba(43, 38, 35, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            background-image:
+                linear-gradient(45deg, rgba(43, 38, 35, 0.035) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(43, 38, 35, 0.035) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(43, 38, 35, 0.035) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(43, 38, 35, 0.035) 75%);
+            background-size: 64px 64px;
+            background-position: 0 0, 0 32px, 32px -32px, -32px 0;
+            color: var(--color-texto);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        #vista-publicaciones, #vista-crear, #vista-editar {
+            display: none;
+        }
+
+        .navbar {
+            background-color: var(--color-tablero-oscuro);
+            box-shadow: var(--sombra);
+            border-bottom: 3px solid var(--color-oro);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 15px 0;
+        }
+
+        .nav-item {
+            margin: 0 22px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--blanco);
+            font-weight: bold;
+            font-size: 1.1rem;
+            letter-spacing: 0.4px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .nav-link::before {
+            content: "♟ ";
+            color: var(--color-oro);
+        }
+
+        .nav-link:hover {
+            color: var(--color-oro);
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .contenedor-principal {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.45s ease-in-out;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #vista-inicio {
+            text-align: center;
+            background: var(--blanco);
+            padding: 42px 36px;
+            border-radius: var(--borde-suave);
+            box-shadow: var(--sombra-fuerte);
+            border-top: 6px solid var(--color-madera);
+        }
+
+        .titulo-principal {
+            color: var(--color-tablero-oscuro);
+            margin-bottom: 22px;
+            font-size: 2.4rem;
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        .titulo-principal::after {
+            content: " ♛";
+            color: var(--color-oro);
+            font-size: 2rem;
+        }
+
+        .foto-perfil {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--color-oro);
+            outline: 3px solid var(--color-tablero-oscuro);
+            margin-bottom: 22px;
+            box-shadow: var(--sombra);
+            background-color: var(--color-tablero-oscuro);
+        }
+
+        .texto-bienvenida {
+            font-size: 1.18rem;
+            color: var(--color-texto-suave);
+            max-width: 600px;
+            margin: 0 auto 14px auto;
+        }
+
+        .texto-bienvenida:last-child {
+            margin-bottom: 0;
+        }
+
+        .tarjeta-formulario {
+            background: var(--blanco);
+            padding: 32px;
+            border-radius: var(--borde-suave);
+            box-shadow: var(--sombra-fuerte);
+            border-top: 5px solid var(--color-oro);
+            margin-bottom: 40px;
+        }
+
+        .subtitulo {
+            margin-bottom: 20px;
+            color: var(--color-tablero-oscuro);
+            font-family: Georgia, 'Times New Roman', serif;
+            border-bottom: 2px solid var(--color-fondo);
+            padding-bottom: 10px;
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.9rem;
+            color: var(--color-texto-suave);
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 15px;
+            border: 1px solid #d4ccc0;
+            background-color: #fcfaf6;
+            color: var(--color-texto);
+            border-radius: var(--borde-suave);
+            font-size: 1rem;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            background-color: var(--blanco);
+            border-color: var(--color-madera);
+            box-shadow: 0 0 0 3px rgba(118, 150, 86, 0.25);
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            padding: 11px 20px;
+            border: none;
+            border-radius: var(--borde-suave);
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--blanco);
+            cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.12s ease, box-shadow 0.25s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primario {
+            background-color: var(--color-madera);
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-primario:hover {
+            background-color: var(--color-madera-hover);
+        }
+
+        .btn-secundario {
+            background-color: var(--color-oro);
+            color: var(--color-tablero-oscuro);
+            margin-right: 10px;
+        }
+        .btn-secundario:hover {
+            background-color: var(--color-oro-hover);
+            color: var(--blanco);
+        }
+
+        .btn-peligro {
+            background-color: var(--color-peligro);
+        }
+        .btn-peligro:hover {
+            background-color: var(--color-peligro-hover);
+        }
+
+        .btn-exito {
+            background-color: var(--color-exito);
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        .btn-exito:hover {
+            background-color: var(--color-exito-hover);
+        }
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .tarjeta-post {
+            background: var(--blanco);
+            border-radius: var(--borde-suave);
+            box-shadow: var(--sombra);
+            border-left: 6px solid var(--color-tablero-oscuro);
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--sombra-fuerte);
+            border-left-color: var(--color-oro);
+        }
+
+        .t-post {
+            padding: 20px 22px 10px 22px;
+            color: var(--color-tablero-oscuro);
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.35rem;
+        }
+
+        .t-post::before {
+            content: "♜ ";
+            color: var(--color-madera);
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+            border-top: 1px solid #ece6da;
+            border-bottom: 1px solid #ece6da;
+        }
+
+        .img-post[src=""], .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 16px 22px;
+            color: var(--color-texto-suave);
+            white-space: pre-wrap;
+        }
+
+        .caja-botones {
+            padding: 14px 22px 18px 22px;
+            border-top: 1px solid #ede7dc;
+            background-color: #f9f6f0;
+        }
+
+        @media (max-width: 600px) {
+            .titulo-principal {
+                font-size: 1.9rem;
+            }
+            .nav-lista {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-item {
+                margin: 8px 0;
+            }
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn-secundario, .btn-peligro {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-inicio'); return false;">Inicio</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones'); return false;">Publicaciones</a></li>
+        </ul>
+    </nav>
+
+    <main class="contenedor-principal">
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+            <h1 class="titulo-principal">Bienvenido a mi Blog</h1>
+            <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%232b2623'/%3E%3Cg fill='%23769656'%3E%3Crect x='0' y='0' width='50' height='50'/%3E%3Crect x='100' y='0' width='50' height='50'/%3E%3Crect x='50' y='50' width='50' height='50'/%3E%3Crect x='150' y='50' width='50' height='50'/%3E%3Crect x='0' y='100' width='50' height='50'/%3E%3Crect x='100' y='100' width='50' height='50'/%3E%3Crect x='50' y='150' width='50' height='50'/%3E%3Crect x='150' y='150' width='50' height='50'/%3E%3C/g%3E%3Cg fill='%23f3efe6'%3E%3Crect x='50' y='0' width='50' height='50'/%3E%3Crect x='150' y='0' width='50' height='50'/%3E%3Crect x='0' y='50' width='50' height='50'/%3E%3Crect x='100' y='50' width='50' height='50'/%3E%3Crect x='50' y='100' width='50' height='50'/%3E%3Crect x='150' y='100' width='50' height='50'/%3E%3Crect x='0' y='150' width='50' height='50'/%3E%3Crect x='100' y='150' width='50' height='50'/%3E%3C/g%3E%3Ctext x='100' y='128' text-anchor='middle' font-size='96' fill='%23c59b27' stroke='%23231f1d' stroke-width='3'%3E%E2%99%9A%3C/text%3E%3C/svg%3E" class="foto-perfil" alt="Rey dorado sobre tablero de ajedrez">
+            <p class="texto-bienvenida">¡Hola! Soy Matías Concha, estudiante de 7° Básico A del Colegio Concepción de Linares y este es mi blog sobre el ajedrez.</p>
+            <p class="texto-bienvenida">Me gusta el ajedrez porque cada partida es un reto de estrategia y concentración. Me gusta mucho estudiar tácticas, analizar jugadas y compartir lo que aprendo en este blog.</p>
+        </section>
+
+        <section id="vista-publicaciones" class="vista-seccion">
+            <button class="btn btn-primario" onclick="cambiarVista('vista-crear')" style="margin-bottom: 20px;">+ Crear Nueva Publicación</button>
+            <div id="muro" class="contenedor-muro"></div>
+        </section>
+
+        <section id="vista-crear" class="vista-seccion">
+            <div class="tarjeta-formulario">
+                <h2 class="subtitulo">Nueva Publicación</h2>
+                <input type="text" id="tit" class="input-formulario" placeholder="Título (máx 50 caracteres)" maxlength="50">
+                <p class="etiqueta-pequena">Imagen (Sube un archivo o pega un link):</p>
+                <input type="file" id="imgArchivo" class="input-formulario" accept="image/*">
+                <input type="text" id="imgUrl" class="input-formulario" placeholder="O pega la URL aquí">
+                <textarea id="txt" class="textarea-formulario" placeholder="¿Qué estás pensando sobre tu partida o táctica?"></textarea>
+                <button class="btn btn-primario" onclick="crearPost()">Publicar</button>
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+            </div>
+        </section>
+
+        <section id="vista-editar" class="vista-seccion">
+            <div class="tarjeta-formulario">
+                <h2 class="subtitulo">Editar Publicación</h2>
+                <input type="text" id="edit-tit" class="input-formulario" maxlength="50">
+                <p class="etiqueta-pequena">Cambiar imagen (déjalo en blanco para mantener la actual):</p>
+                <input type="file" id="edit-imgArchivo" class="input-formulario" accept="image/*">
+                <input type="text" id="edit-imgUrl" class="input-formulario" placeholder="O nueva URL de imagen">
+                <input type="hidden" id="edit-imgActual">
+                <textarea id="edit-txt" class="textarea-formulario"></textarea>
+                <button class="btn btn-exito" onclick="guardarEdicion()">Guardar Cambios</button>
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const CLAVE_STORAGE = "blog_ajedrez_7basico_posts";
+        let posts = [];
+        let indiceEditando = null;
+
+        function cambiarVista(idVistaDestino) {
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+        function leerArchivoComoBase64(archivo) {
+            return new Promise((resolve, reject) => {
+                const lector = new FileReader();
+                lector.onload = () => resolve(lector.result);
+                lector.onerror = reject;
+                lector.readAsDataURL(archivo);
+            });
+        }
+
+        async function obtenerImagen(idArchivo, idUrl, fallbackActual = "") {
+            const archivo = document.getElementById(idArchivo).files[0];
+            const url = document.getElementById(idUrl).value.trim();
+
+            if (archivo) {
+                return await leerArchivoComoBase64(archivo);
+            } else if (url !== "") {
+                return url;
+            }
+            return fallbackActual;
+        }
+
+        function guardarEnStorage() {
+            try {
+                localStorage.setItem(CLAVE_STORAGE, JSON.stringify(posts));
+            } catch (e) {
+                alert("La imagen es muy pesada para guardar automáticamente, pero se mostrará en la sesión actual.");
+            }
+        }
+
+        function cargarDesdeStorage() {
+            const guardado = localStorage.getItem(CLAVE_STORAGE);
+            if (guardado) {
+                posts = JSON.parse(guardado);
+            }
+            renderizarMuro();
+        }
+
+        function escaparHtml(texto) {
+            const div = document.createElement('div');
+            div.textContent = texto;
+            return div.innerHTML;
+        }
+
+        function renderizarMuro() {
+            const muro = document.getElementById("muro");
+            muro.innerHTML = "";
+
+            posts.forEach((post, index) => {
+                const tarjeta = document.createElement("div");
+                tarjeta.className = "tarjeta-post";
+
+                const imgHtml = post.imagen
+                    ? `<img src="${post.imagen}" class="img-post" alt="Imagen de publicación">`
+                    : "";
+
+                tarjeta.innerHTML = `
+                    <h3 class="t-post">${escaparHtml(post.titulo)}</h3>
+                    ${imgHtml}
+                    <p class="p-post">${escaparHtml(post.texto)}</p>
+                    <div class="caja-botones">
+                        <button class="btn btn-secundario" onclick="abrirEditar(${index})">Editar</button>
+                        <button class="btn btn-peligro" onclick="borrarPost(${index})">Eliminar</button>
+                    </div>
+                `;
+                muro.appendChild(tarjeta);
+            });
+        }
+
+        async function crearPost() {
+            const titulo = document.getElementById("tit").value.trim();
+            const texto = document.getElementById("txt").value.trim();
+            const imagenFinal = await obtenerImagen("imgArchivo", "imgUrl", "");
+
+            if (titulo === "" && texto === "") {
+                alert("¡Debes escribir un título o texto antes de publicar!");
+                return;
+            }
+
+            posts.push({
+                titulo: titulo || "Sin título",
+                texto: texto,
+                imagen: imagenFinal
+            });
+
+            guardarEnStorage();
+            renderizarMuro();
+
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+        }
+
+        function borrarPost(index) {
+            if (confirm("¿Seguro que quieres eliminar esta publicación?")) {
+                posts.splice(index, 1);
+                guardarEnStorage();
+                renderizarMuro();
+            }
+        }
+
+        function abrirEditar(index) {
+            indiceEditando = index;
+            const post = posts[index];
+
+            document.getElementById("edit-tit").value = post.titulo;
+            document.getElementById("edit-txt").value = post.texto;
+            document.getElementById("edit-imgActual").value = post.imagen || "";
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+        }
+
+        async function guardarEdicion() {
+            if (indiceEditando === null) return;
+
+            const nuevoTit = document.getElementById("edit-tit").value.trim();
+            const nuevoTxt = document.getElementById("edit-txt").value.trim();
+            const imgActual = document.getElementById("edit-imgActual").value;
+            const nuevaImg = await obtenerImagen("edit-imgArchivo", "edit-imgUrl", imgActual);
+
+            if (nuevoTit === "" && nuevoTxt === "") {
+                alert("¡La publicación no puede quedar completamente vacía!");
+                return;
+            }
+
+            posts[indiceEditando] = {
+                titulo: nuevoTit || "Sin título",
+                texto: nuevoTxt,
+                imagen: nuevaImg
+            };
+
+            guardarEnStorage();
+            renderizarMuro();
+            indiceEditando = null;
+            cambiarVista('vista-publicaciones');
+        }
+
+        // Cargar publicaciones al abrir la página
+        cargarDesdeStorage();
+    </script>
+</body>
+</html>

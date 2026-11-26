@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog Hello Kitty 🎀</title>
+
+    <style>
+        /* =====================================
+           DISEÑO HELLO KITTY - COLORES
+        ===================================== */
+
+        :root {
+            --rosa: #ff9fbd;
+            --rosa-claro: #ffe4ed;
+            --rosa-fondo: #fff3f7;
+            --rosa-fuerte: #f36b9a;
+            --rojo: #e85d75;
+            --blanco: #ffffff;
+            --texto: #704653;
+            --sombra: 0 5px 15px rgba(230, 110, 150, 0.18);
+            --borde: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--rosa-fondo);
+            background-image:
+                radial-gradient(#ffc6d9 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
+            color: var(--texto);
+            line-height: 1.7;
+        }
+
+        /* =====================================
+           NAVEGACIÓN
+        ===================================== */
+
+        .navbar {
+            background: rgba(255,255,255,0.97);
+            box-shadow: var(--sombra);
+            border-bottom: 4px solid var(--rosa);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 18px;
+            gap: 45px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--rosa-fuerte);
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 10px 18px;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            background: var(--rosa-claro);
+            color: var(--rojo);
+            transform: translateY(-2px);
+        }
+
+        /* =====================================
+           CONTENEDOR PRINCIPAL
+        ===================================== */
+
+        .contenedor-principal {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.5s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================
+           INICIO
+        ===================================== */
+
+        #vista-inicio {
+            text-align: center;
+            background: var(--blanco);
+            padding: 45px 35px;
+            border-radius: 30px;
+            border: 3px solid #ffc4d8;
+            box-shadow: var(--sombra);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #vista-inicio::before {
+            content: "🎀";
+            position: absolute;
+            top: 12px;
+            left: 18px;
+            font-size: 35px;
+        }
+
+        #vista-inicio::after {
+            content: "♡";
+            position: absolute;
+            bottom: 5px;
+            right: 20px;
+            font-size: 45px;
+            color: var(--rosa);
+        }
+
+        .titulo-principal {
+            color: var(--rosa-fuerte);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px #ffe0eb;
+        }
+
+        .foto-perfil {
+            width: 165px;
+            height: 165px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--rosa);
+            margin-bottom: 20px;
+            box-shadow: var(--sombra);
+            background: var(--rosa-claro);
+        }
+
+        .texto-bienvenida {
+            font-size: 1.15rem;
+            color: #805968;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        /* =====================================
+           DECORACIÓN
+        ===================================== */
+
+        .titulo-principal::after {
+            content: " ♡";
+            color: var(--rojo);
+        }
+
+        .subtitulo {
+            color: var(--rosa-fuerte);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            border-bottom: 3px dashed #ffc0d5;
+            padding-bottom: 12px;
+        }
+
+        /* =====================================
+           FORMULARIOS
+        ===================================== */
+
+        .tarjeta-formulario {
+            background: var(--blanco);
+            padding: 30px;
+            border-radius: 25px;
+            border: 3px solid #ffc4d8;
+            box-shadow: var(--sombra);
+            margin-bottom: 40px;
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.95rem;
+            color: #a15e77;
+            margin: 12px 0 6px;
+            font-weight: bold;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 2px solid #ffd0df;
+            border-radius: 14px;
+            font-size: 1rem;
+            color: var(--texto);
+            background: #fffafd;
+            transition: 0.3s;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: var(--rosa-fuerte);
+            box-shadow: 0 0 8px #ffc2d8;
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        /* =====================================
+           BOTONES
+        ===================================== */
+
+        .btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.05);
+            box-shadow: var(--sombra);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primario {
+            background: linear-gradient(135deg, #ff9fbd, #f36b9a);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-secundario {
+            background: #f5b64c;
+            margin-right: 10px;
+        }
+
+        .btn-peligro {
+            background: #e97888;
+        }
+
+        .btn-exito {
+            background: #75c9a4;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        /* =====================================
+           PUBLICACIONES
+        ===================================== */
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .tarjeta-post {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 3px solid #ffc6d9;
+            box-shadow: var(--sombra);
+            transition: 0.3s;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(230, 110, 150, 0.25);
+        }
+
+        .t-post {
+            padding: 20px 22px 10px;
+            color: var(--rosa-fuerte);
+            font-size: 1.5rem;
+        }
+
+        .t-post::before {
+            content: "🎀 ";
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+            border-top: 2px solid #ffe1eb;
+            border-bottom: 2px solid #ffe1eb;
+        }
+
+        .img-post[src=""],
+        .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 20px 22px;
+            color: #805968;
+            white-space: pre-wrap;
+        }
+
+        .caja-botones {
+            padding: 18px 22px;
+            border-top: 2px dashed #ffd0df;
+            background: #fff6fa;
+        }
+
+        /* =====================================
+           DETALLES DECORATIVOS
+        ===================================== */
+
+        .contenedor-principal::after {
+            content: "♡ 🎀 ♡";
+            display: block;
+            text-align: center;
+            font-size: 25px;
+            color: var(--rosa-fuerte);
+            margin: 35px 0;
+        }
+
+        ::selection {
+            background: #ffb9d0;
+            color: #703c50;
+        }
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 600px) {
+
+            .nav-lista {
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px;
+            }
+
+            .nav-item {
+                margin: 3px 0;
+            }
+
+            .contenedor-principal {
+                margin: 25px auto;
+            }
+
+            #vista-inicio {
+                padding: 35px 20px;
+            }
+
+            .titulo-principal {
+                font-size: 1.9rem;
+            }
+
+            .tarjeta-formulario {
+                padding: 20px;
+            }
+
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secundario,
+            .btn-peligro,
+            .btn-exito {
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVEGACIÓN -->
+
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">🏠 Inicio</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">🎀 Publicaciones</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="contenedor-principal">
+
+        <!-- INICIO -->
+
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+
+            <h1 class="titulo-principal">Bienvenido a mi Blog</h1>
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_kitty_character_portrait.png"
+                class="foto-perfil"
+                alt="Hello Kitty">
+
+            <p class="texto-bienvenida">
+                !bienvenido a mi pequeño blog¡ mi nombre es Belén Díaz y soy estudiante del 7°A,
+                me gusta el chocolate y el helado, mi color favorito es el morado y
+                me gusta hello kity y
+                mi blog se va a tratar de hello kity va a tener colores blancos y rosados.
+                ¡espero te guste mi blog! ♡
+            </p>
+
+        </section>
+
+        <!-- PUBLICACIONES -->
+
+        <section id="vista-publicaciones" class="vista-seccion">
+
+            <button class="btn btn-primario"
+                onclick="cambiarVista('vista-crear')"
+                style="margin-bottom: 20px;">
+                🎀 + Crear Nueva Publicación
+            </button>
+
+            <div id="muro" class="contenedor-muro"></div>
+
+        </section>
+
+        <!-- CREAR PUBLICACIÓN -->
+
+        <section id="vista-crear" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">🎀 Nueva Publicación</h2>
+
+                <input
+                    type="text"
+                    id="tit"
+                    class="input-formulario"
+                    placeholder="Escribe un título bonito..."
+                    maxlength="50">
+
+                <p class="etiqueta-pequena">♡ Imagen (Sube un archivo o pega un link):</p>
+
+                <input
+                    type="file"
+                    id="imgArchivo"
+                    class="input-formulario"
+                    accept="image/*">
+
+                <input
+                    type="text"
+                    id="imgUrl"
+                    class="input-formulario"
+                    placeholder="O pega la URL de tu imagen aquí">
+
+                <textarea
+                    id="txt"
+                    class="textarea-formulario"
+                    placeholder="¿Qué estás pensando? Escribe algo bonito..."></textarea>
+
+                <button class="btn btn-primario" onclick="crearPost()">
+                    💗 Publicar
+                </button>
+
+                <button class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- EDITAR PUBLICACIÓN -->
+
+        <section id="vista-editar" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">🎀 Editar Publicación</h2>
+
+                <input
+                    type="text"
+                    id="edit-tit"
+                    class="input-formulario"
+                    maxlength="50">
+
+                <p class="etiqueta-pequena">♡ Cambiar imagen:</p>
+
+                <input
+                    type="file"
+                    id="edit-imgArchivo"
+                    class="input-formulario"
+                    accept="image/*">
+
+                <input
+                    type="text"
+                    id="edit-imgUrl"
+                    class="input-formulario"
+                    placeholder="O nueva URL de imagen">
+
+                <input type="hidden" id="edit-imgActual">
+
+                <textarea
+                    id="edit-txt"
+                    class="textarea-formulario"></textarea>
+
+                <button class="btn btn-exito" onclick="guardarEdicion()">
+                    💚 Guardar Cambios
+                </button>
+
+                <button class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // CAMBIAR ENTRE VISTAS
+
+        function cambiarVista(idVistaDestino) {
+
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+        // OBTENER IMAGEN
+
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+            let archivo = document.getElementById(idArchivo).files[0];
+            let url = document.getElementById(idUrl).value;
+
+            if (archivo) {
+                return URL.createObjectURL(archivo);
+
+            } else if (url !== "") {
+                return url;
+
+            } else if (idActual) {
+                return document.getElementById(idActual).value;
+            }
+
+            return "";
+        }
+
+        // CREAR PUBLICACIÓN
+
+        function crearPost() {
+
+            let titulo = document.getElementById("tit").value.trim();
+            let texto = document.getElementById("txt").value.trim();
+
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if (titulo === "" && texto === "") {
+                alert("🎀 ¡Debes escribir un título o texto antes de publicar!");
+                return;
+            }
+
+            let tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-post";
+
+            let tituloPost = document.createElement("h3");
+            tituloPost.className = "t-post";
+            tituloPost.textContent = titulo;
+
+            let imagenPost = document.createElement("img");
+            imagenPost.className = "img-post";
+            imagenPost.alt = "Imagen de la publicación";
+
+            if (imagenFinal) {
+                imagenPost.src = imagenFinal;
+            }
+
+            let textoPost = document.createElement("p");
+            textoPost.className = "p-post";
+            textoPost.textContent = texto;
+
+            let cajaBotones = document.createElement("div");
+            cajaBotones.className = "caja-botones";
+
+            let botonEditar = document.createElement("button");
+            botonEditar.className = "btn btn-secundario";
+            botonEditar.textContent = "✏️ Editar";
+            botonEditar.onclick = function() {
+                abrirEditar(botonEditar);
+            };
+
+            let botonBorrar = document.createElement("button");
+            botonBorrar.className = "btn btn-peligro";
+            botonBorrar.textContent = "🗑️ Eliminar";
+            botonBorrar.onclick = function() {
+                borrarPost(botonBorrar);
+            };
+
+            cajaBotones.appendChild(botonEditar);
+            cajaBotones.appendChild(botonBorrar);
+
+            tarjeta.appendChild(tituloPost);
+
+            if (imagenFinal) {
+                tarjeta.appendChild(imagenPost);
+            }
+
+            tarjeta.appendChild(textoPost);
+            tarjeta.appendChild(cajaBotones);
+
+            document.getElementById("muro").appendChild(tarjeta);
+
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+        }
+
+        // ELIMINAR PUBLICACIÓN
+
+        function borrarPost(botonApretado) {
+
+            let confirmacion = confirm("🎀 ¿Seguro que quieres eliminar esta publicación?");
+
+            if (confirmacion === true) {
+                botonApretado.parentElement.parentElement.remove();
+            }
+        }
+
+        // PREPARAR EDICIÓN
+
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+
+            postAEditar = botonApretado.parentElement.parentElement;
+
+            document.getElementById("edit-tit").value =
+                postAEditar.querySelector('.t-post').innerText;
+
+            document.getElementById("edit-txt").value =
+                postAEditar.querySelector('.p-post').innerText;
+
+            let imagen = postAEditar.querySelector('.img-post');
+
+            document.getElementById("edit-imgActual").value =
+                imagen ? imagen.src : "";
+
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+
+            cambiarVista('vista-editar');
+        }
+
+        // GUARDAR EDICIÓN
+
+        function guardarEdicion() {
+
+            let nuevoTit = document.getElementById("edit-tit").value;
+            let nuevoTxt = document.getElementById("edit-txt").value;
+
+            let nuevaImg = obtenerImagen(
+                "edit-imgArchivo",
+                "edit-imgUrl",
+                "edit-imgActual"
+            );
+
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+
+            let imagen = postAEditar.querySelector('.img-post');
+
+            if (nuevaImg) {
+
+                if (!imagen) {
+                    imagen = document.createElement("img");
+                    imagen.className = "img-post";
+                    imagen.alt = "Imagen de la publicación";
+
+                    postAEditar.insertBefore(
+                        imagen,
+                        postAEditar.querySelector('.p-post')
+                    );
+                }
+
+                imagen.src = nuevaImg;
+
+            } else if (imagen) {
+                imagen.remove();
+            }
+
+            cambiarVista('vista-publicaciones');
+        }
+
+    </script>
+
+</body>
+</html>

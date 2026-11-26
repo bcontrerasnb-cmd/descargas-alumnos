@@ -1,0 +1,881 @@
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineBlog | Mi mundo Minecraft</title>
+
+    <style>
+        /* =========================================
+           ESTILO MINECRAFT
+           ========================================= */
+
+        :root {
+            --verde: #55a630;
+            --verde-oscuro: #285b24;
+            --verde-claro: #a7e063;
+            --tierra: #80512e;
+            --tierra-oscura: #50321e;
+            --piedra: #777d7d;
+            --fondo: #18251c;
+            --tarjeta: #263b2b;
+            --texto: #f3f7ed;
+            --gris: #c2d0c0;
+            --rojo: #d94b40;
+            --amarillo: #f0c84b;
+            --borde: #111a12;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            background-color: var(--fondo);
+            background-image:
+                linear-gradient(rgba(10, 22, 13, 0.87), rgba(10, 22, 13, 0.94)),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 39px,
+                    rgba(255, 255, 255, 0.035) 40px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 39px,
+                    rgba(255, 255, 255, 0.035) 40px
+                );
+            color: var(--texto);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        button, input, textarea {
+            font: inherit;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* =========================================
+           BARRA DE NAVEGACIÓN
+           ========================================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #1d321f;
+            border-bottom: 5px solid #101c11;
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            list-style: none;
+            padding: 15px 20px;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            display: block;
+            text-decoration: none;
+            color: white;
+            font-weight: 900;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 18px;
+            background: #365b31;
+            border: 3px solid #152516;
+            box-shadow: inset 0 3px rgba(255, 255, 255, 0.12),
+                        0 4px 0 #101b10;
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .nav-link:hover {
+            background: var(--verde);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .nav-link:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        /* =========================================
+           CONTENEDOR Y ANIMACIONES
+           ========================================= */
+
+        .contenedor-principal {
+            width: min(100% - 32px, 900px);
+            margin: 38px auto;
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.35s ease;
+        }
+
+        #vista-publicaciones,
+        #vista-crear,
+        #vista-editar {
+            display: none;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================
+           INICIO / PORTADA
+           ========================================= */
+
+        #vista-inicio {
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            background: linear-gradient(145deg, #345b34, #203b27 75%);
+            padding: 48px 30px;
+            border: 5px solid var(--borde);
+            box-shadow: 0 0 0 4px #365d30,
+                        0 12px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        #vista-inicio::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: repeating-linear-gradient(
+                90deg,
+                #75b843 0 40px,
+                #5a9835 40px 80px
+            );
+        }
+
+        .titulo-principal {
+            color: #a9ef64;
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            font-weight: 1000;
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-shadow: 4px 4px 0 #24451f,
+                         7px 7px 0 rgba(0, 0, 0, 0.35);
+            margin-bottom: 18px;
+        }
+
+        .foto-perfil {
+            width: 155px;
+            height: 155px;
+            object-fit: cover;
+            border: 6px solid #1b2b1b;
+            outline: 4px solid var(--verde-claro);
+            margin: 25px 0;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .foto-perfil:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .texto-bienvenida {
+            max-width: 650px;
+            margin: 0 auto;
+            color: #edf6e8;
+            font-size: 1.12rem;
+        }
+
+        .etiqueta-minecraft {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 9px 15px;
+            background: #192b19;
+            color: var(--verde-claro);
+            border: 2px solid #719d52;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================
+           TÍTULOS Y FORMULARIOS
+           ========================================= */
+
+        .tarjeta-formulario {
+            background: var(--tarjeta);
+            padding: 30px;
+            border: 4px solid #111b12;
+            box-shadow: 7px 7px 0 #142017;
+            margin-bottom: 30px;
+        }
+
+        .subtitulo {
+            color: var(--verde-claro);
+            font-size: 1.7rem;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 4px solid #42633b;
+            text-shadow: 2px 2px #142017;
+        }
+
+        .etiqueta-pequena {
+            color: var(--gris);
+            font-size: 0.95rem;
+            margin: 14px 0 7px;
+            font-weight: bold;
+        }
+
+        .input-formulario,
+        .textarea-formulario {
+            display: block;
+            width: 100%;
+            padding: 13px 15px;
+            margin-bottom: 15px;
+            color: #f4f7ef;
+            background: #17261b;
+            border: 3px solid #456345;
+            border-radius: 0;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-formulario::placeholder,
+        .textarea-formulario::placeholder {
+            color: #a4b5a1;
+        }
+
+        .input-formulario:focus,
+        .textarea-formulario:focus {
+            border-color: var(--verde-claro);
+            box-shadow: 0 0 0 3px rgba(167, 224, 99, 0.16);
+        }
+
+        .textarea-formulario {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            font-size: 0.9rem;
+        }
+
+        input[type="file"]::file-selector-button {
+            background: #477b39;
+            color: white;
+            border: 2px solid #172517;
+            padding: 7px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           BOTONES ESTILO BLOQUES
+           ========================================= */
+
+        .btn {
+            display: inline-block;
+            padding: 11px 19px;
+            border: 3px solid rgba(0, 0, 0, 0.45);
+            border-radius: 0;
+            color: white;
+            font-weight: 900;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: inset 0 3px rgba(255, 255, 255, 0.17),
+                        0 5px 0 rgba(0, 0, 0, 0.3);
+            transition: filter 0.15s, transform 0.15s;
+        }
+
+        .btn:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+
+        .btn-primario {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            background: #4e9b37;
+        }
+
+        .btn-secundario {
+            background: #b57a35;
+            margin-right: 8px;
+        }
+
+        .btn-peligro {
+            background: #bd3932;
+        }
+
+        .btn-exito {
+            background: #3c944d;
+            margin-right: 8px;
+            margin-top: 10px;
+        }
+
+        /* =========================================
+           PUBLICACIONES
+           ========================================= */
+
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            margin-top: 25px;
+        }
+
+        .tarjeta-post {
+            overflow: hidden;
+            background: var(--tarjeta);
+            border: 4px solid #111b12;
+            box-shadow: 7px 7px 0 #142017;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tarjeta-post:hover {
+            transform: translateY(-4px);
+            box-shadow: 9px 11px 0 #101b12;
+        }
+
+        .t-post {
+            overflow-wrap: anywhere;
+            padding: 20px 22px 12px;
+            color: var(--verde-claro);
+            font-size: 1.5rem;
+            line-height: 1.3;
+            text-shadow: 2px 2px #172417;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            display: block;
+            border-top: 3px solid #172317;
+            border-bottom: 3px solid #172317;
+            background: #17261b;
+        }
+
+        .img-post[src=""],
+        .img-post:not([src]) {
+            display: none;
+        }
+
+        .p-post {
+            padding: 18px 22px;
+            color: #e1eadd;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .caja-botones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 16px 22px 20px;
+            border-top: 3px solid #172317;
+            background: #1c3021;
+        }
+
+        /* =========================================
+           SCROLLBAR
+           ========================================= */
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #142017;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #528c3d;
+            border: 2px solid #142017;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #77b957;
+        }
+
+        /* =========================================
+           SELECCIÓN DE TEXTO
+           ========================================= */
+
+        ::selection {
+            background: #80c957;
+            color: #172317;
+        }
+
+        /* =========================================
+           DISEÑO PARA CELULARES
+           ========================================= */
+
+        @media (max-width: 600px) {
+            .nav-lista {
+                gap: 9px;
+                padding: 12px 8px;
+            }
+
+            .nav-link {
+                padding: 9px 12px;
+                font-size: 0.85rem;
+            }
+
+            .contenedor-principal {
+                width: calc(100% - 24px);
+                margin: 25px auto;
+            }
+
+            #vista-inicio {
+                padding: 38px 17px;
+            }
+
+            .titulo-principal {
+                font-size: 2rem;
+            }
+
+            .foto-perfil {
+                width: 125px;
+                height: 125px;
+            }
+
+            .texto-bienvenida {
+                font-size: 1rem;
+            }
+
+            .tarjeta-formulario {
+                padding: 20px 15px;
+            }
+
+            .subtitulo {
+                font-size: 1.35rem;
+            }
+
+            .t-post {
+                font-size: 1.25rem;
+                padding: 17px 15px 10px;
+            }
+
+            .p-post {
+                padding: 15px;
+            }
+
+            .caja-botones {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .caja-botones .btn {
+                width: 100%;
+                margin: 0;
+            }
+
+            .btn-exito {
+                width: 100%;
+            }
+        }
+
+        /* =========================================
+           ACCESIBILIDAD: MENOS ANIMACIONES
+           ========================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item">
+                <a href="#" class="nav-link"
+                   onclick="cambiarVista('vista-inicio'); return false;">
+                    Inicio
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link"
+                   onclick="cambiarVista('vista-publicaciones'); return false;">
+                    Publicaciones
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenedor-principal">
+
+        <!-- INICIO -->
+        <section id="vista-inicio" class="vista-seccion">
+            <h1 class="titulo-principal">bienvenido a mi blog sobre minecraft</h1>
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png"
+                class="foto-perfil"
+                alt="Foto de perfil"
+            >
+
+            <p class="bienvendos">
+                ¡Bienvenido a mi mundo de Minecraft! Aquí podrás compartir
+                construcciones increíbles, aventuras de supervivencia,
+                trucos, semillas, ideas y tus mejores momentos del juego.
+            </p>
+
+            <div class="etiqueta-minecraft">
+                ⛏️ EXPLORA · CONSTRUYE · SOBREVIVE
+            </div>
+        </section>
+
+        <!-- PUBLICACIONES -->
+        <section id="vista-publicaciones" class="vista-seccion">
+
+            <button
+                class="btn btn-primario"
+                onclick="cambiarVista('vista-crear')"
+                style="margin-bottom: 20px;"
+            >
+                + Crear nueva publicación
+            </button>
+
+            <div id="muro" class="contenedor-muro"></div>
+
+        </section>
+
+        <!-- CREAR PUBLICACIÓN -->
+        <section id="vista-crear" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">⛏️ Nueva publicación</h2>
+
+                <input
+                    type="text"
+                    id="tit"
+                    class="input-formulario"
+                    placeholder="Título de tu aventura"
+                    maxlength="50"
+                >
+
+                <p class="etiqueta-pequena">
+                    Imagen (sube un archivo o pega un enlace):
+                </p>
+
+                <input
+                    type="file"
+                    id="imgArchivo"
+                    class="input-formulario"
+                    accept="image/*"
+                >
+
+                <input
+                    type="text"
+                    id="imgUrl"
+                    class="input-formulario"
+                    placeholder="O pega la URL de una imagen"
+                >
+
+                <textarea
+                    id="txt"
+                    class="textarea-formulario"
+                    placeholder="Cuenta tu aventura, construcción o descubrimiento..."
+                ></textarea>
+
+                <button class="btn btn-primario" onclick="crearPost()">
+                    Publicar en el blog
+                </button>
+
+                <button
+                    class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 15px; width: 100%;"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+        </section>
+
+        <!-- EDITAR PUBLICACIÓN -->
+        <section id="vista-editar" class="vista-seccion">
+
+            <div class="tarjeta-formulario">
+
+                <h2 class="subtitulo">🛠️ Editar publicación</h2>
+
+                <input
+                    type="text"
+                    id="edit-tit"
+                    class="input-formulario"
+                    maxlength="50"
+                    placeholder="Título"
+                >
+
+                <p class="etiqueta-pequena">
+                    Cambiar imagen (déjalo en blanco para mantener la actual):
+                </p>
+
+                <input
+                    type="file"
+                    id="edit-imgArchivo"
+                    class="input-formulario"
+                    accept="image/*"
+                >
+
+                <input
+                    type="text"
+                    id="edit-imgUrl"
+                    class="input-formulario"
+                    placeholder="O pega una nueva URL"
+                >
+
+                <input type="hidden" id="edit-imgActual">
+
+                <textarea
+                    id="edit-txt"
+                    class="textarea-formulario"
+                    placeholder="Contenido de la publicación"
+                ></textarea>
+
+                <button class="btn btn-exito" onclick="guardarEdicion()">
+                    Guardar cambios
+                </button>
+
+                <button
+                    class="btn btn-peligro"
+                    onclick="cambiarVista('vista-publicaciones')"
+                    style="margin-top: 10px;"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT: FUNCIONES DEL BLOG -->
+    <script>
+        // CAMBIAR ENTRE LAS DIFERENTES VISTAS
+        function cambiarVista(idVistaDestino) {
+            const vistas = [
+                'vista-inicio',
+                'vista-publicaciones',
+                'vista-crear',
+                'vista-editar'
+            ];
+
+            vistas.forEach(function(id) {
+                document.getElementById(id).style.display = 'none';
+            });
+
+            document.getElementById(idVistaDestino).style.display = 'block';
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // OBTENER IMAGEN DESDE UN ARCHIVO O URL
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+            const archivo = document.getElementById(idArchivo).files[0];
+            const url = document.getElementById(idUrl).value.trim();
+
+            if (archivo) {
+                return URL.createObjectURL(archivo);
+            } else if (url !== '') {
+                return url;
+            } else if (idActual) {
+                return document.getElementById(idActual).value;
+            }
+
+            return '';
+        }
+
+        // CREAR UNA PUBLICACIÓN
+        function crearPost() {
+            const titulo = document.getElementById('tit').value.trim();
+            const texto = document.getElementById('txt').value.trim();
+            const imagenFinal = obtenerImagen('imgArchivo', 'imgUrl');
+
+            if (titulo === '' && texto === '') {
+                alert('¡Escribe un título o contenido antes de publicar!');
+                return;
+            }
+
+            // Crear elementos sin insertar el contenido del usuario como HTML.
+            const tarjeta = document.createElement('article');
+            tarjeta.className = 'tarjeta-post';
+
+            const encabezado = document.createElement('h3');
+            encabezado.className = 't-post';
+            encabezado.textContent = titulo || 'Aventura sin título';
+
+            const imagen = document.createElement('img');
+            imagen.className = 'img-post';
+            imagen.alt = titulo || 'Imagen de la publicación';
+
+            if (imagenFinal) {
+                imagen.src = imagenFinal;
+            } else {
+                imagen.style.display = 'none';
+            }
+
+            const parrafo = document.createElement('p');
+            parrafo.className = 'p-post';
+            parrafo.textContent = texto;
+
+            const cajaBotones = document.createElement('div');
+            cajaBotones.className = 'caja-botones';
+
+            const botonEditar = document.createElement('button');
+            botonEditar.className = 'btn btn-secundario';
+            botonEditar.textContent = 'Editar';
+            botonEditar.onclick = function() {
+                abrirEditar(botonEditar);
+            };
+
+            const botonEliminar = document.createElement('button');
+            botonEliminar.className = 'btn btn-peligro';
+            botonEliminar.textContent = 'Eliminar';
+            botonEliminar.onclick = function() {
+                borrarPost(botonEliminar);
+            };
+
+            cajaBotones.append(botonEditar, botonEliminar);
+            tarjeta.append(encabezado, imagen, parrafo, cajaBotones);
+
+            document.getElementById('muro').prepend(tarjeta);
+
+            // Limpiar el formulario.
+            document.getElementById('tit').value = '';
+            document.getElementById('txt').value = '';
+            document.getElementById('imgUrl').value = '';
+            document.getElementById('imgArchivo').value = '';
+
+            cambiarVista('vista-publicaciones');
+        }
+
+        // ELIMINAR UNA PUBLICACIÓN
+        function borrarPost(botonApretado) {
+            const confirmacion = confirm(
+                '¿Seguro que quieres eliminar esta publicación?'
+            );
+
+            if (confirmacion) {
+                botonApretado.closest('.tarjeta-post').remove();
+            }
+        }
+
+        // PREPARAR LA EDICIÓN
+        let postAEditar = null;
+
+        function abrirEditar(botonApretado) {
+            postAEditar = botonApretado.closest('.tarjeta-post');
+
+            document.getElementById('edit-tit').value =
+                postAEditar.querySelector('.t-post').textContent;
+
+            document.getElementById('edit-txt').value =
+                postAEditar.querySelector('.p-post').textContent;
+
+            const imagenActual = postAEditar.querySelector('.img-post');
+
+            document.getElementById('edit-imgActual').value =
+                imagenActual.getAttribute('src') || '';
+
+            document.getElementById('edit-imgArchivo').value = '';
+            document.getElementById('edit-imgUrl').value = '';
+
+            cambiarVista('vista-editar');
+        }
+
+        // GUARDAR LOS CAMBIOS
+        function guardarEdicion() {
+            if (!postAEditar) {
+                return;
+            }
+
+            const nuevoTitulo =
+                document.getElementById('edit-tit').value.trim();
+
+            const nuevoTexto =
+                document.getElementById('edit-txt').value.trim();
+
+            const nuevaImagen = obtenerImagen(
+                'edit-imgArchivo',
+                'edit-imgUrl',
+                'edit-imgActual'
+            );
+
+            if (nuevoTitulo === '' && nuevoTexto === '') {
+                alert('Escribe un título o contenido antes de guardar.');
+                return;
+            }
+
+            postAEditar.querySelector('.t-post').textContent =
+                nuevoTitulo || 'Aventura sin título';
+
+            postAEditar.querySelector('.p-post').textContent = nuevoTexto;
+
+            const imagen = postAEditar.querySelector('.img-post');
+
+            if (nuevaImagen) {
+                imagen.src = nuevaImagen;
+                imagen.style.display = 'block';
+            } else {
+                imagen.removeAttribute('src');
+                imagen.style.display = 'none';
+            }
+
+            imagen.alt = nuevoTitulo || 'Imagen de la publicación';
+
+            postAEditar = null;
+
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Mi Blog Personal - 7° Básico | Modo Ajedrez</title>
+
+<!-- BLOQUE CSS (DISEÑO INSPIRADO EN AJEDREZ DE TORNEO) -->
+
+<style id="estilos-ia">
+
+/* =========================================
+
+VARIABLES Y RESET GLOBAL (ESTILO TABLERO)
+
+========================================= */
+
+:root {
+
+/* Paleta inspirada en tablero clásico + acento dorado/ámbar */
+
+--casilla-clara: #f3ead8; /* Marfil / madera clara */
+
+--casilla-oscura: #23272d; /* Carbón / ébano elegante */
+
+--casilla-oscura-borde: #14171a;
+
+--color-fondo: #e9e2d2;
+
+--color-texto: #1e2226;
+
+--color-texto-suave: #555b64;
+
+
+
+/* Acentos estratégicos */
+
+--color-primario: #1e272e; /* Pieza negra / estrategia */
+
+--color-primario-hover: #3742fa;
+
+--color-acento: #c59b27; /* Oro de torneo / jaque */
+
+--color-acento-hover: #a8821c;
+
+--color-secundario: #d97706; /* Ámbar para editar */
+
+--color-secundario-hover: #b45309;
+
+--color-peligro: #c0392b; /* Rojo captura / eliminar */
+
+--color-peligro-hover: #992d22;
+
+--color-exito: #1e8449; /* Verde jugada válida */
+
+--color-exito-hover: #186a3b;
+
+
+
+--blanco: #fffdf9;
+
+--borde-tablero: 3px solid var(--casilla-oscura);
+
+--borde-suave: 6px;
+
+--sombra-pieza: 0 6px 0 var(--casilla-oscura), 0 10px 18px rgba(0, 0, 0, 0.14);
+
+--sombra-suave: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+}
+
+
+
+{
+box-sizing: border-box;
+
+margin: 0;
+
+padding: 0;
+
+font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+}
+
+
+
+body {
+
+background-color: var(--color-fondo);
+
+/* Patrón sutil de tablero de ajedrez en el fondo */
+
+background-image:
+
+linear-gradient(45deg, rgba(35, 39, 45, 0.045) 25%, transparent 25%),
+
+linear-gradient(-45deg, rgba(35, 39, 45, 0.045) 25%, transparent 25%),
+
+linear-gradient(45deg, transparent 75%, rgba(35, 39, 45, 0.045) 75%),
+
+linear-gradient(-45deg, transparent 75%, rgba(35, 39, 45, 0.045) 75%);
+
+background-size: 64px 64px;
+
+background-position: 0 0, 0 32px, 32px -32px, -32px 0;
+
+color: var(--color-texto);
+
+line-height: 1.6;
+
+min-height: 100vh;
+
+}
+
+
+
+/* Ocultamos las vistas secundarias por defecto */
+
+#vista-publicaciones, #vista-crear, #vista-editar {
+
+display: none;
+
+}
+
+
+
+/* =========================================
+
+BARRA DE NAVEGACIÓN (FRANJA DE TORNEO)
+
+========================================= */
+
+.navbar {
+
+background-color: var(--casilla-oscura);
+
+border-bottom: 4px solid var(--color-acento);
+
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+position: sticky;
+
+top: 0;
+
+width: 100%;
+
+z-index: 100;
+
+}
+
+
+
+.nav-lista {
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+list-style: none;
+
+padding: 14px 16px;
+
+gap: 12px;
+
+}
+
+
+
+.nav-item {
+
+margin: 0 10px;
+
+}
+
+
+
+.nav-link {
+
+position: relative;
+
+text-decoration: none;
+
+color: var(--casilla-clara);
+
+font-weight: 700;
+
+font-size: 1.08rem;
+
+letter-spacing: 0.4px;
+
+padding: 8px 16px;
+
+border-radius: var(--borde-suave);
+
+border: 1px solid transparent;
+
+transition: all 0.25s ease;
+
+display: inline-flex;
+
+align-items: center;
+
+gap: 8px;
+
+}
+
+
+
+.nav-link::before {
+
+content: "♟";
+
+color: var(--color-acento);
+
+font-size: 1rem;
+
+transition: transform 0.25s ease;
+
+}
+
+
+
+.nav-link:hover {
+
+color: #ffffff;
+
+background-color: rgba(197, 155, 39, 0.16);
+
+border-color: var(--color-acento);
+
+}
+
+
+
+.nav-link:hover::before {
+
+transform: translateY(-2px) scale(1.1);
+
+}
+
+
+
+/* =========================================
+
+CONTENEDOR PRINCIPAL Y VISTA INICIO
+
+========================================= */
+
+.contenedor-principal {
+
+max-width: 820px;
+
+margin: 36px auto 60px auto;
+
+padding: 0 20px;
+
+}
+
+
+
+.vista-seccion {
+
+animation: aparecer 0.4s ease-out;
+
+}
+
+
+
+@keyframes aparecer {
+
+from { opacity: 0; transform: translateY(10px); }
+
+to { opacity: 1; transform: translateY(0); }
+
+}
+
+
+
+#vista-inicio {
+
+position: relative;
+
+text-align: center;
+
+background: var(--blanco);
+
+padding: 44px 32px;
+
+border-radius: var(--borde-suave);
+
+border: var(--borde-tablero);
+
+box-shadow: var(--sombra-pieza);
+
+overflow: hidden;
+
+}
+
+
+
+/* Borde decorativo superior tipo casillas alternadas */
+
+#vista-inicio::before {
+
+content: "";
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+right: 0;
+
+height: 12px;
+
+background-image: linear-gradient(
+
+90deg,
+
+var(--casilla-oscura) 0 16px,
+
+var(--color-acento) 16px 32px
+
+);
+
+background-size: 32px 12px;
+
+}
+
+
+
+.titulo-principal {
+
+color: var(--casilla-oscura);
+
+margin-top: 8px;
+
+margin-bottom: 22px;
+
+font-size: 2.35rem;
+
+font-weight: 800;
+
+letter-spacing: -0.5px;
+
+}
+
+
+
+.titulo-principal::after {
+
+content: " ♛";
+
+color: var(--color-acento);
+
+}
+
+
+
+.foto-perfil {
+
+width: 152px;
+
+height: 152px;
+
+border-radius: 50%;
+
+object-fit: cover;
+
+background-color: var(--casilla-clara);
+
+border: 5px solid var(--casilla-oscura);
+
+outline: 3px solid var(--color-acento);
+
+margin-bottom: 22px;
+
+box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+
+transition: transform 0.3s ease;
+
+}
+
+
+
+.foto-perfil:hover {
+
+transform: scale(1.04) rotate(-2deg);
+
+}
+
+
+
+.texto-bienvenida {
+
+font-size: 1.18rem;
+
+color: var(--color-texto-suave);
+
+max-width: 600px;
+
+margin: 0 auto;
+
+padding: 14px 20px;
+
+background-color: var(--casilla-clara);
+
+border-left: 4px solid var(--color-acento);
+
+border-radius: 0 var(--borde-suave) var(--borde-suave) 0;
+
+}
+
+
+
+/* =========================================
+
+FORMULARIOS (TARJETAS DE CREAR/EDITAR)
+
+========================================= */
+
+.tarjeta-formulario {
+
+background: var(--blanco);
+
+padding: 32px;
+
+border-radius: var(--borde-suave);
+
+border: var(--borde-tablero);
+
+box-shadow: var(--sombra-pieza);
+
+margin-bottom: 40px;
+
+}
+
+
+
+.subtitulo {
+
+margin-bottom: 22px;
+
+color: var(--casilla-oscura);
+
+font-size: 1.5rem;
+
+border-bottom: 3px solid var(--color-acento);
+
+padding-bottom: 10px;
+
+display: flex;
+
+align-items: center;
+
+gap: 8px;
+
+}
+
+
+
+.subtitulo::before {
+
+content: "♜";
+
+color: var(--color-acento);
+
+}
+
+
+
+.etiqueta-pequena {
+
+font-size: 0.92rem;
+
+font-weight: 600;
+
+color: var(--color-texto-suave);
+
+margin-top: 14px;
+
+margin-bottom: 6px;
+
+}
+
+
+
+.input-formulario,
+
+.textarea-formulario {
+
+width: 100%;
+
+padding: 12px 14px;
+
+margin-bottom: 14px;
+
+background-color: var(--casilla-clara);
+
+color: var(--color-texto);
+
+border: 2px solid #c9bfa9;
+
+border-radius: var(--borde-suave);
+
+font-size: 1rem;
+
+transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+
+}
+
+
+
+.input-formulario:focus,
+
+.textarea-formulario:focus {
+
+outline: none;
+
+background-color: var(--blanco);
+
+border-color: var(--casilla-oscura);
+
+box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.35);
+
+}
+
+
+
+.textarea-formulario {
+
+resize: vertical;
+
+min-height: 125px;
+
+}
+
+
+
+/* =========================================
+
+BOTONES (ESTILO FICHA / JUGADA)
+
+========================================= */
+
+.btn {
+
+padding: 11px 22px;
+
+border: 2px solid var(--casilla-oscura);
+
+border-radius: var(--borde-suave);
+
+font-size: 1rem;
+
+font-weight: 700;
+
+color: var(--blanco);
+
+cursor: pointer;
+
+box-shadow: 0 3px 0 var(--casilla-oscura);
+
+transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+
+}
+
+
+
+.btn:hover {
+
+transform: translateY(-1px);
+
+box-shadow: 0 4px 0 var(--casilla-oscura);
+
+}
+
+
+
+.btn:active {
+
+transform: translateY(2px);
+
+box-shadow: 0 1px 0 var(--casilla-oscura);
+
+}
+
+
+
+.btn-primario {
+
+background-color: var(--casilla-oscura);
+
+color: var(--casilla-clara);
+
+width: 100%;
+
+margin-top: 10px;
+
+}
+
+.btn-primario:hover {
+
+background-color: #323840;
+
+border-color: var(--color-acento);
+
+}
+
+
+
+.btn-secundario {
+
+background-color: var(--color-secundario);
+
+margin-right: 10px;
+
+}
+
+.btn-secundario:hover {
+
+background-color: var(--color-secundario-hover);
+
+}
+
+
+
+.btn-peligro {
+
+background-color: var(--color-peligro);
+
+}
+
+.btn-peligro:hover {
+
+background-color: var(--color-peligro-hover);
+
+}
+
+
+
+.btn-exito {
+
+background-color: var(--color-exito);
+
+margin-right: 10px;
+
+margin-top: 10px;
+
+}
+
+.btn-exito:hover {
+
+background-color: var(--color-exito-hover);
+
+}
+
+
+
+/* =========================================
+
+MURO Y PUBLICACIONES (POSTS / JUGADAS)
+
+========================================= */
+
+.contenedor-muro {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 28px;
+
+}
+
+
+
+.tarjeta-post {
+
+background: var(--blanco);
+
+border: var(--borde-tablero);
+
+border-radius: var(--borde-suave);
+
+box-shadow: var(--sombra-pieza);
+
+overflow: hidden;
+
+transition: transform 0.25s ease, border-color 0.25s ease;
+
+}
+
+
+
+/* Alternancia sutil entre tarjetas claras y con toque de casilla */
+
+.tarjeta-post:nth-child(even) {
+
+background-color: var(--casilla-clara);
+
+}
+
+
+
+.tarjeta-post:hover {
+
+transform: translateY(-4px);
+
+border-color: var(--color-acento);
+
+}
+
+
+
+.t-post {
+
+padding: 18px 22px 12px 22px;
+
+color: var(--casilla-oscura);
+
+font-size: 1.35rem;
+
+border-bottom: 1px solid rgba(35, 39, 45, 0.12);
+
+display: flex;
+
+align-items: center;
+
+gap: 8px;
+
+}
+
+
+
+.t-post::before {
+
+content: "♞";
+
+color: var(--color-acento);
+
+font-size: 1.2rem;
+
+}
+
+
+
+.img-post {
+
+width: 100%;
+
+max-height: 400px;
+
+object-fit: cover;
+
+display: block;
+
+border-bottom: 2px solid var(--casilla-oscura);
+
+}
+
+
+
+.img-post[src=""], .img-post:not([src]) {
+
+display: none;
+
+}
+
+
+
+.p-post {
+
+padding: 18px 22px;
+
+color: var(--color-texto);
+
+white-space: pre-wrap;
+
+font-size: 1.03rem;
+
+}
+
+
+
+.caja-botones {
+
+padding: 14px 22px 18px 22px;
+
+border-top: 2px solid var(--casilla-oscura);
+
+background-color: rgba(35, 39, 45, 0.05);
+
+}
+
+
+
+/* =========================================
+
+RESPONSIVE (PARA CELULARES)
+
+========================================= */
+
+@media (max-width: 600px) {
+
+.nav-lista {
+
+flex-direction: column;
+
+align-items: center;
+
+gap: 6px;
+
+}
+
+.nav-item {
+
+margin: 4px 0;
+
+}
+
+.titulo-principal {
+
+font-size: 1.85rem;
+
+}
+
+.tarjeta-formulario, #vista-inicio {
+
+padding: 24px 18px;
+
+}
+
+.caja-botones {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 10px;
+
+}
+
+.btn-secundario, .btn-peligro {
+
+width: 100%;
+
+margin-right: 0;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<!-- BLOQUE HTML (ESTRUCTURA Y VISTAS) -->
+
+<nav class="navbar">
+
+<ul class="nav-lista">
+
+<li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">Inicio</a></li>
+
+<li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">Publicaciones</a></li>
+
+</ul>
+
+</nav>
+
+
+
+<main class="contenedor-principal">
+
+<section id="vista-inicio" class="vista-seccion vista-activa">
+
+<h1 class="titulo-principal">♟️ El Rincón del Ajedrecista</h1>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png" class="foto-perfil" alt="Mi Foto">
+
+<p class="texto-bienvenida">¡Hola! Soy estudiante de 7° Básico del Colegio Concepción y este es mi espacio donde compartiré mis ideas y proyectos.</p>
+
+</section>
+
+
+
+<section id="vista-publicaciones" class="vista-seccion">
+
+<button class="btn btn-primario" onclick="cambiarVista('vista-crear')" style="margin-bottom: 24px;">+ Crear Nueva Publicación</button>
+
+<div id="muro" class="contenedor-muro"></div>
+
+</section>
+
+
+
+<section id="vista-crear" class="vista-seccion">
+
+<div class="tarjeta-formulario">
+
+<h2 class="subtitulo">Nueva Publicación</h2>
+
+<input type="text" id="tit" class="input-formulario" placeholder="Título (máx 50 caracteres)" maxlength="50">
+
+<p class="etiqueta-pequena">Imagen (Sube un archivo o pega un link):</p>
+
+<input type="file" id="imgArchivo" class="input-formulario" accept="image/*">
+
+<input type="text" id="imgUrl" class="input-formulario" placeholder="O pega la URL aquí">
+
+<textarea id="txt" class="textarea-formulario" placeholder="¿Qué estás pensando?"></textarea>
+
+<button class="btn btn-primario" onclick="crearPost()">Publicar</button>
+
+<button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+
+</div>
+
+</section>
+
+
+
+<section id="vista-editar" class="vista-seccion">
+
+<div class="tarjeta-formulario">
+
+<h2 class="subtitulo">Editar Publicación</h2>
+
+<input type="text" id="edit-tit" class="input-formulario" maxlength="50">
+
+<p class="etiqueta-pequena">Cambiar imagen (déjalo en blanco para mantener la actual):</p>
+
+<input type="file" id="edit-imgArchivo" class="input-formulario" accept="image/*">
+
+<input type="text" id="edit-imgUrl" class="input-formulario" placeholder="O nueva URL de imagen">
+
+<input type="hidden" id="edit-imgActual">
+
+<textarea id="edit-txt" class="textarea-formulario"></textarea>
+
+<button class="btn btn-exito" onclick="guardarEdicion()">Guardar Cambios</button>
+
+<button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<!-- BLOQUE JAVASCRIPT (LÓGICA Y CRUD 7° Básico) -->
+
+<script>
+
+function cambiarVista(idVistaDestino) {
+
+document.getElementById('vista-inicio').style.display = 'none';
+
+document.getElementById('vista-publicaciones').style.display = 'none';
+
+document.getElementById('vista-crear').style.display = 'none';
+
+document.getElementById('vista-editar').style.display = 'none';
+
+
+document.getElementById(idVistaDestino).style.display = 'block';
+
+}
+
+
+
+function obtenerImagen(idArchivo, idUrl, idActual = null) {
+
+let archivo = document.getElementById(idArchivo).files[0];
+
+let url = document.getElementById(idUrl).value;
+
+
+if (archivo) {
+
+return URL.createObjectURL(archivo);
+
+} else if (url !== "") {
+
+return url;
+
+} else if (idActual) {
+
+return document.getElementById(idActual).value;
+
+}
+
+return "";
+
+}
+
+
+
+function crearPost() {
+
+let titulo = document.getElementById("tit").value;
+
+let texto = document.getElementById("txt").value;
+
+let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+
+
+if(titulo === "" && texto === "") {
+
+alert("¡Debes escribir un título o texto antes de publicar!");
+
+return;
+
+}
+
+
+
+document.getElementById("muro").innerHTML += `
+
+<div class="tarjeta-post">
+
+<h3 class="t-post">${titulo}</h3>
+
+<img src="${imagenFinal}" class="img-post">
+
+<p class="p-post">${texto}</p>
+
+<div class="caja-botones">
+
+<button class="btn btn-secundario" onclick="abrirEditar(this)">Editar</button>
+
+<button class="btn btn-peligro" onclick="borrarPost(this)">Eliminar</button>
+
+</div>
+
+</div>
+
+`;
+
+
+document.getElementById("tit").value = "";
+
+document.getElementById("txt").value = "";
+
+document.getElementById("imgUrl").value = "";
+
+document.getElementById("imgArchivo").value = "";
+
+
+
+cambiarVista('vista-publicaciones');
+
+}
+
+
+
+function borrarPost(botonApretado) {
+
+let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+
+if (confirmacion === true) {
+
+botonApretado.parentElement.parentElement.remove();
+
+}
+
+}
+
+
+
+let postAEditar = null;
+
+
+
+function abrirEditar(botonApretado) {
+
+postAEditar = botonApretado.parentElement.parentElement;
+
+
+document.getElementById("edit-tit").value = postAEditar.querySelector('.t-post').innerText;
+
+document.getElementById("edit-txt").value = postAEditar.querySelector('.p-post').innerText;
+
+document.getElementById("edit-imgActual").value = postAEditar.querySelector('.img-post').src;
+
+
+document.getElementById("edit-imgArchivo").value = "";
+
+document.getElementById("edit-imgUrl").value = "";
+
+
+cambiarVista('vista-editar');
+
+}
+
+
+
+function guardarEdicion() {
+
+let nuevoTit = document.getElementById("edit-tit").value;
+
+let nuevoTxt = document.getElementById("edit-txt").value;
+
+let nuevaImg = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+
+
+postAEditar.querySelector('.t-post').innerText = nuevoTit;
+
+postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+
+postAEditar.querySelector('.img-post').src = nuevaImg;
+
+
+cambiarVista('vista-publicaciones');
+
+}
+
+</script>
+
+</body>
+
+</html>

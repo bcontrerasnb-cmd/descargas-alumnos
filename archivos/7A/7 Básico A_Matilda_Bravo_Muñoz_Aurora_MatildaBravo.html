@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Blog sobre homestuck - 7° Básico (MSPA Edition)</title>
+    <!-- BLOQUE CSS (DISEÑO TEMÁTICA MS PAINT ADVENTURES / HOMESTUCK) -->
+    <style id="estilos-ia">
+        /* =========================================
+           VARIABLES Y RESET GLOBAL (PALETA MSPA)
+           ========================================= */
+        :root {
+            --mspa-fondo-oscuro: #535353;      /* Gris clásico de fondo de página MSPA */
+            --mspa-contenedor-gris: #c6c6c6;   /* Gris claro de cajas principales */
+            --mspa-panel-blanco: #efefef;      /* Blanco grisáceo del panel de lectura */
+            --mspa-borde-medio: #808080;       /* Bordes estilo web retro */
+            --mspa-texto: #000000;             /* Texto negro puro estilo comandos */
+            --mspa-link: #0000ee;              /* Azul hipervínculo clásico de MSPA (">") */
+            --mspa-link-hover: #551a8b;        /* Morado visitado / hover */
+            
+            /* Colores de texto de los personajes principales (Kids) */
+            --hs-john: #0715cd;                /* Azul ectoBiologist (John) */
+            --hs-rose: #b536da;                /* Morado tentacleTherapist (Rose) */
+            --hs-dave: #e00707;                /* Rojo turntechGodhead (Dave) */
+            --hs-jade: #4ac925;                /* Verde gardenGnostic (Jade) */
+            
+            --borde-retro: 0px;                /* MSPA usa esquinas completamente cuadradas */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* Fuente monoespaciada clásica de los comandos y Pesterlogs de Homestuck */
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        body {
+            background-color: var(--mspa-fondo-oscuro);
+            color: var(--mspa-texto);
+            line-height: 1.5;
+            font-weight: bold;
+        }
+
+        /* Ocultamos las vistas secundarias por defecto */
+        #vista-publicaciones, #vista-crear, #vista-editar { 
+            display: none; 
+        }
+
+        /* =========================================
+           BARRA DE NAVEGACIÓN (NAVBAR ESTILO MENÚ MSPA)
+           ========================================= */
+        .navbar {
+            background-color: var(--mspa-fondo-oscuro);
+            border-bottom: 4px solid var(--mspa-contenedor-gris);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-lista {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 10px 0;
+            background-color: #292929;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        /* Efecto de separador estilo menú superior de mspaintadventures.com */
+        .nav-item:not(:last-child)::after {
+            content: " |";
+            color: #ffffff;
+            margin-left: 15px;
+        }
+
+        .nav-link {
+            text-decoration: underline;
+            color: #29ff4a; /* Verde neón característico del menú superior de MSPA */
+            font-weight: bold;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffff00; /* Amarillo Sburb al pasar el mouse */
+        }
+
+        /* =========================================
+           CONTENEDOR PRINCIPAL Y VISTA INICIO
+           ========================================= */
+        .contenedor-principal {
+            max-width: 750px;
+            margin: 25px auto;
+            padding: 15px;
+            background-color: var(--mspa-contenedor-gris);
+            border: 4px solid var(--mspa-borde-medio);
+        }
+
+        .vista-seccion {
+            animation: aparecer 0.2s steps(3); /* Animación retro por pasos */
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #vista-inicio {
+            text-align: center;
+            background: var(--mspa-panel-blanco);
+            padding: 35px 25px;
+            border: 3px solid var(--mspa-borde-medio);
+        }
+
+        .titulo-principal {
+            color: var(--mspa-texto);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        /* Símbolo decorativo estilo comando de Homestuck */
+        .titulo-principal::before {
+            content: "> ";
+            color: var(--mspa-link);
+        }
+
+        .foto-perfil {
+            width: 150px;
+            height: 150px;
+            border-radius: var(--borde-retro); /* Cuadrado estilo panel de MSPA */
+            object-fit: cover;
+            border: 4px solid var(--hs-john);
+            background-color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .texto-bienvenida {
+            font-size: 1.1rem;
+            color: var(--mspa-texto);
+            background-color: #ffffff;
+            border: 2px dashed var(--mspa-borde-medio); /* Borde punteado estilo Pesterlog */
+            padding: 15px;
+        }
+
+        /* =========================================
+           FORMULARIOS (TARJETAS ESTILO PESTERLOG)
+           ========================================= */
+        .tarjeta-formulario {
+            background: var(--mspa-panel-blanco);
+            padding: 25px;
+            border: 3px solid var(--mspa-borde-medio);
+            margin-bottom: 20px;
+        }
+
+        .subtitulo {
+            margin-bottom: 20px;
+            color: var(--hs-rose);
+            border-bottom: 3px solid var(--mspa-borde-medio);
+            padding-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .subtitulo::before {
+            content: "==> ";
+        }
+
+        .etiqueta-pequena {
+            font-size: 0.9rem;
+            color: #333333;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .input-formulario, 
+        .textarea-formulario {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid var(--mspa-borde-medio);
+            background-color: #ffffff;
+            color: var(--mspa-texto);
+            border-radius: var(--borde-retro);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .input-formulario:focus, 
+        .textarea-formulario:focus {
+            outline: none;
+            border-color: var(--hs-john);
+            background-color: #f8faff;
+        }
+
+        .textarea-formulario {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* =========================================
+           BOTONES (ESTILO COMANDOS DE ACCIÓN MSPA)
+           ========================================= */
+        .btn {
+            padding: 10px 18px;
+            border: 2px solid #000000;
+            border-radius: var(--borde-retro);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0px #000000;
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+        }
+
+        .btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        /* Botón principal estilo enlace de comando (> ==>) */
+        .btn-primario { 
+            background-color: var(--mspa-panel-blanco); 
+            color: var(--mspa-link);
+            text-decoration: underline;
+            width: 100%; 
+            margin-top: 10px;
+        }
+        .btn-primario::before {
+            content: "> ";
+        }
+        .btn-primario:hover { 
+            background-color: #ffffff;
+            color: var(--hs-john); 
+        }
+
+        /* Botón Editar (Color Rose Lalonde) */
+        .btn-secundario { 
+            background-color: var(--hs-rose); 
+            color: #ffffff;
+            margin-right: 10px;
+        }
+        .btn-secundario:hover { 
+            background-color: #9626b8; 
+        }
+
+        /* Botón Eliminar / Cancelar (Color Dave Strider) */
+        .btn-peligro { 
+            background-color: var(--hs-dave); 
+            color: #ffffff;
+        }
+        .btn-peligro:hover { 
+            background-color: #b50505; 
+        }
+
+        /* Botón Guardar (Color Jade Harley) */
+        .btn-exito { 
+            background-color: var(--hs-jade); 
+            color: #000000;
+            margin-right: 10px; 
+            margin-top: 10px;
+        }
+        .btn-exito:hover { 
+            background-color: #3da81d; 
+        }
+
+        /* =========================================
+           MURO Y PUBLICACIONES (ESTILO PÁGINA DE CÓMIC)
+           ========================================= */
+        .contenedor-muro {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; 
+        }
+
+        .tarjeta-post {
+            background: var(--mspa-panel-blanco);
+            border: 3px solid var(--mspa-borde-medio);
+            border-radius: var(--borde-retro);
+            overflow: hidden;
+        }
+
+        /* Título del post centrado como encabezado de panel en Homestuck */
+        .t-post {
+            padding: 18px 20px 12px 20px;
+            color: var(--mspa-texto);
+            text-align: center;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--mspa-contenedor-gris);
+            background-color: #ffffff;
+        }
+
+        .img-post {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            background-color: #ffffff;
+            display: block; 
+            border-bottom: 2px solid var(--mspa-contenedor-gris);
+        }
+
+        .img-post[src=""], .img-post:not([src]) {
+            display: none;
+        }
+
+        /* Texto del post estilo narración de Andrew Hussie */
+        .p-post {
+            padding: 20px;
+            color: var(--mspa-texto);
+            white-space: pre-wrap; 
+            font-size: 1.05rem;
+            background-color: var(--mspa-panel-blanco);
+        }
+
+        .caja-botones {
+            padding: 12px 20px;
+            border-top: 2px dashed var(--mspa-borde-medio);
+            background-color: #e2e2e2;
+        }
+
+        /* =========================================
+           RESPONSIVE (PARA CELULARES)
+           ========================================= */
+        @media (max-width: 600px) {
+            .contenedor-principal {
+                margin: 10px;
+                padding: 10px;
+            }
+            .nav-lista {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-item {
+                margin: 6px 0;
+            }
+            .nav-item:not(:last-child)::after {
+                content: "";
+                margin: 0;
+            }
+            .caja-botones {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn-secundario, .btn-peligro, .btn-exito {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BLOQUE HTML (ESTRUCTURA Y VISTAS) -->
+    <nav class="navbar">
+        <ul class="nav-lista">
+            <li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-inicio')">Inicio</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" onclick="cambiarVista('vista-publicaciones')">Publicaciones</a></li>
+        </ul>
+    </nav>
+
+    <main class="contenedor-principal">
+        <section id="vista-inicio" class="vista-seccion vista-activa">
+            <h1 class="titulo-principal">Bienvenido a mi Blog</h1>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png" class="foto-perfil" alt="Mi Foto">
+            <p class="texto-bienvenida">¡Hola! Soy estudiante de 7° Básico del Colegio Concepción y este es mi espacio donde compartiré mis ideas y proyectos.</p>
+        </section>
+
+        <section id="vista-publicaciones" class="vista-seccion">
+            <button class="btn btn-primario" onclick="cambiarVista('vista-crear')" style="margin-bottom: 20px;">Crear Nueva Publicación</button>
+            <div id="muro" class="contenedor-muro"></div>
+        </section>
+
+        <section id="vista-crear" class="vista-seccion">
+            <div class="tarjeta-formulario">
+                <h2 class="subtitulo">Nueva Publicación</h2>
+                <input type="text" id="tit" class="input-formulario" placeholder="Título (máx 50 caracteres)" maxlength="50">
+                <p class="etiqueta-pequena">Imagen (Sube un archivo o pega un link):</p>
+                <input type="file" id="imgArchivo" class="input-formulario" accept="image/*">
+                <input type="text" id="imgUrl" class="input-formulario" placeholder="O pega la URL aquí">
+                <textarea id="txt" class="textarea-formulario" placeholder="¿Qué estás pensando?"></textarea>
+                <button class="btn btn-primario" onclick="crearPost()">Publicar</button>
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 15px; width: 100%;">Cancelar</button>
+            </div>
+        </section>
+
+        <section id="vista-editar" class="vista-seccion">
+            <div class="tarjeta-formulario">
+                <h2 class="subtitulo">Editar Publicación</h2>
+                <input type="text" id="edit-tit" class="input-formulario" maxlength="50">
+                <p class="etiqueta-pequena">Cambiar imagen (déjalo en blanco para mantener la actual):</p>
+                <input type="file" id="edit-imgArchivo" class="input-formulario" accept="image/*">
+                <input type="text" id="edit-imgUrl" class="input-formulario" placeholder="O nueva URL de imagen">
+                <input type="hidden" id="edit-imgActual">
+                <textarea id="edit-txt" class="textarea-formulario"></textarea>
+                <button class="btn btn-exito" onclick="guardarEdicion()">Guardar Cambios</button>
+                <button class="btn btn-peligro" onclick="cambiarVista('vista-publicaciones')" style="margin-top: 10px;">Cancelar</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- BLOQUE JAVASCRIPT (LÓGICA Y CRUD 7° Básico) -->
+    <script>
+        // FUNCIÓN: CAMBIAR ENTRE VISTAS SIN RECARGAR LA PÁGINA
+        function cambiarVista(idVistaDestino) {
+            document.getElementById('vista-inicio').style.display = 'none';
+            document.getElementById('vista-publicaciones').style.display = 'none';
+            document.getElementById('vista-crear').style.display = 'none';
+            document.getElementById('vista-editar').style.display = 'none';
+            
+            document.getElementById(idVistaDestino).style.display = 'block';
+        }
+
+        // FUNCIÓN: SABER QUÉ TIPO DE IMAGEN SUBIÓ EL USUARIO
+        function obtenerImagen(idArchivo, idUrl, idActual = null) {
+            let archivo = document.getElementById(idArchivo).files[0];
+            let url = document.getElementById(idUrl).value;
+            
+            if (archivo) {
+                return URL.createObjectURL(archivo); 
+            } else if (url !== "") {
+                return url; 
+            } else if (idActual) {
+                return document.getElementById(idActual).value; 
+            }
+            return ""; 
+        }
+
+        // FUNCIÓN: CREAR UNA NUEVA PUBLICACIÓN (La 'C' de CRUD)
+        function crearPost() {
+            let titulo = document.getElementById("tit").value;
+            let texto = document.getElementById("txt").value;
+            let imagenFinal = obtenerImagen("imgArchivo", "imgUrl");
+
+            if(titulo === "" && texto === "") {
+                alert("¡Debes escribir un título o texto antes de publicar!");
+                return;
+            }
+
+            document.getElementById("muro").innerHTML += `
+                <div class="tarjeta-post">
+                    <h3 class="t-post">${titulo}</h3>
+                    <img src="${imagenFinal}" class="img-post">
+                    <p class="p-post">${texto}</p>
+                    <div class="caja-botones">
+                        <button class="btn btn-secundario" onclick="abrirEditar(this)">Editar</button>
+                        <button class="btn btn-peligro" onclick="borrarPost(this)">Eliminar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById("tit").value = "";
+            document.getElementById("txt").value = "";
+            document.getElementById("imgUrl").value = "";
+            document.getElementById("imgArchivo").value = "";
+
+            cambiarVista('vista-publicaciones');
+        }
+
+        // FUNCIÓN: ELIMINAR UNA PUBLICACIÓN (La 'D' de CRUD)
+        function borrarPost(botonApretado) {
+            let confirmacion = confirm("¿Seguro que quieres eliminar esta publicación?");
+            
+            if (confirmacion === true) {
+                botonApretado.parentElement.parentElement.remove(); 
+            }
+        }
+
+        // FUNCIÓN: PREPARAR LA EDICIÓN (La 'U' de CRUD - Parte 1)
+        let postAEditar = null; 
+
+        function abrirEditar(botonApretado) {
+            postAEditar = botonApretado.parentElement.parentElement; 
+            
+            document.getElementById("edit-tit").value = postAEditar.querySelector('.t-post').innerText;
+            document.getElementById("edit-txt").value = postAEditar.querySelector('.p-post').innerText;
+            document.getElementById("edit-imgActual").value = postAEditar.querySelector('.img-post').src;
+            
+            document.getElementById("edit-imgArchivo").value = "";
+            document.getElementById("edit-imgUrl").value = "";
+            
+            cambiarVista('vista-editar');
+        }
+
+        // FUNCIÓN: GUARDAR LOS CAMBIOS DE EDICIÓN (La 'U' de CRUD - Parte 2)
+        function guardarEdicion() {
+            let nuevoTit = document.getElementById("edit-tit").value;
+            let nuevoTxt = document.getElementById("edit-txt").value;
+            let nuevaImg = obtenerImagen("edit-imgArchivo", "edit-imgUrl", "edit-imgActual");
+            
+            postAEditar.querySelector('.t-post').innerText = nuevoTit;
+            postAEditar.querySelector('.p-post').innerText = nuevoTxt;
+            postAEditar.querySelector('.img-post').src = nuevaImg;
+            
+            cambiarVista('vista-publicaciones');
+        }
+    </script>
+</body>
+</html>
